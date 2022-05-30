@@ -1,0 +1,23 @@
+{
+  "name": "property-rentals-manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nvsco-10/property-rentals-manager.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nvsco-10/property-rentals-manager/issues"
+  },
+  "homepage": "https://github.com/nvsco-10/property-rentals-manager#readme",
+  "dependencies": {
+    "concurrently": "^7.2.1"
+  }
+}
