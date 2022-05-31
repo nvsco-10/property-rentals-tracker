@@ -1,14 +1,26 @@
 import User from '../models/User.js'
+import { StatusCodes } from 'http-status-codes'
+import { BadRequestError } from '../errors/index.js'
 
-const register = async ({ body },res) => {
+// async errors package handles try catch
+const register = async (req, res) => {
+  const { username, email, password } = req.body
 
-  try {
-    const user = await User.create(body)
-    res.status(201).json(user)
-
-  } catch (error) {
-    res.status(500).json({ msg: 'there was an error'})
+  if ( !username || !email || !password){
+    throw new BadRequestError('Please provide all values')
   }
+
+  const emailExists = await User.findOne({email})
+  if (emailExists) {
+    throw new BadRequestError('Email already in use')
+  }
+  const usernameExists = await User.findOne({username})
+  if (usernameExists) {
+    throw new BadRequestError('Username already in use')
+  }
+
+  const user = await User.create(req.body)
+  res.status(StatusCodes.OK).json(user)
 
 }
 

@@ -15,13 +15,11 @@ const UserSchema = new mongoose.Schema(
     },
     firstName: {
       type: String,
-      required: true,
       maxlength: 20,
       trim: true,
     },
     lastName: {
       type: String,
-      required: true,
       maxlength: 20,
       trim: true,
     },
@@ -43,6 +41,7 @@ const UserSchema = new mongoose.Schema(
     phoneNumber: {
       type: String,
       minlength: 10,
+      trim: true,
     },
     isAdmin: {
       type: Boolean,
@@ -83,8 +82,8 @@ UserSchema.methods.comparePassword = async function (candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password)
 }
 
-UserSchema.virtual('assignedRentalCount').get(function () {
-  return this.assignedRentals.length;
-});
+// UserSchema.virtual('assignedRentalCount').get(function () {
+//   return this.assignedRentals.length;
+// });
   
 export default mongoose.model('User', UserSchema);
