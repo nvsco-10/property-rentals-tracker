@@ -1,7 +1,8 @@
 import mongoose from 'mongoose'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import validator from 'validator'
 import jwt from 'jsonwebtoken'
+
 
 const UserSchema = new mongoose.Schema(
   {
@@ -65,7 +66,7 @@ const UserSchema = new mongoose.Schema(
 
 
 UserSchema.pre('save', async function () {
-  // console.log(this.modifiedPaths())
+
   if (!this.isModified('password')) return
 
   const salt = await bcrypt.genSalt(10)

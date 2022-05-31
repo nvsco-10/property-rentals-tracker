@@ -2,13 +2,16 @@ import { useState, useEffect } from 'react'
 import { Logo, FormRow, Alert } from '../components'
 import Wrapper from '../assets/wrappers/LoginPage'
 import { useAppContext } from '../context/appContext'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
+  const navigate = useNavigate()
+
   const initialState = {
     username: '',
     password: '',
   }
-  const { isLoading, showAlert, displayAlert } = useAppContext();
+  const { user, isLoading, showAlert, displayAlert, setupUser } = useAppContext();
 
   const [formData, setformData] = useState(initialState)
 
@@ -18,14 +21,26 @@ const Login = () => {
 
   const onSubmit = (e) => {
     e.preventDefault()
-    const { email, password } = formData
+    const { username, password } = formData
 
-    if( !email || !password ) {
+    if( !username || !password ) {
       displayAlert()
       return
     }
-    console.log(formData)
+
+    const currentUser = { username, password }
+
+    setupUser({currentUser, endPoint: 'login', alertText: 'Login Successful! Redirecting...' })
+
   }
+
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        navigate('/')
+      }, 3000)
+    }
+  }, [user, navigate])
 
   return (
     <Wrapper className='full-page'>
@@ -50,7 +65,7 @@ const Login = () => {
           handleChange={handleChange}
         />
 
-        <button type='submit' className='btn btn-block'>
+        <button type='submit' className='btn btn-block' disabled={isLoading}>
           submit
         </button>
       </form>

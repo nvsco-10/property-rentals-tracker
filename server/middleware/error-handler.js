@@ -2,6 +2,7 @@ import { StatusCodes } from 'http-status-codes'
 
 const errorHandlerMiddleware = (err, req, res, next) => {
   console.log(err)
+  
   const defaultError = {
     // if bad request status code is provided, use it, otherwise use 500
     statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
@@ -12,7 +13,9 @@ const errorHandlerMiddleware = (err, req, res, next) => {
   if(err.name === 'ValidationError'){
     defaultError.statusCode = StatusCodes.BAD_REQUEST
     // defaultError.msg = err.message
-    defaultError.msg = Object.values(err.errors).map((item) => item.message).join(',')
+    defaultError.msg = Object.values(err.errors)
+      .map((item) => item.message)
+      .join(',')
   }
 
   // if error is related to unique

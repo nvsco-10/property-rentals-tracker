@@ -1,6 +1,6 @@
 import User from '../models/User.js'
 import { StatusCodes } from 'http-status-codes'
-import { BadRequestError } from '../errors/index.js'
+import { BadRequestError, UnauthenticatedError } from '../errors/index.js'
 
 // async errors package handles try catch
 const register = async (req, res) => {
@@ -14,18 +14,52 @@ const register = async (req, res) => {
   if (emailExists) {
     throw new BadRequestError('Email already in use')
   }
+
   const usernameExists = await User.findOne({username})
   if (usernameExists) {
     throw new BadRequestError('Username already in use')
   }
 
   const user = await User.create(req.body)
-  res.status(StatusCodes.OK).json(user)
+  const token = user.createJWT()
+
+  res.status(StatusCodes.CREATED).json({ 
+    user: {
+      username: user.username,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      phoneNumber: user.phoneNumber,
+      isAdmin: user.isAdmin,
+      // assignedRentals: user.assignedRentals
+    }, 
+    token 
+  })
 
 }
 
 const login = async (req,res) => {
-  res.send('login')
+  const { username, password } = req.body
+
+  if( !username || !password ) {
+    throw new BadRequestError('Please provide all values')
+  }
+
+  const user = await User.findOne({ username }).select('+password')
+  if(!user) {
+    throw new UnauthenticatedError('Invalid credentials')
+  }
+
+  const isPassword = await user.comparePassword(password)
+  if(!isPassword) {
+    throw new UnauthenticatedError('Invalid credentials')
+  }
+
+  const token = user.createJWT()
+
+  // set pw to undefined so it's not included in response
+  user.password = undefined
+  res.status(StatusCodes.OK).json({ user, token })
 }
 
 const updateUser = async (req,res) => {
