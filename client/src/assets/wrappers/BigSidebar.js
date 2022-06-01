@@ -26,6 +26,9 @@ const Wrapper = styled.aside`
       align-items: center;
       padding-left: 2.5rem;
     }
+    img {
+      width: 50%;
+    }
     .nav-links {
       padding-top: 2rem;
       display: flex;

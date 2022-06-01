@@ -40,6 +40,13 @@ const Wrapper = styled.aside`
     color: var(--red-dark);
     cursor: pointer;
   }
+  header {
+      display: flex;
+      justify-content: center;
+  }
+  img {
+      width: 50%;
+  }
   .nav-links {
     padding-top: 2rem;
     display: flex;
