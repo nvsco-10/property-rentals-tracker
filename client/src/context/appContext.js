@@ -8,6 +8,8 @@ import { DISPLAY_ALERT,
          SETUP_USER_BEGIN,
          SETUP_USER_SUCCESS,
          SETUP_USER_ERROR, 
+         TOGGLE_SIDEBAR,
+         LOGOUT_USER
        } from './actions'
 
 const token = localStorage.getItem('token')
@@ -18,9 +20,10 @@ const initialState = {
   showAlert: false,
   alertText: '',
   alertType: '',
-  user: null,
-  token: null,
-  userLocation: ''
+  user: user ? JSON.parse(user) : null,
+  token: token,
+  userLocation: '',
+  showSidebar: false,
 }
 
 const AppContext = React.createContext()
@@ -50,7 +53,7 @@ const AppProvider = ({ children }) => {
   }
 
   const setupUser = async ({ currentUser, endPoint, alertText }) => {
-    dispatch({ type: SETUP_USER_BEGIN})
+    dispatch({ type: SETUP_USER_BEGIN })
     try {
       const { data } = await axios.post(`/api/v1/auth/${endPoint}`, currentUser)
       const { user, token } = data
@@ -72,12 +75,23 @@ const AppProvider = ({ children }) => {
     clearAlert()
   }
 
+  const toggleSidebar = () => {
+    dispatch({ type: TOGGLE_SIDEBAR })
+  }
+
+  const logoutUser = () => {
+    dispatch({ type: LOGOUT_USER })
+    removeUserFromLocalStorage()
+  }
+
   return (
     <AppContext.Provider  
       value={
         {...state,
         displayAlert,
-        setupUser
+        setupUser,
+        toggleSidebar,
+        logoutUser
         }}
     >
       {children}
