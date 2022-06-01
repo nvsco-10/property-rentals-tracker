@@ -10,10 +10,11 @@ import connectDB from './db/connect.js'
 
 // routers
 import authRouter from './routes/authRoutes.js'
-// import rentalsRouter from './routes/rentalsRoutes.js'
+import rentalsRouter from './routes/rentalsRoutes.js'
 
 import notFoundMiddleware from './middleware/not-found.js'
 import errorHandleMiddleware from './middleware/error-handler.js'
+import authenticateUser from './middleware/auth.js'
 
 if(process.env.NODE_ENV !== 'productiion'){
     app.use(morgan('dev'))
@@ -26,7 +27,7 @@ app.get('/', (req,res) => {
 })
 
 app.use('/api/v1/auth', authRouter)
-// app.use('/api/v1/rentals', jobsRouter)
+app.use('/api/v1/rentals', authenticateUser, rentalsRouter)
 
 // only when ready to deploy
 // app.get('*', (req, res) => {

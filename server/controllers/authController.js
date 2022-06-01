@@ -63,7 +63,29 @@ const login = async (req,res) => {
 }
 
 const updateUser = async (req,res) => {
-  res.send('updateUser')
+  // add assignedRentals
+ const { username, email, firstName, lastName, phoneNumber, isAdmin } = req.body
+
+ if ( !username || !email ) {
+   throw new BadRequestError('Please provide all values')
+ }
+
+ const user = await User.findOne({ _id: req.user.userId })
+
+ user.username = username
+ user.email = email
+ user.firstName = firstName
+ user.lastName = lastName
+ user.phoneNumber = phoneNumber
+ user.isAdmin = isAdmin
+
+ await user.save()
+
+ // optional: create new token for updated user
+ const token = user.createJWT()
+
+ res.status(StatusCodes.OK).json({ user, token })
+
 }
 
 export { register, login, updateUser }

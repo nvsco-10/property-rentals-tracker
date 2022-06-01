@@ -66,6 +66,7 @@ const UserSchema = new mongoose.Schema(
 
 
 UserSchema.pre('save', async function () {
+  // console.log(this.modifiedPaths())
 
   if (!this.isModified('password')) return
 
