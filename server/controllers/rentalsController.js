@@ -35,8 +35,16 @@ const getAssignedRentals = async (req,res) => {
   res.status(StatusCodes.OK).json({ rentals, totalRentals: rentals.length })
 }
 
-const getRentalById = async (req,res) => {
-  res.send('getRentalById')
+const getRentalById = async ({ params },res) => {
+  const rental = await Rental.find({ _id: params.id })
+    .populate('assigned')
+    .populate('createdBy')
+
+  if( !rental ) {
+    throw new BadRequestError('Can\'t find rental with that ID! ')
+  }
+
+  res.status(StatusCodes.OK).json({ rental })
 }
 
 const updateRental = async (req,res) => {

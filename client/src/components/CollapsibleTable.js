@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { useAppContext } from '../context/appContext'
 import { useEffect } from 'react'
+import { useAppContext } from '../context/appContext'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -33,8 +34,9 @@ export default function CollapsibleTable() {
     getAllRentals()
   }, [])
 
-  function createData(address, status, priority, owner, assigned, actions) {
+  function createData(id, address, status, priority, owner, assigned, actions) {
     return {
+      id,
       address,
       status,
       priority,
@@ -44,30 +46,12 @@ export default function CollapsibleTable() {
     };
   }
 
-  // Row.propTypes = {
-  //   row: PropTypes.shape({
-  //     status: PropTypes.string.isRequired,
-  //     owner: PropTypes.string,
-  //     priority: PropTypes.string.isRequired,
-  //     actions: PropTypes.arrayOf(
-  //       PropTypes.shape({
-  //         id: PropTypes.string.isRequired,
-  //         action: PropTypes.string.isRequired,
-  //         priority: PropTypes.string.isRequired,
-  //         createdAt: PropTypes.string.isRequired,
-  //       }),
-  //     ).isRequired,
-  //     address: PropTypes.string.isRequired,
-  //     assigned: PropTypes.string,
-  //   }).isRequired,
-  // };
-
   const rows = rentals.map(rental => {
     const actions = rental.actions.map(actions => {
       return { id: actions._id, action: actions.actionItem, priority: actions.priority, createdAt: actions.createdAt }
     })
 
-    return createData(`${rental.streetAddress} ${rental.city}`, rental.status, rental.priority, rental.owner || '', rental.assigned.username || '', actions)
+    return createData(rental._id, `${rental.streetAddress} ${rental.city}`, rental.status, rental.priority, rental.owner || '', rental.assigned.username || '', actions)
   })
 
   function descendingComparator(a, b, orderBy) {
@@ -144,15 +128,7 @@ export default function CollapsibleTable() {
       <TableHead>
         <TableRow>
           <TableCell padding="checkbox">
-            {/* <Checkbox
-              color="primary"
-              indeterminate={numSelected > 0 && numSelected < rowCount}
-              checked={rowCount > 0 && numSelected === rowCount}
-              onChange={onSelectAllClick}
-              inputProps={{
-                'aria-label': 'select all desserts',
-              }}
-            /> */}
+
           </TableCell>
           {headCells.map((headCell) => (
             <TableCell
@@ -181,64 +157,62 @@ export default function CollapsibleTable() {
   }
   
   EnhancedTableHead.propTypes = {
-    // numSelected: PropTypes.number.isRequired,
     onRequestSort: PropTypes.func.isRequired,
-    // onSelectAllClick: PropTypes.func.isRequired,
     order: PropTypes.oneOf(['asc', 'desc']).isRequired,
     orderBy: PropTypes.string.isRequired,
     rowCount: PropTypes.number.isRequired,
   };
   
-  const EnhancedTableToolbar = (props) => {
-    const { numSelected } = props;
+  // const EnhancedTableToolbar = (props) => {
+  //   const { numSelected } = props;
   
-    return (
-      <Toolbar
-        sx={{
-          pl: { sm: 2 },
-          pr: { xs: 1, sm: 1 },
-          ...(numSelected > 0 && {
-            bgcolor: (theme) =>
-              alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
-          }),
-        }}
-      >
-        {/* {numSelected > 0 ? (
-          <Typography
-            sx={{ flex: '1 1 100%' }}
-            color="inherit"
-            variant="subtitle1"
-            component="div"
-          >
-            {numSelected} selected
-          </Typography>
-        ) : ( */}
-          <Typography
-            sx={{ flex: '1 1 100%' }}
-            variant="h6"
-            id="tableTitle"
-            component="div"
-          >
-            All Rental Properties
-          </Typography>
-        {/* )} */}
+  //   return (
+  //     <Toolbar
+  //       sx={{
+  //         pl: { sm: 2 },
+  //         pr: { xs: 1, sm: 1 },
+  //         ...(numSelected > 0 && {
+  //           bgcolor: (theme) =>
+  //             alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+  //         }),
+  //       }}
+  //     >
+  //       {/* {numSelected > 0 ? (
+  //         <Typography
+  //           sx={{ flex: '1 1 100%' }}
+  //           color="inherit"
+  //           variant="subtitle1"
+  //           component="div"
+  //         >
+  //           {numSelected} selected
+  //         </Typography>
+  //       ) : ( */}
+  //         {/* <Typography
+  //           sx={{ flex: '1 1 100%' }}
+  //           variant="h6"
+  //           id="tableTitle"
+  //           component="div"
+  //         >
+  //           All Rental Properties
+  //         </Typography> */}
+  //       {/* )} */}
   
-        {/* {numSelected > 0 ? (
-          <Tooltip title="Delete">
-            <IconButton>
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
-        ) : ( */}
-          <Tooltip title="Filter list">
-            <IconButton>
-              <FilterListIcon />
-            </IconButton>
-          </Tooltip>
-        {/* )} */}
-      </Toolbar>
-    );
-  };
+  //       {/* {numSelected > 0 ? (
+  //         <Tooltip title="Delete">
+  //           <IconButton>
+  //             <DeleteIcon />
+  //           </IconButton>
+  //         </Tooltip>
+  //       ) : ( */}
+  //         {/* <Tooltip title="Filter list">
+  //           <IconButton>
+  //             <FilterListIcon />
+  //           </IconButton>
+  //         </Tooltip> */}
+  //       {/* )} */}
+  //     </Toolbar>
+  //   );
+  // };
   
   // EnhancedTableToolbar.propTypes = {
   //   numSelected: PropTypes.number.isRequired,
@@ -271,7 +245,9 @@ export default function CollapsibleTable() {
           scope="row"
           padding="none"
         >
+          <Link to={`/rentals/${row.id}`}>
           {row.address}
+          </Link>
         </TableCell>
         <TableCell align="left">{row.status}</TableCell>
         <TableCell align="left">{row.priority}</TableCell>
@@ -282,13 +258,13 @@ export default function CollapsibleTable() {
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
+              {/* <Typography variant="h6" gutterBottom component="div">
                 Actions
-              </Typography>
+              </Typography> */}
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Action Item</TableCell>
+                    <TableCell>Action Items</TableCell>
                     <TableCell>Priority</TableCell>
                     <TableCell align="right">CreatedAt</TableCell>
                   </TableRow>
@@ -359,7 +335,7 @@ export default function CollapsibleTable() {
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}

@@ -15,6 +15,9 @@ import { DISPLAY_ALERT,
          CREATE_RENTAL_ERROR,
          GET_ALLRENTALS_BEGIN,
          GET_ALLRENTALS_SUCCESS,
+         GET_RENTALBYID_BEGIN,
+         GET_RENTALBYID_SUCCESS,
+         GET_RENTALBYID_ERROR,
        } from './actions'
        
 import { initialState } from './appContext'
@@ -178,6 +181,22 @@ const reducer = (state, action) => {
       isLoading: false,
       rentals: action.payload.rentals,
       totalRentals: action.payload.totalRentals
+    }
+  }
+
+  if (action.type === GET_RENTALBYID_BEGIN) {
+    return { 
+      ...state, 
+      isLoading: true,
+      showAlert: false
+    }
+  }
+
+  if (action.type === GET_RENTALBYID_SUCCESS) {
+    return { 
+      ...state, 
+      isLoading: false,
+      rentalById: action.payload.rental
     }
   }
 

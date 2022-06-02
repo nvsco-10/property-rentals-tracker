@@ -11,6 +11,7 @@ router.route('/assignedRentals')
   .get(getAssignedRentals)
 
 router.route('/:id')
+  .get(getRentalById)
   .post(createAction)
 
 export default router

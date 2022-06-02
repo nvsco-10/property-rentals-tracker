@@ -20,6 +20,9 @@ import { DISPLAY_ALERT,
          CREATE_RENTAL_ERROR,
          GET_ALLRENTALS_BEGIN,
          GET_ALLRENTALS_SUCCESS,
+         GET_RENTALBYID_BEGIN,
+         GET_RENTALBYID_SUCCESS,
+         GET_RENTALBYID_ERROR,
        } from './actions'
 
 const token = localStorage.getItem('token')
@@ -46,6 +49,7 @@ const initialState = {
   // owner: '',
   assigned: '',
   rentals: [],
+  rentalById: [],
   totalRentals: 0
 }
 
@@ -211,7 +215,7 @@ const AppProvider = ({ children }) => {
 
     dispatch({ type: GET_ALLRENTALS_BEGIN })
     try {
-      const { data } = await authFetch(url)
+      const { data } = await authFetch.get(url)
       const { rentals, totalRentals } = data
       // console.log(data)
 
@@ -229,6 +233,28 @@ const AppProvider = ({ children }) => {
     clearAlert()
   }
 
+  const getRentalById = async(id) => {
+    dispatch({ type: GET_RENTALBYID_BEGIN })
+    try {
+      const { data } = await authFetch.get(`/rentals/${id}`)
+      const { rental } = data
+      // console.log(rental[0])
+
+      dispatch({ 
+        type: GET_RENTALBYID_SUCCESS,
+        payload: {
+          rental: rental[0],
+        }
+      })
+
+    } catch (error) {
+      dispatch({ 
+        type: GET_RENTALBYID_ERROR,
+        payload: { msg: error.response.data.msg }
+      })
+    }
+  }
+
 
   return (
     <AppContext.Provider  
@@ -242,7 +268,8 @@ const AppProvider = ({ children }) => {
         handleChange,
         clearValues,
         createRental,
-        getAllRentals
+        getAllRentals,
+        getRentalById
         }}
     >
       {children}
