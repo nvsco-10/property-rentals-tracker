@@ -22,7 +22,7 @@ const createRental = async (req,res) => {
 
 const getAllRentals = async (req,res) => {
   const rentals = await Rental.find()
-    .populate('owner')
+    // .populate('owner')
     .populate('assigned')
     .populate('actions')
 

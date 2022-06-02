@@ -33,10 +33,10 @@ const RentalSchema = new mongoose.Schema(
       enum: ['normal', 'high'],
       default: 'normal'
     },
-    owner: {
-        type: mongoose.Types.ObjectId,
-        ref: 'Owner'
-    },
+    // owner: {
+    //     type: mongoose.Types.ObjectId,
+    //     ref: 'Owner'
+    // },
     assigned: {
         type: mongoose.Types.ObjectId,
         ref: 'User'

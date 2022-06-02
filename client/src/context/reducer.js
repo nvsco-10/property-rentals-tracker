@@ -127,8 +127,8 @@ const reducer = (state, action) => {
       zipCode: '',
       status: 'open',
       priority: 'normal',
-      owners: [],
-      assigned: []
+      // owner: '',
+      assigned: ''
     }
 
     return {

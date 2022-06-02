@@ -43,7 +43,7 @@ const initialState = {
   status: 'open',
   priorityOptions: ['normal', 'high'],
   priority: 'normal',
-  owner: '',
+  // owner: '',
   assigned: '',
   rentals: [],
   totalRentals: 0
@@ -177,9 +177,10 @@ const AppProvider = ({ children }) => {
   }
 
   const createRental = async () => {
-    dispatch({ type: CREATE_RENTAL_BEGIN})
+    dispatch({ type: CREATE_RENTAL_BEGIN })
     try {
-      const { streetAddress, city, zipCode, status, priority, owners, assigned } = state
+      // add owner back
+      const { streetAddress, city, zipCode, status, priority, assigned } = state
 
       await authFetch.post('/rentals', {
         streetAddress,
@@ -187,7 +188,7 @@ const AppProvider = ({ children }) => {
         zipCode,
         status,
         priority,
-        owners,
+        // owner,
         assigned
       })
 

@@ -6,7 +6,7 @@ const AllRentals = () => {
 
   return (
     <>
-    <h3>All Rentals</h3>
+    <h4>All Rentals</h4>
     <CollapsibleTable />
     </>
   )
