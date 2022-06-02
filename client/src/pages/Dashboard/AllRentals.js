@@ -1,8 +1,9 @@
 import React from 'react'
+import { EnhancedTable } from '../../components'
 
 const AllRentals = () => {
   return (
-    <div>AllRentals</div>
+    <h3>all rentals</h3>
   )
 }
 

@@ -12,7 +12,14 @@ import { DISPLAY_ALERT,
          LOGOUT_USER,
          UPDATE_USER_BEGIN,
          UPDATE_USER_SUCCESS,
-         UPDATE_USER_ERROR
+         UPDATE_USER_ERROR,
+         HANDLE_CHANGE,
+         CLEAR_VALUES,
+         CREATE_RENTAL_BEGIN,
+         CREATE_RENTAL_SUCCESS,
+         CREATE_RENTAL_ERROR,
+         GET_ALLRENTALS_BEGIN,
+         GET_ALLRENTALS_SUCCESS,
        } from './actions'
 
 const token = localStorage.getItem('token')
@@ -27,6 +34,19 @@ const initialState = {
   token: token,
   userLocation: '',
   showSidebar: false,
+  isEditing: false,
+  editRentalId: '',
+  streetAddress: '',
+  city: '',
+  zipCode: '',
+  statusOptions: ['open', 'pending-lease', 'maintenance', 'closed'],
+  status: 'open',
+  priorityOptions: ['normal', 'high'],
+  priority: 'normal',
+  owner: '',
+  assigned: '',
+  rentals: [],
+  totalRentals: 0
 }
 
 const AppContext = React.createContext()
@@ -65,8 +85,6 @@ const AppProvider = ({ children }) => {
       return Promise.reject(error)
     }
   )
-
-
 
   const displayAlert = () => {
     dispatch({type: DISPLAY_ALERT})
@@ -147,6 +165,70 @@ const AppProvider = ({ children }) => {
     clearAlert()
   }
 
+  const handleChange = ({ name, value }) => {
+    dispatch({ 
+      type: HANDLE_CHANGE, 
+      payload: { name, value }
+    })
+  }
+
+  const clearValues = () => {
+    dispatch({ type: CLEAR_VALUES })
+  }
+
+  const createRental = async () => {
+    dispatch({ type: CREATE_RENTAL_BEGIN})
+    try {
+      const { streetAddress, city, zipCode, status, priority, owners, assigned } = state
+
+      await authFetch.post('/rentals', {
+        streetAddress,
+        city,
+        zipCode,
+        status,
+        priority,
+        owners,
+        assigned
+      })
+
+      dispatch({ type: CREATE_RENTAL_SUCCESS })
+
+      clearValues()
+
+    } catch (error) {
+      if(error.response.status === 401) return
+      dispatch({
+        type: CREATE_RENTAL_ERROR,
+        payload: { msg: error.response.data.msg }
+      })
+    }
+    clearAlert()
+  }
+
+  const getAllRentals = async () => {
+    let url = `/rentals`
+
+    dispatch({ type: GET_ALLRENTALS_BEGIN })
+    try {
+      const { data } = await authFetch(url)
+      const { rentals, totalRentals } = data
+      console.log(data)
+
+      dispatch({ 
+        type: GET_ALLRENTALS_SUCCESS,
+        payload: {
+          rentals,
+          totalRentals
+        }
+      })
+
+    } catch (error) {
+      // logoutUser()
+    }
+    clearAlert()
+  }
+
+
   return (
     <AppContext.Provider  
       value={
@@ -155,7 +237,11 @@ const AppProvider = ({ children }) => {
         setupUser,
         toggleSidebar,
         logoutUser,
-        updateUser
+        updateUser,
+        handleChange,
+        clearValues,
+        createRental,
+        getAllRentals
         }}
     >
       {children}

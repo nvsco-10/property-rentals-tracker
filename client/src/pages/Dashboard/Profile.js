@@ -10,17 +10,16 @@ const Profile = () => {
   const [email] = useState(user?.email || '')
   const [firstName, setFirstName] = useState(user?.firstName || '')
   const [lastName, setLastName] = useState(user?.lastName || '')
-  const [phoneNumber, setPhoneNumber] = useState(user?.phoneNumber || '')
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    if( !username || !firstName || !lastName || !phoneNumber ) {
+    if( !username ) {
       displayAlert()
       return
     }
 
-    updateUser({ username, email, firstName, lastName, phoneNumber })
+    updateUser({ username, email, firstName, lastName })
   }
 
   return (
@@ -54,13 +53,6 @@ const Profile = () => {
             name='lastName'
             value={lastName}
             handleChange={(e) => setLastName(e.target.value)}
-          />
-          <FormRow
-            type='text'
-            labelText={'phone'}
-            name='phoneNumber'
-            value={phoneNumber}
-            handleChange={(e) => setPhoneNumber(e.target.value)}
           />
           <button className='btn btn-block' type='submit' disabled={isLoading}>
             {isLoading ? 'Please wait...' : 'save changes'}

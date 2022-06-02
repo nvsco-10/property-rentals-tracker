@@ -29,7 +29,6 @@ const register = async (req, res) => {
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
-      phoneNumber: user.phoneNumber,
       isAdmin: user.isAdmin,
       // assignedRentals: user.assignedRentals
     }, 
@@ -64,10 +63,10 @@ const login = async (req,res) => {
 
 const updateUser = async (req,res) => {
   // add assignedRentals
- const { username, email, firstName, lastName, phoneNumber, isAdmin } = req.body
+ const { username, email, firstName, lastName, isAdmin } = req.body
 
  if ( !username || !email ) {
-   throw new BadRequestError('Please provide all values')
+   throw new BadRequestError('Please provide username and/or email')
  }
 
  const user = await User.findOne({ _id: req.user.userId })
@@ -76,7 +75,6 @@ const updateUser = async (req,res) => {
  user.email = email
  user.firstName = firstName
  user.lastName = lastName
- user.phoneNumber = phoneNumber
  user.isAdmin = isAdmin
 
  await user.save()
@@ -88,6 +86,13 @@ const updateUser = async (req,res) => {
 
 }
 
-export { register, login, updateUser }
+const getAllUsers = async (req,res) => {
+  const users = await User.find()
+    .populate('assignedRentals')
+
+  res.status(StatusCodes.OK).json({ users })
+}
+
+export { register, login, updateUser, getAllUsers }
 
 
