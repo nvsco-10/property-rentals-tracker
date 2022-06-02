@@ -5,6 +5,6 @@ import BigSidebar from './BigSidebar'
 import SmallSidebar from './SmallSidebar'
 import Navbar from './Navbar'
 import FormRowSelect from './FormRowSelect'
-import EnhancedTable from './EnhancedTable'
+import CollapsibleTable from './CollapsibleTable'
 
-export { Logo, FormRow, Alert, BigSidebar, SmallSidebar, Navbar, FormRowSelect, EnhancedTable }
+export { Logo, FormRow, Alert, BigSidebar, SmallSidebar, Navbar, FormRowSelect, CollapsibleTable }

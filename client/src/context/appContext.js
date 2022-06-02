@@ -212,7 +212,7 @@ const AppProvider = ({ children }) => {
     try {
       const { data } = await authFetch(url)
       const { rentals, totalRentals } = data
-      console.log(data)
+      // console.log(data)
 
       dispatch({ 
         type: GET_ALLRENTALS_SUCCESS,

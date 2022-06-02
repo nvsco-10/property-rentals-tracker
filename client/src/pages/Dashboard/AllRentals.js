@@ -1,9 +1,14 @@
 import React from 'react'
-import { EnhancedTable } from '../../components'
+import { CollapsibleTable } from '../../components'
+
 
 const AllRentals = () => {
+
   return (
-    <h3>all rentals</h3>
+    <>
+    <h3>All Rentals</h3>
+    <CollapsibleTable />
+    </>
   )
 }
 

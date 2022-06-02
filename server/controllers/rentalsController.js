@@ -4,11 +4,13 @@ import { StatusCodes } from 'http-status-codes'
 import { BadRequestError, NotFoundError } from '../errors/index.js'
 
 const createRental = async (req,res) => {
-  const { streetAddress, city, zipCode } = req.body
+  const { streetAddress, city, zipCode, assigned } = req.body
 
   if( !streetAddress || !city || !zipCode ) {
     throw new BadRequestError('Please provide all values')
   }
+
+  if ( !assigned ) req.body.assigned = req.user.userId
 
   req.body.createdBy = req.user.userId
 
@@ -56,7 +58,8 @@ const createAction = async ({ body, params, user },res) => {
     throw new BadRequestError('Please provide all values')
   }
 
-  body.createdBy = '629657dff0dd6759ce1fec52'
+  // user.userId '629657dff0dd6759ce1fec52'
+  body.createdBy = user.userId
 
   const action = await Action.create(body) 
 
