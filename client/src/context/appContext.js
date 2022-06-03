@@ -23,6 +23,8 @@ import { DISPLAY_ALERT,
          GET_RENTALBYID_BEGIN,
          GET_RENTALBYID_SUCCESS,
          GET_RENTALBYID_ERROR,
+         SET_ACTIVE_ACTION,
+         SET_ACTIVE_ACTION_SUCCESS,
        } from './actions'
 
 const token = localStorage.getItem('token')
@@ -50,6 +52,7 @@ const initialState = {
   assigned: '',
   rentals: [],
   rentalById: [],
+  activeAction: {},
   totalRentals: 0
 }
 
@@ -255,6 +258,21 @@ const AppProvider = ({ children }) => {
     }
   }
 
+  const setAction = (action) => {
+    // console.log(action)
+    dispatch({ 
+      type: SET_ACTIVE_ACTION,
+      payload: {
+        action: action
+      }
+    })
+
+    dispatch({ 
+      type: SET_ACTIVE_ACTION_SUCCESS,
+    })
+  }
+
+
 
   return (
     <AppContext.Provider  
@@ -269,7 +287,8 @@ const AppProvider = ({ children }) => {
         clearValues,
         createRental,
         getAllRentals,
-        getRentalById
+        getRentalById,
+        setAction
         }}
     >
       {children}

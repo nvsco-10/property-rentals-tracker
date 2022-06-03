@@ -18,6 +18,8 @@ import { DISPLAY_ALERT,
          GET_RENTALBYID_BEGIN,
          GET_RENTALBYID_SUCCESS,
          GET_RENTALBYID_ERROR,
+         SET_ACTIVE_ACTION,
+         SET_ACTIVE_ACTION_SUCCESS,
        } from './actions'
        
 import { initialState } from './appContext'
@@ -207,6 +209,21 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: 'danger',
       alertText: action.payload.msg,
+    }
+  }
+
+  if (action.type === SET_ACTIVE_ACTION) {
+    return {
+      ...state,
+      isLoading: true,
+      activeAction: action.payload.action
+    }
+  }
+
+  if (action.type === SET_ACTIVE_ACTION_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
     }
   }
 

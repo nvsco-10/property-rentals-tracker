@@ -10,5 +10,6 @@ import Loading from './Loading'
 import SingleRentalContainer from './SingleRentalContainer'
 import RentalInfo from './RentalInfo'
 import RentalActions from './RentalActions'
+import ActionContainer from './ActionContainer'
 
-export { Logo, FormRow, Alert, BigSidebar, SmallSidebar, Navbar, FormRowSelect, CollapsibleTable, Loading, SingleRentalContainer, RentalInfo, RentalActions }
+export { Logo, FormRow, Alert, BigSidebar, SmallSidebar, Navbar, FormRowSelect, CollapsibleTable, Loading, SingleRentalContainer, RentalInfo, RentalActions, ActionContainer }

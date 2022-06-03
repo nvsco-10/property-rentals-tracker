@@ -1,5 +1,7 @@
 import Wrapper from '../assets/wrappers/RentalActions'
 import * as React from 'react';
+import { useEffect } from 'react';
+import { useAppContext } from '../context/appContext';
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -22,20 +24,34 @@ import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
+import AddButton from './AddButton';
+import moment from 'moment'
 
 const RentalActions = () => {
-  function createData(id, actionItem, priority, createdAt) {
+  const { rentalById, isLoading, setAction } = useAppContext()
+  const { actions } = rentalById
+  // console.log(actions)
+
+  useEffect(() => {
+    setAction('')
+  }, [])
+
+  function createData(id, actionItem, priority, createdAt, createdBy, notes) {
     return {
       id,
       actionItem,
       priority,
       createdAt,
+      createdBy,
+      notes
     };
   }
 
-  const rows = [
-    createData('321321321', 'Cupcake', 'open', 'date here'),
-  ];
+  const rows = actions?.map(action => {
+    // console.log(action)
+    return createData(action._id, action.actionItem, action.priority, moment(action.createdAt).format('MMM Do, YYYY'), action.createdBy.username, action.notes)
+  })
+
 
   function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -90,7 +106,7 @@ const RentalActions = () => {
   ];
   
   function EnhancedTableHead(props) {
-    const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
+    const { order, orderBy,  onRequestSort } =
       props;
     const createSortHandler = (property) => (event) => {
       onRequestSort(event, property);
@@ -175,16 +191,23 @@ const RentalActions = () => {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
 
-
+  if(isLoading) {
+    return <div>isLoading</div>
+  }
+  
   return (
     <Wrapper>
-      <h5>Actions</h5>
+      <header>
+        <h5>Actions</h5>
+        <AddButton/>
+      </header>
+      { actions?.length ? (
       <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
         {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
         <TableContainer>
           <Table
-            sx={{ minWidth: 750 }}
+            sx={{ minWidth: 400 }}
             aria-labelledby="tableTitle"
             size={dense ? 'small' : 'medium'}
           >
@@ -211,8 +234,9 @@ const RentalActions = () => {
                       // onClick={(event) => handleClick(event, row.name)}
                       // role="checkbox"
                       // aria-checked={isItemSelected}
+                      onClick={() => setAction(row)}
                       tabIndex={-1}
-                      key={row.name}
+                      key={row.id}
                       // selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -233,7 +257,7 @@ const RentalActions = () => {
                         {row.actionItem}
                       </TableCell>
                       <TableCell align="left">{row.priority}</TableCell>
-                      <TableCell align="ledt">{row.createdAt}</TableCell>
+                      <TableCell align="left">{row.createdAt}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -264,6 +288,9 @@ const RentalActions = () => {
         label="Dense padding"
       />
     </Box>
+    ) : (
+      <div>No actions to display...</div>
+    )}
     </Wrapper>
   )
 }

@@ -7,6 +7,13 @@ const Wrapper = styled.article`
   flex-basis: 50%;
   height: max-content;
   padding: 1rem;
+
+  header {
+    display: flex;
+    justify-content: space-between;
+
+    
+  }
 `
 
 export default Wrapper

@@ -41,6 +41,24 @@ const getRentalById = async ({ params },res) => {
     .populate('owner')
     .populate('assigned')
     .populate('createdBy')
+    .populate({
+      path:     'actions',			
+      populate: [
+        { 
+            path:  'createdBy',
+            model: 'User', 
+        },
+        { 
+          path:  'notes',
+          populate: [
+            {
+              path: 'createdBy',
+              model: 'User', 
+            }
+          ]
+        },
+      ]
+      })
 
   if( !rental ) {
     throw new BadRequestError('Can\'t find rental with that ID! ')
@@ -86,4 +104,27 @@ const createAction = async ({ body, params, user },res) => {
   res.status(StatusCodes.CREATED).json({ updatedRental })
 }
 
-export { createRental, getAllRentals, getAssignedRentals, getRentalById, updateRental, deleteRental, showStats, createAction }
+const createNote = async ({ body, params, user },res) => {
+  const { note } = body
+
+  if( !note ) {
+    throw new BadRequestError('Please provide a note')
+  }
+
+  // user.userId '629657dff0dd6759ce1fec52'
+  body.createdBy = '629657dff0dd6759ce1fec52'
+
+  const updatedAction = await Action.findOneAndUpdate(
+    { _id: params.actionId },
+    { $addToSet: { notes: body } },
+    { runValidators: true, new: true }
+  )
+
+  if( !updatedAction ) {
+    throw new BadRequestError('Can\'t find action with that ID! ')
+  }
+  
+  res.status(StatusCodes.CREATED).json({ updatedAction })
+}
+
+export { createRental, getAllRentals, getAssignedRentals, getRentalById, updateRental, deleteRental, showStats, createAction, createNote }
