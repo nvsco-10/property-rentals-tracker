@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useEffect } from 'react'
 import { useAppContext } from '../context/appContext'
 import { Link } from 'react-router-dom'
+import moment from 'moment'
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -48,10 +49,10 @@ export default function CollapsibleTable() {
 
   const rows = rentals.map(rental => {
     const actions = rental.actions.map(actions => {
-      return { id: actions._id, action: actions.actionItem, priority: actions.priority, createdAt: actions.createdAt }
+      return { id: actions._id, action: actions.actionItem, priority: actions.priority, createdAt: moment(actions.createdAt).format('MMM Do, YYYY') }
     })
 
-    return createData(rental._id, `${rental.streetAddress} ${rental.city}`, rental.status, rental.priority, rental.owner || '', rental.assigned.username || '', actions)
+    return createData(rental._id, `${rental.streetAddress} ${rental.city}`, rental.status, rental.priority, rental.owner.name || '', rental.assigned.username || '', actions)
   })
 
   function descendingComparator(a, b, orderBy) {

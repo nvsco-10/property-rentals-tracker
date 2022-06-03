@@ -130,7 +130,7 @@ const reducer = (state, action) => {
       zipCode: '',
       status: 'open',
       priority: 'normal',
-      // owner: '',
+      owner: '',
       assigned: ''
     }
 
@@ -197,6 +197,16 @@ const reducer = (state, action) => {
       ...state, 
       isLoading: false,
       rentalById: action.payload.rental
+    }
+  }
+
+  if (action.type === GET_RENTALBYID_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.msg,
     }
   }
 

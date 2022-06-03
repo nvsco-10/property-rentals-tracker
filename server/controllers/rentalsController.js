@@ -10,9 +10,10 @@ const createRental = async (req,res) => {
     throw new BadRequestError('Please provide all values')
   }
 
-  if ( !assigned ) req.body.assigned = req.user.userId
+  // 629657dff0dd6759ce1fec52
+  if ( !assigned ) req.body.assigned = '629657dff0dd6759ce1fec52'
 
-  req.body.createdBy = req.user.userId
+  req.body.createdBy = '629657dff0dd6759ce1fec52'
 
   const rental = await Rental.create(req.body) 
   
@@ -22,7 +23,7 @@ const createRental = async (req,res) => {
 
 const getAllRentals = async (req,res) => {
   const rentals = await Rental.find()
-    // .populate('owner')
+    .populate('owner')
     .populate('assigned')
     .populate('actions')
 
@@ -37,6 +38,7 @@ const getAssignedRentals = async (req,res) => {
 
 const getRentalById = async ({ params },res) => {
   const rental = await Rental.find({ _id: params.id })
+    .populate('owner')
     .populate('assigned')
     .populate('createdBy')
 
@@ -67,7 +69,7 @@ const createAction = async ({ body, params, user },res) => {
   }
 
   // user.userId '629657dff0dd6759ce1fec52'
-  body.createdBy = user.userId
+  body.createdBy = '629657dff0dd6759ce1fec52'
 
   const action = await Action.create(body) 
 

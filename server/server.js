@@ -11,6 +11,7 @@ import connectDB from './db/connect.js'
 // routers
 import authRouter from './routes/authRoutes.js'
 import rentalsRouter from './routes/rentalsRoutes.js'
+import ownersRouter from './routes/ownersRoutes.js'
 
 import notFoundMiddleware from './middleware/not-found.js'
 import errorHandleMiddleware from './middleware/error-handler.js'
@@ -28,6 +29,7 @@ app.get('/', (req,res) => {
 
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/rentals', authenticateUser, rentalsRouter)
+app.use('/api/v1/owners', authenticateUser, ownersRouter)
 
 // only when ready to deploy
 // app.get('*', (req, res) => {

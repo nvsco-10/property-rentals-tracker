@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useAppContext } from '../../context/appContext'
-import { Loading } from '../../components'
+import { Loading, SingleRentalContainer } from '../../components'
 
 const SingleRental = () => {
   const { id } = useParams()
@@ -19,8 +19,7 @@ const SingleRental = () => {
     <>
     {rentalById && (
       <>
-      <p>{rentalById.streetAddress}</p>
-      <p>{rentalById.city}</p>
+      <SingleRentalContainer />
       </>
     )}
     </>

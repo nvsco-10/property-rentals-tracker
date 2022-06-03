@@ -46,7 +46,7 @@ const initialState = {
   status: 'open',
   priorityOptions: ['normal', 'high'],
   priority: 'normal',
-  // owner: '',
+  owner: '',
   assigned: '',
   rentals: [],
   rentalById: [],
@@ -184,7 +184,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CREATE_RENTAL_BEGIN })
     try {
       // add owner back
-      const { streetAddress, city, zipCode, status, priority, assigned } = state
+      const { streetAddress, city, zipCode, status, priority, assigned, owner } = state
 
       await authFetch.post('/rentals', {
         streetAddress,
@@ -192,7 +192,7 @@ const AppProvider = ({ children }) => {
         zipCode,
         status,
         priority,
-        // owner,
+        owner,
         assigned
       })
 
@@ -228,7 +228,7 @@ const AppProvider = ({ children }) => {
       })
 
     } catch (error) {
-      // logoutUser()
+      logoutUser()
     }
     clearAlert()
   }

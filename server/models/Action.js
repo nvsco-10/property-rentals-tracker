@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-// Schema to create note 
+// Schema to create note - not a mongoose model
 const noteSchema = new mongoose.Schema(
   {
     note: {
