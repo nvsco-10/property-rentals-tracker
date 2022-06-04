@@ -25,6 +25,9 @@ import { DISPLAY_ALERT,
          GET_RENTALBYID_ERROR,
          SET_ACTIVE_ACTION,
          SET_ACTIVE_ACTION_SUCCESS,
+         CREATE_ACTION_BEGIN,
+         CREATE_ACTION_SUCCESS,
+         CREATE_ACTION_ERROR,
        } from './actions'
 
 const token = localStorage.getItem('token')
@@ -53,8 +56,14 @@ const initialState = {
   rentals: [],
   rentalById: [],
   activeAction: {},
-  totalRentals: 0
-}
+  totalRentals: 0,
+  actionItem: '',
+  details: '',
+  actionStatusOptions: ['open', 'closed'],
+  actionStatus: 'open',
+  actionPriorityOptions: ['normal', 'high'],
+  actionPriority: 'normal',
+  }
 
 const AppContext = React.createContext()
 
@@ -272,6 +281,31 @@ const AppProvider = ({ children }) => {
     })
   }
 
+  const createAction = async (rentalId) => {
+    dispatch({ type: CREATE_ACTION_BEGIN })
+    try {
+      const { actionItem, details, actionStatus, actionPriority } = state
+
+      await authFetch.post(`/rentals/${rentalId}`, {
+        actionItem,
+        details,
+        status: actionStatus,
+        priority: actionPriority
+      })
+
+      dispatch({ type: CREATE_ACTION_SUCCESS })
+
+      clearValues()
+
+    } catch (error) {
+      if(error.response.status === 401) return
+      dispatch({
+        type: CREATE_ACTION_ERROR,
+        payload: { msg: error.response.data.msg }
+      })
+    }
+    clearAlert()
+  }
 
 
   return (
@@ -288,7 +322,8 @@ const AppProvider = ({ children }) => {
         createRental,
         getAllRentals,
         getRentalById,
-        setAction
+        setAction,
+        createAction
         }}
     >
       {children}

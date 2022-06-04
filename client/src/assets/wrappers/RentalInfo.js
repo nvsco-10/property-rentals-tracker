@@ -29,6 +29,13 @@ const Wrapper = styled.article`
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
+
+        span {
+          font-size: 0.75rem;
+          text-transform: lowercase;
+          cursor: pointer;
+          padding: 0 0.75em;
+        }
       }
 
       h5 {

@@ -5,15 +5,17 @@ import icon from '../assets/images/houseplaceholder.png'
 import Info from './Info'
 
 const RentalInfo = () => {
-  const { rentalById, isLoading } = useAppContext()
+  const { rentalById, isLoading, createAction } = useAppContext()
   const { streetAddress, city, zipCode, status, priority, owner, assigned } = rentalById
+
+  // console.log(rentalById._id)
   
   return (
     <Wrapper>
         <img src={icon} alt='house icon' />
         <div className='details'>
           <div className='title'>
-            <h5>{`${streetAddress}, ${city}, ${zipCode}`}</h5>
+            <h5>{`${streetAddress}, ${city}, ${zipCode}`} <span><i>edit</i></span></h5>
             <p className='heading'>owner: {assigned?.username} </p>
           </div>
           <div className='content'>

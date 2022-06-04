@@ -20,6 +20,9 @@ import { DISPLAY_ALERT,
          GET_RENTALBYID_ERROR,
          SET_ACTIVE_ACTION,
          SET_ACTIVE_ACTION_SUCCESS,
+         CREATE_ACTION_BEGIN,
+         CREATE_ACTION_SUCCESS,
+         CREATE_ACTION_ERROR,
        } from './actions'
        
 import { initialState } from './appContext'
@@ -133,7 +136,11 @@ const reducer = (state, action) => {
       status: 'open',
       priority: 'normal',
       owner: '',
-      assigned: ''
+      assigned: '',
+      actionItem: '',
+      details: '',
+      actionStatus: 'open',
+      actionPriority: 'normal'
     }
 
     return {
@@ -224,6 +231,33 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoading: false,
+    }
+  }
+
+  if (action.type === CREATE_ACTION_BEGIN) {
+    return { 
+      ...state, 
+      isLoading: true 
+    }
+  }
+
+  if (action.type === CREATE_ACTION_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'success',
+      alertText: 'New Action Created!',
+    }
+  }
+
+  if (action.type === CREATE_ACTION_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.msg,
     }
   }
 

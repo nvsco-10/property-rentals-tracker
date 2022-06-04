@@ -87,7 +87,7 @@ const createAction = async ({ body, params, user },res) => {
   }
 
   // user.userId '629657dff0dd6759ce1fec52'
-  body.createdBy = '629657dff0dd6759ce1fec52'
+  body.createdBy = user.userId
 
   const action = await Action.create(body) 
 

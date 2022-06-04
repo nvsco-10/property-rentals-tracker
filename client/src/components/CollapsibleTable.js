@@ -228,7 +228,7 @@ export default function CollapsibleTable() {
       <TableRow
         hover
         tabIndex={-1}
-        key={row.address}
+        key={row.id}
       >
         <TableCell padding="checkbox">
 
@@ -362,71 +362,7 @@ export default function CollapsibleTable() {
                   
 
                   return (
-                    <>
-                    {/* <TableRow
-                      hover
-                      tabIndex={-1}
-                      key={row.address}
-                    >
-                      <TableCell padding="checkbox">
-
-                        <IconButton
-                          aria-label="expand row"
-                          size="small"
-                          onClick={() => setOpen(!open)}
-                        >
-                          {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                        </IconButton>
-                      </TableCell>
-                      <TableCell
-                        component="th"
-                        id={labelId}
-                        scope="row"
-                        padding="none"
-                      >
-                        {row.address}
-                      </TableCell>
-                      <TableCell align="left">{row.status}</TableCell>
-                      <TableCell align="left">{row.priority}</TableCell>
-                      <TableCell align="left">{row.owner}</TableCell>
-                      <TableCell align="left">{row.assigned}</TableCell>
-                    </TableRow> */}
-
                     <CollapsibleRow row={row} />
-
-
-                     {/* <TableRow>
-                     <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                       <Collapse in={open} timeout="auto" unmountOnExit>
-                         <Box sx={{ margin: 1 }}>
-                           <Typography variant="h6" gutterBottom component="div">
-                             Actions
-                           </Typography>
-                           <Table size="small" aria-label="purchases">
-                             <TableHead>
-                               <TableRow>
-                                 <TableCell>Action Item</TableCell>
-                                 <TableCell>Priority</TableCell>
-                                 <TableCell align="right">CreatedAt</TableCell>
-                               </TableRow>
-                             </TableHead>
-                             <TableBody>
-                               {row.actions.map((action) => (
-                                 <TableRow key={action.id}>
-                                   <TableCell component="th" scope="row">
-                                     {action.action}
-                                   </TableCell>
-                                   <TableCell>{action.priority}</TableCell>
-                                   <TableCell align="right">{action.createdAt}</TableCell>
-                                 </TableRow>
-                               ))}
-                             </TableBody>
-                           </Table>
-                         </Box>
-                       </Collapse>
-                     </TableCell>
-                   </TableRow> */}
-                   </>
                   );
                 })}
               {emptyRows > 0 && (

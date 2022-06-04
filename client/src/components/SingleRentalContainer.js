@@ -5,7 +5,6 @@ import ActionContainer from './ActionContainer'
 import { useAppContext } from '../context/appContext'
 import Loading from './Loading'
 
-
 import React from 'react'
 
 const SingleRentalContainer = () => {

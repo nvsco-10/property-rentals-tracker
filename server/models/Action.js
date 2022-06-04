@@ -36,7 +36,6 @@ const ActionSchema = new mongoose.Schema(
     },
     details: {
       type: String,
-      minlength: 3,
       maxlength: 400,
       trim: true,
     },

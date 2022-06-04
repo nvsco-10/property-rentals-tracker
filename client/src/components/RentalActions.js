@@ -28,12 +28,18 @@ import AddButton from './AddButton';
 import moment from 'moment'
 
 const RentalActions = () => {
-  const { rentalById, isLoading, setAction } = useAppContext()
-  const { actions } = rentalById
+  const { rentalById, isLoading, setAction, createAction } = useAppContext()
+  const { _id, actions } = rentalById
   // console.log(actions)
+
 
   useEffect(() => {
     setAction('')
+
+    const rows = actions?.map(action => {
+      // console.log(action)
+      return createData(action._id, action.actionItem, action.priority, moment(action.createdAt).format('MMM Do, YYYY'), action.createdBy.username, action.notes)
+    })
   }, [])
 
   function createData(id, actionItem, priority, createdAt, createdBy, notes) {
@@ -199,7 +205,7 @@ const RentalActions = () => {
     <Wrapper>
       <header>
         <h5>Actions</h5>
-        <AddButton/>
+        <AddButton create={createAction} id={_id} type='action'/>
       </header>
       { actions?.length ? (
       <Box sx={{ width: '100%' }}>
