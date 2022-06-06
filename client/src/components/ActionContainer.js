@@ -8,16 +8,19 @@ import Loading from './Loading'
 import moment from 'moment'
 
 const ActionContainer = () => {
-  const { rentalById, activeAction, isLoading, handleChange, note, createNote } = useAppContext()
+  const { rentalById, activeAction, activeNote, isLoading, handleChange, note, createNote, setNote } = useAppContext()
 
-  const handleInput = (e) => {
+  const handleNoteInput = (e) => {
     const name = e.target.name
     const value = e.target.value
 
     handleChange({ name, value })
   }
 
-  const handleSubmit = (e) => {
+  const handleNoteSubmit = (e) => {
+    if(!note) {
+      return
+    }
     createNote()
   }
 
@@ -52,17 +55,17 @@ const ActionContainer = () => {
             <textarea
               name='note'
               value={note}
-              onChange={handleInput}
+              onChange={handleNoteInput}
             />
-            <button onClick={handleSubmit}>Add note</button>
+            <button className='btn addnote-btn' onClick={handleNoteSubmit}>Add note</button>
           </div>
           <div className='body'>
             {activeAction?.notes?.length > 0 ? (activeAction.notes.map(note => {
               return (
-              <div key={note._id} className='note-container'>
+              <div onClick={() => setNote(note)} key={note._id} className='note-container'>
                 <div className='row'>
                   <p className='note'>{note.note}</p>
-                  <EditDeleteBtns />
+                  <EditDeleteBtns type='note' id={note._id} />
                 </div>
                 <div className='row'>
                   <p className='details'>Added by: {note.createdBy.username}</p>

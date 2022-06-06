@@ -30,6 +30,11 @@ import { DISPLAY_ALERT,
          CREATE_NOTE_BEGIN,
          CREATE_NOTE_SUCCESS,
          CREATE_NOTE_ERROR,
+         SET_ACTIVE_NOTE,
+         SET_EDIT_NOTE,
+         EDIT_NOTE_SUCCESS,
+         EDIT_NOTE_ERROR,
+         DELETE_NOTE_BEGIN
        } from './actions'
        
 import { initialState } from './appContext'
@@ -147,7 +152,9 @@ const reducer = (state, action) => {
       actionItem: '',
       details: '',
       actionStatus: 'open',
-      actionPriority: 'normal'
+      actionPriority: 'normal',
+      note: '',
+      editedNote: ''
     }
 
     return {
@@ -212,7 +219,8 @@ const reducer = (state, action) => {
     return { 
       ...state, 
       isLoading: false,
-      rentalById: action.payload.rental
+      rentalById: action.payload.rental,
+      actions: action.payload.actions
     }
   }
 
@@ -300,6 +308,49 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: 'danger',
       alertText: action.payload.msg,
+    }
+  }
+
+  if (action.type === SET_ACTIVE_NOTE) {
+    return {
+      ...state,
+      activeNote: action.payload.note
+    }
+  }
+
+  if(action.type === SET_EDIT_NOTE) {
+    const note = state.activeAction.notes.find((note) => note._id === action.payload.id)
+   
+    return {
+    ...state,
+    isEditing: true,
+    editedNote: note.note
+    }
+  }
+
+  if (action.type === EDIT_NOTE_SUCCESS) {
+    return {
+      ...state,
+      // isLoading: false,
+      showAlert: true,
+      alertType: 'success',
+      alertText: 'Note Updated!',
+    }
+  }
+  if (action.type === EDIT_NOTE_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.msg,
+    }
+  }
+
+  if(action.type === DELETE_NOTE_BEGIN) {
+    return {
+      ...state,
+      // isLoading: true
     }
   }
 

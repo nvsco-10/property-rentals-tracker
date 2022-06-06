@@ -5,7 +5,8 @@ import { Loading, SingleRentalContainer } from '../../components'
 
 const SingleRental = () => {
   const { id } = useParams()
-  const { getRentalById, rentalById, isLoading } = useAppContext()
+  const { getRentalById, rentalById, isLoading, actions } = useAppContext()
+  const { _id } = rentalById
 
   useEffect(() => {
     getRentalById(id)

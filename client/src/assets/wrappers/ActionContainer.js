@@ -65,7 +65,7 @@ const Wrapper = styled.article`
         padding: 0.5em;
       }
 
-      button {
+      .addnote-btn {
         background: #112658;
         color: white;
         font-size: inherit;
@@ -83,6 +83,7 @@ const Wrapper = styled.article`
       margin: 0.5rem;
       padding: 0.5em;
       border-bottom: solid 1px lightgray;
+      cursor: pointer;
 
       .row {
         display: flex;

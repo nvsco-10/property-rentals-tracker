@@ -153,10 +153,48 @@ const createNote = async ({ body, params, user },res) => {
   )
 
   if( !updatedAction ) {
-    throw new BadRequestError('Can\'t find action with that ID! ')
+    throw new NotFoundError(`No action with id: ${params.actionId}`)
   }
   
   res.status(StatusCodes.CREATED).json({ updatedAction })
 }
 
-export { createRental, getAllRentals, getAssignedRentals, getRentalById, updateRental, deleteRental, showStats, createAction, updateAction, deleteAction, createNote, }
+const updateNote = async ({ body, params },res) => {
+  const { note } = body
+
+  if( !note ) {
+    throw new BadRequestError('Please provide a note')
+  }
+
+  const updatedAction = await Action.findOneAndUpdate(
+    // https://www.mongodb.com/docs/manual/reference/operator/update/positional/
+    
+    // update conflict with timestamps:
+    // https://stackoverflow.com/questions/63994447/mongodb-update-in-array-fails-updating-the-path-companies-updatedat-would-c
+    { _id: params.actionId, "notes._id": params.noteId  },
+    { $set: { "notes.$.note": note  } },
+    { new: true }
+  )
+
+  if( !updatedAction ) {
+    throw new NotFoundError(`No action with id: ${params.actionId}`)
+  }
+  
+  res.status(StatusCodes.OK).json({ updatedAction })
+}
+
+const deleteNote = async ({ params }, res) => {
+  const updatedAction = await Action.findOneAndUpdate(
+    { _id: params.actionId },
+    { $pull: { notes: { _id: params.noteId } } },
+    { new: true }
+  )
+
+  if (!updateAction) {
+    throw new NotFoundError(`No action with id: ${params.actionId}`)
+  }
+
+  res.status(StatusCodes.OK).json({ updatedAction })
+}
+
+export { createRental, getAllRentals, getAssignedRentals, getRentalById, updateRental, deleteRental, showStats, createAction, updateAction, deleteAction, createNote, updateNote,deleteNote }

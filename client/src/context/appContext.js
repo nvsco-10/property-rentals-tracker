@@ -35,6 +35,11 @@ import { DISPLAY_ALERT,
          CREATE_NOTE_BEGIN,
          CREATE_NOTE_SUCCESS,
          CREATE_NOTE_ERROR,
+         SET_ACTIVE_NOTE,
+         SET_EDIT_NOTE,
+         EDIT_NOTE_SUCCESS,
+         EDIT_NOTE_ERROR,
+         DELETE_NOTE_BEGIN
        } from './actions'
 
 const token = localStorage.getItem('token')
@@ -61,7 +66,8 @@ const initialState = {
   owner: '',
   assigned: '',
   rentals: [],
-  rentalById: [],
+  rentalById: {},
+  actions: [],
   activeAction: {},
   totalRentals: 0,
   actionItem: '',
@@ -70,7 +76,9 @@ const initialState = {
   actionStatus: 'open',
   actionPriorityOptions: ['normal', 'high'],
   actionPriority: 'normal',
-  note: ''
+  activeNote: {},
+  note: '',
+  editedNote: ''
   }
 
 const AppContext = React.createContext()
@@ -264,6 +272,7 @@ const AppProvider = ({ children }) => {
         type: GET_RENTALBYID_SUCCESS,
         payload: {
           rental: rental[0],
+          actions: rental[0].actions
         }
       })
 
@@ -283,6 +292,7 @@ const AppProvider = ({ children }) => {
         action: action,
       }
     })
+    
   }
 
   const createAction = async (rentalId) => {
@@ -374,30 +384,78 @@ const AppProvider = ({ children }) => {
   const createNote = async () => {
     const { id } = state.activeAction
   
-    // dispatch({ type: CREATE_NOTE_BEGIN })
-    // try {
-    //   const { actionItem, details, actionStatus, actionPriority } = state
+    try {
+      const { note } = state
 
-    //   await authFetch.post(`/rentals/${rentalId}`, {
-    //     actionItem,
-    //     details,
-    //     status: actionStatus,
-    //     priority: actionPriority
-    //   })
+      await authFetch.post(`/rentals/actions/${id}`, {
+        note
+      })
 
-    //   dispatch({ type: CREATE_NOTE_SUCCESS })
+      clearValues()
 
-    //   // getAllRentals()
-    //   clearValues()
+    } catch (error) {
+      console.log(error.msg)
+      logoutUser()
+    }
+  }
 
-    // } catch (error) {
-    //   if(error.response.status === 401) return
-    //   dispatch({
-    //     type: CREATE_NOTE_ERROR,
-    //     payload: { msg: error.response.data.msg }
-    //   })
-    // }
-    // clearAlert()
+  const setNote = (note) => {
+    dispatch({ 
+      type: SET_ACTIVE_NOTE,
+      payload: {
+        note: note,
+      }
+    })
+
+  }
+
+  const setEditNote = (id) => {
+
+    dispatch({ 
+      type: SET_EDIT_NOTE,
+      payload: { id }
+    })
+    
+  }
+
+  const editNote = async () => {
+    const { editedNote, activeNote, activeAction } = state
+    
+    try {
+      await authFetch.patch(`/rentals/actions/${activeAction.id}/${activeNote._id}`, {
+        note: editedNote
+      })
+
+      dispatch({ type: EDIT_NOTE_SUCCESS })
+      
+      setTimeout(() => {
+        clearValues()
+        // getAllRentals()
+      }, 1000)
+
+    } catch (error) {
+
+      if(error.response.status === 401) return
+      dispatch({
+        type: EDIT_NOTE_ERROR,
+        payload: { msg: error.response.data.msg }
+      })
+    }
+    clearAlert()
+  }
+
+  const deleteNote = async () => {
+    const { activeNote, activeAction } = state
+
+    dispatch({ type: DELETE_NOTE_BEGIN })
+
+    try {
+      await authFetch.delete(`/rentals/actions/${activeAction.id}/${activeNote._id}`)
+      getAllRentals()
+      setNote('')
+    } catch (error) {
+      logoutUser()
+    }
   }
 
 
@@ -420,7 +478,11 @@ const AppProvider = ({ children }) => {
         deleteAction,
         setEditAction,
         editAction,
-        createNote
+        createNote,
+        setNote,
+        setEditNote,
+        editNote,
+        deleteNote,
         }}
     >
       {children}

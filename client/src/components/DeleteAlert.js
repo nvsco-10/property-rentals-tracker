@@ -4,8 +4,8 @@ import Wrapper from '../assets/wrappers/Modal'
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 
-const DeleteAlert = ({ open, setOpen }) => {
-  const { activeAction, deleteAction } = useAppContext();
+const DeleteAlert = ({ open, setOpen, type }) => {
+  const { activeAction, deleteAction, activeNote, deleteNote } = useAppContext();
 
   const handleClose = () => {
     setOpen(false);
@@ -14,7 +14,14 @@ const DeleteAlert = ({ open, setOpen }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    deleteAction(activeAction.id)
+    if(type === 'action') {
+      deleteAction(activeAction.id)
+    }
+
+    if(type === 'note') {
+      deleteNote()
+    }
+
   }
 
 
@@ -39,7 +46,7 @@ const DeleteAlert = ({ open, setOpen }) => {
       >
         <Box sx={style} className='box'>
           <Wrapper>
-            <p>Are you sure you want to delete this action?</p>
+            <p>{`Are you sure you want to delete this ${type}?`}</p>
             <p>Click 'Delete' to proceed.</p>
 
             <div className='btn-container'>

@@ -29,7 +29,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 export default function CollapsibleTable() {
 
-  const { getAllRentals, rentals} = useAppContext()
+  const { getAllRentals, rentals } = useAppContext()
 
   useEffect(() => {
     getAllRentals()
