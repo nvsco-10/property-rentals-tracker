@@ -3,6 +3,7 @@ import { Navbar, SmallSidebar, BigSidebar } from '../../components'
 import Wrapper from '../../assets/wrappers/SharedLayout'
 
 const SharedLayout = () => {
+
   return (
     <Wrapper>
       <main className='dashboard'>

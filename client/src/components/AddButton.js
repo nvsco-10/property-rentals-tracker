@@ -3,7 +3,7 @@ import { GrFormAdd } from 'react-icons/gr'
 import Wrapper from '../assets/wrappers/AddButton'
 import ActionContainer from './CreateAction'
 
-const AddButton = ({ create, id, type }) => {
+const AddButton = ({ type }) => {
   const [open, setOpen] = useState(false);
 
   const handleClick = () => {
@@ -12,11 +12,19 @@ const AddButton = ({ create, id, type }) => {
 
     }
   }
+
+  const renderModal = () => {
+    switch(type) {
+      case 'action':
+        return <ActionContainer open={open} setOpen={setOpen}/>
+        break;
+    }
+  }
   
   return (
     <Wrapper>
       <GrFormAdd onClick={handleClick}/>
-      <ActionContainer open={open} setOpen={setOpen} create id />
+      {renderModal()}
     </Wrapper>
   )
 }

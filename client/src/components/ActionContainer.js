@@ -8,7 +8,18 @@ import Loading from './Loading'
 import moment from 'moment'
 
 const ActionContainer = () => {
-  const { rentalById, activeAction, isLoading } = useAppContext()
+  const { rentalById, activeAction, isLoading, handleChange, note, createNote } = useAppContext()
+
+  const handleInput = (e) => {
+    const name = e.target.name
+    const value = e.target.value
+
+    handleChange({ name, value })
+  }
+
+  const handleSubmit = (e) => {
+    createNote()
+  }
 
   return (
     <Wrapper>
@@ -19,7 +30,7 @@ const ActionContainer = () => {
         <div className='details-container'>
         <header>
           <h5>Selected Action</h5>
-          <EditDeleteBtns />
+          <EditDeleteBtns type='action'/>
         </header>
         <div className='body'>
           <div className='row spaced'>
@@ -27,7 +38,7 @@ const ActionContainer = () => {
             <StatusContainer status='open' priority='normal' />
           </div>
           <div className='row'>
-            <Info heading='description' item={activeAction?.description || '-'}/>
+            <Info heading='details' item={activeAction?.details || '-'}/>
           </div>
           <div className='row'>
             <Info heading='created by' item={activeAction?.createdBy || '-'}/>
@@ -38,8 +49,12 @@ const ActionContainer = () => {
       <div className='notes-container'>
         <h6>Notes</h6>
           <div className='input-container'>
-            <textarea></textarea>
-            <button>Add note</button>
+            <textarea
+              name='note'
+              value={note}
+              onChange={handleInput}
+            />
+            <button onClick={handleSubmit}>Add note</button>
           </div>
           <div className='body'>
             {activeAction?.notes?.length > 0 ? (activeAction.notes.map(note => {

@@ -26,9 +26,10 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import AddButton from './AddButton';
 import moment from 'moment'
+import { GET_ALLRENTALS_BEGIN } from '../context/actions';
 
 const RentalActions = () => {
-  const { rentalById, isLoading, setAction, createAction } = useAppContext()
+  const { rentalById, isLoading, setAction, createAction, getAllRentals } = useAppContext()
   const { _id, actions } = rentalById
   // console.log(actions)
 
@@ -36,17 +37,19 @@ const RentalActions = () => {
   useEffect(() => {
     setAction('')
 
-    const rows = actions?.map(action => {
-      // console.log(action)
-      return createData(action._id, action.actionItem, action.priority, moment(action.createdAt).format('MMM Do, YYYY'), action.createdBy.username, action.notes)
-    })
+    // const rows = actions?.map(action => {
+    //   // console.log(action)
+    //   return createData(action._id, action.actionItem, action.details, action.priority, moment(action.createdAt).format('MMM Do, YYYY'), action.createdBy.username, action.notes)
+    // })
   }, [])
 
-  function createData(id, actionItem, priority, createdAt, createdBy, notes) {
+  function createData(id, actionItem, details, priority, status, createdAt, createdBy, notes) {
     return {
       id,
       actionItem,
+      details,
       priority,
+      status,
       createdAt,
       createdBy,
       notes
@@ -55,7 +58,7 @@ const RentalActions = () => {
 
   const rows = actions?.map(action => {
     // console.log(action)
-    return createData(action._id, action.actionItem, action.priority, moment(action.createdAt).format('MMM Do, YYYY'), action.createdBy.username, action.notes)
+    return createData(action._id, action.actionItem, action.details, action.priority, action.status, moment(action.createdAt).format('MMM Do, YYYY'), action.createdBy.username, action.notes)
   })
 
 
@@ -101,6 +104,12 @@ const RentalActions = () => {
       numeric: false,
       disablePadding: false,
       label: 'Priority',
+    },
+    {
+      id: 'status',
+      numeric: false,
+      disablePadding: false,
+      label: 'Status',
     },
     {
       id: 'createdAt',
@@ -205,7 +214,7 @@ const RentalActions = () => {
     <Wrapper>
       <header>
         <h5>Actions</h5>
-        <AddButton create={createAction} id={_id} type='action'/>
+        <AddButton type='action'/>
       </header>
       { actions?.length ? (
       <Box sx={{ width: '100%' }}>
@@ -263,6 +272,7 @@ const RentalActions = () => {
                         {row.actionItem}
                       </TableCell>
                       <TableCell align="left">{row.priority}</TableCell>
+                      <TableCell align="left">{row.status}</TableCell>
                       <TableCell align="left">{row.createdAt}</TableCell>
                     </TableRow>
                   );

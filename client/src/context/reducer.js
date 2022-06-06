@@ -19,10 +19,17 @@ import { DISPLAY_ALERT,
          GET_RENTALBYID_SUCCESS,
          GET_RENTALBYID_ERROR,
          SET_ACTIVE_ACTION,
-         SET_ACTIVE_ACTION_SUCCESS,
          CREATE_ACTION_BEGIN,
          CREATE_ACTION_SUCCESS,
          CREATE_ACTION_ERROR,
+         DELETE_ACTION_BEGIN,
+         SET_EDIT_ACTION,
+         EDIT_ACTION_BEGIN,
+         EDIT_ACTION_SUCCESS,
+         EDIT_ACTION_ERROR,
+         CREATE_NOTE_BEGIN,
+         CREATE_NOTE_SUCCESS,
+         CREATE_NOTE_ERROR,
        } from './actions'
        
 import { initialState } from './appContext'
@@ -222,22 +229,14 @@ const reducer = (state, action) => {
   if (action.type === SET_ACTIVE_ACTION) {
     return {
       ...state,
-      isLoading: true,
       activeAction: action.payload.action
-    }
-  }
-
-  if (action.type === SET_ACTIVE_ACTION_SUCCESS) {
-    return {
-      ...state,
-      isLoading: false,
     }
   }
 
   if (action.type === CREATE_ACTION_BEGIN) {
     return { 
       ...state, 
-      isLoading: true 
+      // isLoading: true 
     }
   }
 
@@ -247,11 +246,54 @@ const reducer = (state, action) => {
       isLoading: false,
       showAlert: true,
       alertType: 'success',
-      alertText: 'New Action Created!',
+      alertText: 'New Action Added!',
     }
   }
 
   if (action.type === CREATE_ACTION_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.msg,
+    }
+  }
+
+  if(action.type === DELETE_ACTION_BEGIN) {
+    return {
+      ...state,
+      isLoading: true
+    }
+  }
+
+  if(action.type === SET_EDIT_ACTION) {
+    return {
+    ...state,
+    isEditing: true,
+    actionItem: action.payload.actionItem,
+    details: action.payload.details,
+    actionStatus: action.payload.actionStatus,
+    actionPriority: action.payload.actionPriority,
+    }
+  }
+
+  if (action.type === EDIT_ACTION_BEGIN) {
+    return {
+      ...state,
+      // isLoading: true,
+    }
+  }
+  if (action.type === EDIT_ACTION_SUCCESS) {
+    return {
+      ...state,
+      // isLoading: false,
+      showAlert: true,
+      alertType: 'success',
+      alertText: 'Action Updated!',
+    }
+  }
+  if (action.type === EDIT_ACTION_ERROR) {
     return {
       ...state,
       isLoading: false,

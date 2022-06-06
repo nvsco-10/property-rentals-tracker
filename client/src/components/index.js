@@ -11,5 +11,6 @@ import SingleRentalContainer from './SingleRentalContainer'
 import RentalInfo from './RentalInfo'
 import RentalActions from './RentalActions'
 import ActionContainer from './ActionContainer'
+import DeleteAlert from './DeleteAlert'
 
-export { Logo, FormRow, Alert, BigSidebar, SmallSidebar, Navbar, FormRowSelect, CollapsibleTable, Loading, SingleRentalContainer, RentalInfo, RentalActions, ActionContainer }
+export { Logo, FormRow, Alert, BigSidebar, SmallSidebar, Navbar, FormRowSelect, CollapsibleTable, Loading, SingleRentalContainer, RentalInfo, RentalActions, ActionContainer, DeleteAlert }

@@ -3,6 +3,8 @@ import Action from '../models/Action.js'
 import { StatusCodes } from 'http-status-codes'
 import { BadRequestError, NotFoundError } from '../errors/index.js'
 
+import checkPermissions from '../utils/checkPermissions.js'
+
 const createRental = async (req,res) => {
   const { streetAddress, city, zipCode, assigned } = req.body
 
@@ -83,7 +85,7 @@ const createAction = async ({ body, params, user },res) => {
   const { actionItem } = body
 
   if( !actionItem ) {
-    throw new BadRequestError('Please provide all values')
+    throw new BadRequestError('Please provide an action item')
   }
 
   // user.userId '629657dff0dd6759ce1fec52'
@@ -104,6 +106,36 @@ const createAction = async ({ body, params, user },res) => {
   res.status(StatusCodes.CREATED).json({ updatedRental })
 }
 
+const updateAction = async ({ body, params }, res) => {
+  const { actionItem } = body
+
+  if( !actionItem ) {
+    throw new BadRequestError('Please provide an action item')
+  }
+
+  const action = await Action.findOne({ _id: params.actionId })
+
+  if (!action) {
+    throw new NotFoundError(`No action with id: ${params.actionId}`)
+  }
+
+  const updatedAction = await Action.findOneAndUpdate({ _id: params.actionId }, body,
+    { runValidators: true, new: true }
+  )
+  
+  res.status(StatusCodes.OK).json({ updatedAction })
+}
+
+const deleteAction = async ({ params }, res) => {
+  const deletedAction = await Action.findOneAndDelete({ _id: params.actionId })
+
+  if (!deletedAction) {
+    throw new NotFoundError(`No action with id: ${params.actionId}`)
+  }
+
+  res.status(StatusCodes.OK).json({ msg: 'Success! Action removed' })
+}
+
 const createNote = async ({ body, params, user },res) => {
   const { note } = body
 
@@ -112,7 +144,7 @@ const createNote = async ({ body, params, user },res) => {
   }
 
   // user.userId '629657dff0dd6759ce1fec52'
-  body.createdBy = '629657dff0dd6759ce1fec52'
+  body.createdBy = user.userId
 
   const updatedAction = await Action.findOneAndUpdate(
     { _id: params.actionId },
@@ -127,4 +159,4 @@ const createNote = async ({ body, params, user },res) => {
   res.status(StatusCodes.CREATED).json({ updatedAction })
 }
 
-export { createRental, getAllRentals, getAssignedRentals, getRentalById, updateRental, deleteRental, showStats, createAction, createNote }
+export { createRental, getAllRentals, getAssignedRentals, getRentalById, updateRental, deleteRental, showStats, createAction, updateAction, deleteAction, createNote, }

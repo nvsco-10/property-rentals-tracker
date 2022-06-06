@@ -24,10 +24,17 @@ import { DISPLAY_ALERT,
          GET_RENTALBYID_SUCCESS,
          GET_RENTALBYID_ERROR,
          SET_ACTIVE_ACTION,
-         SET_ACTIVE_ACTION_SUCCESS,
          CREATE_ACTION_BEGIN,
          CREATE_ACTION_SUCCESS,
          CREATE_ACTION_ERROR,
+         DELETE_ACTION_BEGIN,
+         SET_EDIT_ACTION,
+         EDIT_ACTION_BEGIN,
+         EDIT_ACTION_SUCCESS,
+         EDIT_ACTION_ERROR,
+         CREATE_NOTE_BEGIN,
+         CREATE_NOTE_SUCCESS,
+         CREATE_NOTE_ERROR,
        } from './actions'
 
 const token = localStorage.getItem('token')
@@ -63,6 +70,7 @@ const initialState = {
   actionStatus: 'open',
   actionPriorityOptions: ['normal', 'high'],
   actionPriority: 'normal',
+  note: ''
   }
 
 const AppContext = React.createContext()
@@ -272,12 +280,8 @@ const AppProvider = ({ children }) => {
     dispatch({ 
       type: SET_ACTIVE_ACTION,
       payload: {
-        action: action
+        action: action,
       }
-    })
-
-    dispatch({ 
-      type: SET_ACTIVE_ACTION_SUCCESS,
     })
   }
 
@@ -295,6 +299,7 @@ const AppProvider = ({ children }) => {
 
       dispatch({ type: CREATE_ACTION_SUCCESS })
 
+      // getAllRentals()
       clearValues()
 
     } catch (error) {
@@ -305,6 +310,94 @@ const AppProvider = ({ children }) => {
       })
     }
     clearAlert()
+  }
+
+  const deleteAction = async (actionId) => {
+    dispatch({ type: DELETE_ACTION_BEGIN })
+    console.log(actionId)
+    try {
+      await authFetch.delete(`/rentals/actions/${actionId}`)
+      getAllRentals()
+      setAction('')
+    } catch (error) {
+
+      logoutUser()
+    }
+  }
+
+  const setEditAction = () => {
+    const { activeAction } = state;
+
+    dispatch({ 
+      type: SET_EDIT_ACTION,
+      payload: {
+        actionItem: activeAction.actionItem,
+        details: activeAction.details,
+        actionStatus: activeAction.status,
+        actionPriority: activeAction.priority
+      }
+      
+    })
+    
+  }
+
+  const editAction = async (actionId) => {
+    
+    dispatch({ type: EDIT_ACTION_BEGIN})
+    try {
+      const { actionItem, details, actionStatus, actionPriority } = state;
+      await authFetch.patch(`/rentals/actions/${actionId}`, {
+        actionItem,
+        details,
+        status: actionStatus,
+        priority: actionPriority
+      })
+
+      dispatch({ type: EDIT_ACTION_SUCCESS })
+      
+      setTimeout(() => {
+        clearValues()
+        // getAllRentals()
+      }, 1000)
+
+    } catch (error) {
+
+      if(error.response.status === 401) return
+      dispatch({
+        type: EDIT_ACTION_ERROR,
+        payload: { msg: error.response.data.msg }
+      })
+    }
+    clearAlert()
+  }
+
+  const createNote = async () => {
+    const { id } = state.activeAction
+  
+    // dispatch({ type: CREATE_NOTE_BEGIN })
+    // try {
+    //   const { actionItem, details, actionStatus, actionPriority } = state
+
+    //   await authFetch.post(`/rentals/${rentalId}`, {
+    //     actionItem,
+    //     details,
+    //     status: actionStatus,
+    //     priority: actionPriority
+    //   })
+
+    //   dispatch({ type: CREATE_NOTE_SUCCESS })
+
+    //   // getAllRentals()
+    //   clearValues()
+
+    // } catch (error) {
+    //   if(error.response.status === 401) return
+    //   dispatch({
+    //     type: CREATE_NOTE_ERROR,
+    //     payload: { msg: error.response.data.msg }
+    //   })
+    // }
+    // clearAlert()
   }
 
 
@@ -323,7 +416,11 @@ const AppProvider = ({ children }) => {
         getAllRentals,
         getRentalById,
         setAction,
-        createAction
+        createAction,
+        deleteAction,
+        setEditAction,
+        editAction,
+        createNote
         }}
     >
       {children}
