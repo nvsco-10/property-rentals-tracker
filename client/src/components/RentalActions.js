@@ -29,16 +29,13 @@ import moment from 'moment'
 import { GET_ALLRENTALS_BEGIN } from '../context/actions';
 
 const RentalActions = () => {
-  const { rentalById, actions, isLoading, setAction, createAction, getAllRentals } = useAppContext()
-  const { _id } = rentalById
-  // console.log(actions)
+  const { activeRental, actions, isLoading, setAction, activeAction, createAction, getAllRentals } = useAppContext()
+  const { _id } = activeRental
 
   useEffect(() => {
+
     setAction('')
-    // const rows = actions?.map(action => {
-    //   // console.log(action)
-    //   return createData(action._id, action.actionItem, action.details, action.priority, moment(action.createdAt).format('MMM Do, YYYY'), action.createdBy.username, action.notes)
-    // })
+   
   }, [])
 
   function createData(id, actionItem, details, priority, status, createdAt, createdBy, notes) {

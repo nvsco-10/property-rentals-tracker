@@ -5,10 +5,10 @@ import icon from '../assets/images/houseplaceholder.png'
 import Info from './Info'
 
 const RentalInfo = () => {
-  const { rentalById, isLoading, createAction } = useAppContext()
-  const { streetAddress, city, zipCode, status, priority, owner, assigned } = rentalById
+  const { activeRental, isLoading, createAction } = useAppContext()
+  const { streetAddress, city, zipCode, status, priority, owner, assigned } = activeRental
 
-  // console.log(rentalById._id)
+  // console.log(activeRental._id)
   
   return (
     <Wrapper>

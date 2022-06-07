@@ -219,7 +219,7 @@ const reducer = (state, action) => {
     return { 
       ...state, 
       isLoading: false,
-      rentalById: action.payload.rental,
+      activeRental: action.payload.rental,
       actions: action.payload.actions
     }
   }
@@ -271,7 +271,7 @@ const reducer = (state, action) => {
   if(action.type === DELETE_ACTION_BEGIN) {
     return {
       ...state,
-      isLoading: true
+      // isLoading: true
     }
   }
 
@@ -316,6 +316,14 @@ const reducer = (state, action) => {
       ...state,
       activeNote: action.payload.note
     }
+  }
+
+  if (action.type === CREATE_NOTE_SUCCESS) {
+    return {
+      ...state,
+      activeAction: action.payload.activeAction
+    }
+
   }
 
   if(action.type === SET_EDIT_NOTE) {

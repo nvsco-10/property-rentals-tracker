@@ -25,7 +25,7 @@ const Profile = () => {
   return (
     <Wrapper>
       <form className='form' onSubmit={handleSubmit}>
-        <h3>profile</h3>
+        <h4>profile</h4>
         {showAlert && <Alert/>}
         <div className='form-center'>
           <FormRow

@@ -5,20 +5,22 @@ import { Loading, SingleRentalContainer } from '../../components'
 
 const SingleRental = () => {
   const { id } = useParams()
-  const { getRentalById, rentalById, isLoading, actions } = useAppContext()
-  const { _id } = rentalById
+  const { getRentalById, activeRental, isLoading, actions } = useAppContext()
+  const { _id } = activeRental
 
   useEffect(() => {
     getRentalById(id)
+
+    if (isLoading) {
+      return <Loading center />
+    }
   }, [])
 
-  if (isLoading) {
-    return <Loading center />
-  }
+  
 
   return (
     <>
-    {rentalById && (
+    {activeRental && (
       <>
       <SingleRentalContainer />
       </>

@@ -6,9 +6,9 @@ import { FormRow, FormRowSelect, Alert } from './index.js'
 import Modal from '@mui/material/Modal';
 
 export default function ActionContainer({ open, setOpen }) {
-  const{ isEditing, actionItem, details, actionStatus, actionStatusOptions, actionPriority, actionPriorityOptions, handleChange, createAction, editAction, rentalById, showAlert, activeAction, displayAlert } = useAppContext()
+  const{ isEditing, actionItem, details, actionStatus, actionStatusOptions, actionPriority, actionPriorityOptions, handleChange, createAction, editAction, activeRental, showAlert, activeAction, displayAlert } = useAppContext()
 
-  const { _id } = rentalById
+  const { _id } = activeRental
 
   const handleClose = () => {
     setOpen(false);
