@@ -7,7 +7,7 @@ const OwnerSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Please provide a name'],
       minlength: 3,
-      maxlength: 20,
+      maxlength: 50,
       trim: true,
       unique: true,
     },
@@ -18,12 +18,6 @@ const OwnerSchema = new mongoose.Schema(
         message: 'Please provide a valid email',
       },
     },
-    rentals: [
-      {
-        type: mongoose.Types.ObjectId,
-        ref: 'Rental'
-      }
-    ],
   },
  
   {
@@ -34,10 +28,5 @@ const OwnerSchema = new mongoose.Schema(
   }
 );
 
-
-OwnerSchema.virtual('rentalCount')
-  .get(function () {
-    return this.rentals.length;
-  });
   
 export default mongoose.model('Owner', OwnerSchema);

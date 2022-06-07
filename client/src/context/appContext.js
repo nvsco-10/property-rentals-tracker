@@ -18,6 +18,9 @@ import { DISPLAY_ALERT,
          GET_USERS_ERROR,
          HANDLE_CHANGE,
          CLEAR_VALUES,
+         CREATE_OWNER_BEGIN,
+         CREATE_OWNER_SUCCESS,
+         CREATE_OWNER_ERROR,
          GET_OWNERS_BEGIN,
          GET_OWNERS_SUCCESS,
          CREATE_RENTAL_BEGIN,
@@ -67,6 +70,8 @@ const initialState = {
   users: [],
   showSidebar: false,
   owners: [],
+  ownerName: '',
+  ownerEmail: '',
   isEditing: false,
   editRentalId: '',
   streetAddress: '',
@@ -242,6 +247,30 @@ const AppProvider = ({ children }) => {
 
   const clearValues = () => {
     dispatch({ type: CLEAR_VALUES })
+  }
+
+  const createOwner = async () => {
+    dispatch({ type: CREATE_OWNER_BEGIN })
+    try {
+      const { ownerName, ownerEmail } = state
+
+      await authFetch.post('/owners', {
+        name: ownerName,
+        email: ownerEmail
+      })
+
+      dispatch({ type: CREATE_OWNER_SUCCESS })
+
+      clearValues()
+
+    } catch (error) {
+      if(error.response.status === 401) return
+      dispatch({
+        type: CREATE_OWNER_ERROR,
+        payload: { msg: error.response.data.msg }
+      })
+    }
+    clearAlert()
   }
 
   const getOwners = async () => {
@@ -624,6 +653,7 @@ const AppProvider = ({ children }) => {
         getUsers,
         handleChange,
         clearValues,
+        createOwner,
         getOwners,
         createRental,
         setEditRental,

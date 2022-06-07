@@ -13,6 +13,9 @@ import { DISPLAY_ALERT,
          GET_USERS_ERROR,
          HANDLE_CHANGE,
          CLEAR_VALUES,
+         CREATE_OWNER_BEGIN,
+         CREATE_OWNER_SUCCESS,
+         CREATE_OWNER_ERROR,
          GET_OWNERS_BEGIN,
          GET_OWNERS_SUCCESS,
          CREATE_RENTAL_BEGIN,
@@ -167,6 +170,8 @@ const reducer = (state, action) => {
   if(action.type === CLEAR_VALUES) {
     const initialState = {
       isEditing: false,
+      ownerName: '',
+      ownerEmail: '',
       editRentalId: '',
       streetAddress: '',
       city: '',
@@ -186,6 +191,33 @@ const reducer = (state, action) => {
     return {
       ...state,
       ...initialState,
+    }
+  }
+
+  if (action.type === CREATE_OWNER_BEGIN) {
+    return { 
+      ...state, 
+      isLoading: true 
+    }
+  }
+
+  if (action.type === CREATE_OWNER_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'success',
+      alertText: 'New Owner Added!',
+    }
+  }
+
+  if (action.type === CREATE_OWNER_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.msg,
     }
   }
 
