@@ -43,14 +43,7 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false
     },
-    assignedRentals: [
-      {
-        type: mongoose.Types.ObjectId,
-        ref: 'Rental'
-      }
-    ],
   },
- 
   {
     toJSON: {
       virtuals: true,
@@ -78,10 +71,5 @@ UserSchema.methods.createJWT = function () {
 UserSchema.methods.comparePassword = async function (candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password)
 }
-
-UserSchema.virtual('assignedRentalCount')
-  .get(function () {
-    return this.assignedRentals.length;
-  });
   
 export default mongoose.model('User', UserSchema);

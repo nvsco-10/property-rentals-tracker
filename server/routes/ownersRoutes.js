@@ -1,9 +1,10 @@
 import express from 'express'
 const router = express.Router()
 
-import { createOwner } from '../controllers/ownersController.js'
+import { createOwner, getOwners } from '../controllers/ownersController.js'
 
 router.route('/')
+  .get(getOwners)
   .post(createOwner)
 
 export default router

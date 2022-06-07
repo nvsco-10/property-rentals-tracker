@@ -1,5 +1,5 @@
 import React from 'react'
-import { CollapsibleTable } from '../../components'
+import { CollapsibleTable, SearchContainer } from '../../components'
 
 
 const AllRentals = () => {
@@ -7,6 +7,7 @@ const AllRentals = () => {
   return (
     <>
     <h4>All Rentals</h4>
+    <SearchContainer />
     <CollapsibleTable />
     </>
   )

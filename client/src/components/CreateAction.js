@@ -2,7 +2,7 @@ import * as React from 'react';
 import Wrapper from '../assets/wrappers/Modal'
 import Box from '@mui/material/Box';
 import { useAppContext } from '../context/appContext';
-import { FormRow, FormRowSelect, Alert } from './index.js'
+import { FormRow, FormRowSelect, FormRowSelectUsers, Alert } from './index.js'
 import Modal from '@mui/material/Modal';
 
 export default function ActionContainer({ open, setOpen }) {

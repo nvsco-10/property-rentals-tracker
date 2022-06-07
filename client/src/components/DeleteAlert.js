@@ -5,7 +5,7 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 
 const DeleteAlert = ({ open, setOpen, type }) => {
-  const { activeRental, activeAction, deleteAction, activeNote, deleteNote } = useAppContext();
+  const { activeRental, activeAction, activeNote, deleteRental, deleteAction, deleteNote } = useAppContext();
 
   const handleClose = () => {
     setOpen(false);
@@ -13,6 +13,10 @@ const DeleteAlert = ({ open, setOpen, type }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if(type === 'rental') {
+      deleteRental()
+    }
 
     if(type === 'action') {
       deleteAction(activeAction.id)

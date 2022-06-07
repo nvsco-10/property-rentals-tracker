@@ -18,11 +18,11 @@ const Wrapper = styled.section`
     width: 100%;
   }
   .form-row {
-    margin-bottom: 0;
+    margin-bottom: 0.5rem;
   }
   .form-center {
     display: grid;
-    row-gap: 0.5rem;
+    row-gap: 1rem;
   }
   .form-center button {
     align-self: end;

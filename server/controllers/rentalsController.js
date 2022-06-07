@@ -5,35 +5,55 @@ import { BadRequestError, NotFoundError } from '../errors/index.js'
 
 import checkPermissions from '../utils/checkPermissions.js'
 
-const createRental = async (req,res) => {
-  const { streetAddress, city, zipCode, assigned } = req.body
+const createRental = async ({ user, body },res) => {
+  const { streetAddress, city, zipCode, assigned, owner } = body
+  let { createdBy } = body
 
-  if( !streetAddress || !city || !zipCode ) {
+  if( !streetAddress || !city || !zipCode || !assigned || !owner ) {
     throw new BadRequestError('Please provide all values')
   }
 
-  // 629657dff0dd6759ce1fec52
-  if ( !assigned ) req.body.assigned = '629657dff0dd6759ce1fec52'
+  createdBy = user.userId
 
-  req.body.createdBy = '629657dff0dd6759ce1fec52'
+  const rental = await Rental.create(body) 
 
-  const rental = await Rental.create(req.body) 
-  
   res.status(StatusCodes.CREATED).json({ rental })
   
 }
 
 const getAllRentals = async (req,res) => {
-  const rentals = await Rental.find()
+  const { status, search } = req.query 
+
+  const queryObject = {
+    status: ['open', 'pending-lease', 'maintenance']
+  }
+  // add stuff based on condition
+
+  if (status === 'all') {
+    queryObject.status = ['open', 'pending-lease', 'maintenance', 'closed']
+  }
+
+  if (status === 'inactive') {
+    queryObject.status = ['closed']
+  }
+
+  if(search) {
+    queryObject.streetAddress = { $regex: search, $options: 'i'}
+  }
+  
+  // no await
+  let result = Rental.find(queryObject)
     .populate('owner')
     .populate('assigned')
     .populate('actions')
 
+  const rentals = await result
+
   res.status(StatusCodes.OK).json({ rentals, totalRentals: rentals.length })
 }
 
-const getAssignedRentals = async (req,res) => {
-  const rentals = await Rental.find({ assigned: '629657dff0dd6759ce1fec52'})
+const getAssignedRentals = async ({ user },res) => {
+  const rentals = await Rental.find({ assigned: { _id: user.userId }})
 
   res.status(StatusCodes.OK).json({ rentals, totalRentals: rentals.length })
 }
@@ -69,12 +89,34 @@ const getRentalById = async ({ params },res) => {
   res.status(StatusCodes.OK).json({ rental })
 }
 
-const updateRental = async (req,res) => {
-  res.send('updateRental')
+const updateRental = async ({ body, params },res) => {
+  const { streetAddress, city, zipCode } = body
+
+  if( !streetAddress || !city || !zipCode ) {
+    throw new BadRequestError('Please provide all values')
+  }
+
+  const rental = await Rental.findOne({ _id: params.id })
+
+  if (!rental) {
+    throw new NotFoundError(`No rental with id: ${params.id}`)
+  }
+
+  const updatedRental = await Rental.findOneAndUpdate({ _id: params.id }, body,
+    { runValidators: true, new: true }
+  )
+  
+  res.status(StatusCodes.OK).json({  updatedRental })
 }
 
-const deleteRental = async (req,res) => {
-  res.send('deleteRental')
+const deleteRental = async ({ params },res) => {
+  const deletedRental = await Rental.findOneAndDelete({ _id: params.id })
+
+  if (!deletedRental) {
+    throw new NotFoundError(`No rental with id: ${params.id}`)
+  }
+
+  res.status(StatusCodes.OK).json({ msg: 'Success! Rental removed' })
 }
 
 const showStats = async (req,res) => {

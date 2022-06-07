@@ -15,4 +15,11 @@ const createOwner = async (req,res) => {
 
 }
 
-export { createOwner }
+const getOwners = async (req,res) => {
+  const owners = await Owner.find()
+    .populate('rentals')
+
+  res.status(StatusCodes.OK).json({ owners })
+}
+
+export { createOwner, getOwners }

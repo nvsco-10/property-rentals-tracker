@@ -13,11 +13,21 @@ import { DISPLAY_ALERT,
          UPDATE_USER_BEGIN,
          UPDATE_USER_SUCCESS,
          UPDATE_USER_ERROR,
+         GET_USERS_BEGIN,
+         GET_USERS_SUCCESS,
+         GET_USERS_ERROR,
          HANDLE_CHANGE,
          CLEAR_VALUES,
+         GET_OWNERS_BEGIN,
+         GET_OWNERS_SUCCESS,
          CREATE_RENTAL_BEGIN,
          CREATE_RENTAL_SUCCESS,
          CREATE_RENTAL_ERROR,
+         SET_EDIT_RENTAL,
+         EDIT_RENTAL_BEGIN,
+         EDIT_RENTAL_SUCCESS,
+         EDIT_RENTAL_ERROR,
+         DELETE_RENTAL_BEGIN,
          GET_ALLRENTALS_BEGIN,
          GET_ALLRENTALS_SUCCESS,
          GET_RENTALBYID_BEGIN,
@@ -39,7 +49,8 @@ import { DISPLAY_ALERT,
          SET_EDIT_NOTE,
          EDIT_NOTE_SUCCESS,
          EDIT_NOTE_ERROR,
-         DELETE_NOTE_BEGIN
+         DELETE_NOTE_BEGIN,
+         CLEAR_FILTERS
        } from './actions'
 
 const token = localStorage.getItem('token')
@@ -53,7 +64,9 @@ const initialState = {
   user: user ? JSON.parse(user) : null,
   token: token,
   userLocation: '',
+  users: [],
   showSidebar: false,
+  owners: [],
   isEditing: false,
   editRentalId: '',
   streetAddress: '',
@@ -66,6 +79,8 @@ const initialState = {
   owner: '',
   assigned: '',
   rentals: [],
+  search: '',
+  searchStatus: 'active',
   activeRental: {},
   actions: [],
   activeAction: {},
@@ -197,6 +212,27 @@ const AppProvider = ({ children }) => {
     clearAlert()
   }
 
+  const getUsers = async () => {
+
+    dispatch({ type: GET_USERS_BEGIN })
+    try {
+      const { data } = await authFetch.get('/auth/users')
+      const { users } = data
+
+      dispatch({ 
+        type: GET_USERS_SUCCESS,
+        payload: {
+          users
+        }
+      })
+
+    } catch (error) {
+      console.log(error.msg)
+      // logoutUser()
+    }
+    clearAlert()
+  }
+
   const handleChange = ({ name, value }) => {
     dispatch({ 
       type: HANDLE_CHANGE, 
@@ -206,6 +242,26 @@ const AppProvider = ({ children }) => {
 
   const clearValues = () => {
     dispatch({ type: CLEAR_VALUES })
+  }
+
+  const getOwners = async () => {
+    dispatch({ type: GET_OWNERS_BEGIN })
+    try {
+      const { data } = await authFetch.get('/owners')
+      const { owners } = data
+      // console.log(owners)
+
+      dispatch({ 
+        type: GET_OWNERS_SUCCESS,
+        payload: {
+          owners
+        }
+      })
+
+    } catch (error) {
+      logoutUser()
+    }
+    clearAlert()
   }
 
   const createRental = async () => {
@@ -238,14 +294,88 @@ const AppProvider = ({ children }) => {
     clearAlert()
   }
 
+  const setEditRental = () => {
+    const { activeRental } = state
+    // console.log(activeRental)
+
+    dispatch({ 
+      type: SET_EDIT_RENTAL, 
+      payload: 
+        { 
+          id: activeRental._id,
+          streetAddress: activeRental.streetAddress,
+          city: activeRental.city,
+          zipCode: activeRental.zipCode,
+          status: activeRental.status,
+          priority: activeRental.priority,
+          owner: activeRental.owner._id,
+          assigned: activeRental.assigned._id,
+        } 
+    })
+  }
+
+  const editRental = async () => {
+    dispatch({ type: EDIT_RENTAL_BEGIN })
+    try {
+      const { editRentalId, streetAddress, city, zipCode, status, priority, owner, assigned } = state
+      await authFetch.patch(`/rentals/${editRentalId}`, {
+        streetAddress,
+        city,
+        zipCode,
+        status,
+        priority,
+        owner,
+        assigned
+      })
+
+      dispatch({ type: EDIT_RENTAL_SUCCESS })
+      
+      clearValues()
+      setTimeout(() => {
+        getAllRentals()
+      }, 2000)
+      
+
+    } catch (error) {
+
+      if(error.response.status === 401) return
+      dispatch({
+        type: EDIT_RENTAL_ERROR,
+        payload: { msg: error.response.data.msg }
+      })
+    }
+    clearAlert()
+  }
+
+  const deleteRental = async () => {
+    const { activeRental } = state
+
+    dispatch({ type: DELETE_RENTAL_BEGIN })
+    try {
+      await authFetch.delete(`/rentals/${activeRental._id}`)
+
+      clearValues()
+      getAllRentals()
+
+    } catch (error) {
+
+      logoutUser()
+    }
+  }
+
   const getAllRentals = async () => {
-    let url = `/rentals`
+    const { search, searchStatus } = state
+
+    let url = `/rentals?status=${searchStatus}`
+    if(search) {
+      url = url + `&search=${search}`
+    }
 
     dispatch({ type: GET_ALLRENTALS_BEGIN })
     try {
       const { data } = await authFetch.get(url)
       const { rentals, totalRentals } = data
-      // console.log(data)
+      // console.log(rentals)
 
       dispatch({ 
         type: GET_ALLRENTALS_SUCCESS,
@@ -359,7 +489,7 @@ const AppProvider = ({ children }) => {
   const editAction = async (actionId) => {
     const { activeRental } = state
     
-    dispatch({ type: EDIT_ACTION_BEGIN})
+    dispatch({ type: EDIT_ACTION_BEGIN })
     try {
       const { actionItem, details, actionStatus, actionPriority } = state;
       await authFetch.patch(`/rentals/actions/${actionId}`, {
@@ -477,6 +607,10 @@ const AppProvider = ({ children }) => {
     }
   }
 
+  const clearFilters = () => {
+    dispatch({ type: CLEAR_FILTERS })
+  }
+
 
   return (
     <AppContext.Provider  
@@ -487,9 +621,14 @@ const AppProvider = ({ children }) => {
         toggleSidebar,
         logoutUser,
         updateUser,
+        getUsers,
         handleChange,
         clearValues,
+        getOwners,
         createRental,
+        setEditRental,
+        editRental,
+        deleteRental,
         getAllRentals,
         getRentalById,
         setAction,
@@ -502,6 +641,7 @@ const AppProvider = ({ children }) => {
         setEditNote,
         editNote,
         deleteNote,
+        clearFilters
         }}
     >
       {children}

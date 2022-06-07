@@ -8,11 +8,21 @@ import { DISPLAY_ALERT,
          UPDATE_USER_BEGIN,
          UPDATE_USER_SUCCESS,
          UPDATE_USER_ERROR,
+         GET_USERS_BEGIN,
+         GET_USERS_SUCCESS,
+         GET_USERS_ERROR,
          HANDLE_CHANGE,
          CLEAR_VALUES,
+         GET_OWNERS_BEGIN,
+         GET_OWNERS_SUCCESS,
          CREATE_RENTAL_BEGIN,
          CREATE_RENTAL_SUCCESS,
          CREATE_RENTAL_ERROR,
+         SET_EDIT_RENTAL,
+         EDIT_RENTAL_BEGIN,
+         EDIT_RENTAL_SUCCESS,
+         EDIT_RENTAL_ERROR,
+         DELETE_RENTAL_BEGIN,
          GET_ALLRENTALS_BEGIN,
          GET_ALLRENTALS_SUCCESS,
          GET_RENTALBYID_BEGIN,
@@ -34,7 +44,8 @@ import { DISPLAY_ALERT,
          SET_EDIT_NOTE,
          EDIT_NOTE_SUCCESS,
          EDIT_NOTE_ERROR,
-         DELETE_NOTE_BEGIN
+         DELETE_NOTE_BEGIN,
+         CLEAR_FILTERS
        } from './actions'
        
 import { initialState } from './appContext'
@@ -131,6 +142,21 @@ const reducer = (state, action) => {
     }
   }
 
+  if (action.type === GET_USERS_BEGIN) {
+    return { 
+      ...state, 
+      isLoading: true 
+    }
+  }
+
+  if (action.type === GET_USERS_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      users: action.payload.users,
+    }
+  }
+
   if(action.type === HANDLE_CHANGE) {
     return {
       ...state,
@@ -163,6 +189,21 @@ const reducer = (state, action) => {
     }
   }
 
+  if (action.type === GET_OWNERS_BEGIN) {
+    return { 
+      ...state, 
+      isLoading: true 
+    }
+  }
+
+  if (action.type === GET_OWNERS_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      owners: action.payload.owners,
+    }
+  }
+
   if (action.type === CREATE_RENTAL_BEGIN) {
     return { 
       ...state, 
@@ -187,6 +228,53 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: 'danger',
       alertText: action.payload.msg,
+    }
+  }
+
+  if(action.type === SET_EDIT_RENTAL) {
+    return {
+    ...state,
+    isEditing: true,
+    editRentalId: action.payload.id,
+    streetAddress: action.payload.streetAddress,
+    city: action.payload.city,
+    zipCode: action.payload.zipCode,
+    status: action.payload.status,
+    priority: action.payload.priority,
+    owner: action.payload.owner,
+    assigned: action.payload.assigned,
+    }
+  }
+
+  if (action.type === EDIT_RENTAL_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    }
+  }
+  if (action.type === EDIT_RENTAL_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'success',
+      alertText: 'Rental Updated!',
+    }
+  }
+  if (action.type === EDIT_RENTAL_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.msg,
+    }
+  }
+
+  if(action.type === DELETE_RENTAL_BEGIN) {
+    return {
+      ...state,
+      isLoading: true
     }
   }
 
@@ -359,6 +447,14 @@ const reducer = (state, action) => {
     return {
       ...state,
       // isLoading: true
+    }
+  }
+
+  if(action.type === CLEAR_FILTERS) {
+    return {
+      ...state,
+      search: '',
+      searchStatus: 'active'
     }
   }
 

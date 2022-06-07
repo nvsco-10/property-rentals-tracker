@@ -1,4 +1,5 @@
-import { FormRow, FormRowSelect, Alert } from '../../components'
+import { useState, useEffect } from 'react'
+import { FormRow, FormRowSelect, FormRowSelectUsers, FormRowSelectOwners, Alert, DeleteAlert } from '../../components'
 import { useAppContext } from '../../context/appContext'
 import Wrapper from '../../assets/wrappers/DashboardFormPage-Medium'
 
@@ -15,10 +16,25 @@ const AddRental = () => {
     priorityOptions,
     status,
     statusOptions,
+    assigned,
+    owner,
     handleChange,
     clearValues,
-    createRental
+    createRental,
+    getUsers,
+    users,
+    getOwners,
+    owners,
+    editRental
   } = useAppContext()
+
+  // delete alert
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    getUsers()
+    getOwners()
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -29,10 +45,10 @@ const AddRental = () => {
     }
     
     if (isEditing) {
-      // editrental()
+      editRental()
       return
     }
-    // console.log('create rental')
+ 
     createRental()
   }
   const handleRentalInput = (e) => {
@@ -45,7 +61,11 @@ const AddRental = () => {
   return (
     <Wrapper>
       <form className='form'>
-        <h3>{isEditing ? 'edit rental' : 'add rental'}</h3>
+        <div className='addrental-header'>
+          <h4>{isEditing ? 'edit rental' : 'add rental'}</h4>
+          {isEditing && <span onClick={() => setOpen(true)} className='btn delete-btn'>delete</span> }
+        </div>
+        <DeleteAlert open={open} setOpen={setOpen} type='rental' />
         {showAlert && <Alert />}
         <div className='form-center'>
           {/* streetAddress */}
@@ -85,6 +105,21 @@ const AddRental = () => {
             value={priority}
             handleChange={handleRentalInput}
             list={priorityOptions}
+          />
+          {/* assigned */}
+          <FormRowSelectUsers
+            name='assigned'
+            labelText='assigned'
+            value={assigned}
+            handleChange={handleRentalInput}
+            list={users}
+          />
+          <FormRowSelectOwners
+            name='owner'
+            labelText='owner'
+            value={owner}
+            handleChange={handleRentalInput}
+            list={owners}
           />
           {/* btn container */}
           <div className='btn-container'>

@@ -5,7 +5,7 @@ import { Loading, SingleRentalContainer } from '../../components'
 
 const SingleRental = () => {
   const { id } = useParams()
-  const { getRentalById, activeRental, isLoading, actions } = useAppContext()
+  const { getRentalById, activeRental, isLoading } = useAppContext()
   const { _id } = activeRental
 
   useEffect(() => {
@@ -15,8 +15,6 @@ const SingleRental = () => {
       return <Loading center />
     }
   }, [])
-
-  
 
   return (
     <>

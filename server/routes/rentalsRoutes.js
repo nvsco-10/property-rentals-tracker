@@ -6,6 +6,7 @@ import { createRental, getAllRentals, getAssignedRentals, getRentalById, updateR
 router.route('/')
   .get(getAllRentals)
   .post(createRental)
+  
 
 router.route('/assignedRentals')
   .get(getAssignedRentals)
@@ -22,6 +23,8 @@ router.route('/actions/:actionId/:noteId')
 router.route('/:id')
   .get(getRentalById)
   .post(createAction)
+  .patch(updateRental)
+  .delete(deleteRental)
 
 
 

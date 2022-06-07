@@ -5,6 +5,9 @@ import BigSidebar from './BigSidebar'
 import SmallSidebar from './SmallSidebar'
 import Navbar from './Navbar'
 import FormRowSelect from './FormRowSelect'
+import FormRowSelectUsers from './FormRowSelectUsers'
+import FormRowSelectOwners from './FormRowSelectOwners'
+import SearchContainer from './SearchContainer'
 import CollapsibleTable from './CollapsibleTable'
 import Loading from './Loading'
 import SingleRentalContainer from './SingleRentalContainer'
@@ -13,4 +16,4 @@ import RentalActions from './RentalActions'
 import ActionContainer from './ActionContainer'
 import DeleteAlert from './DeleteAlert'
 
-export { Logo, FormRow, Alert, BigSidebar, SmallSidebar, Navbar, FormRowSelect, CollapsibleTable, Loading, SingleRentalContainer, RentalInfo, RentalActions, ActionContainer, DeleteAlert }
+export { Logo, FormRow, Alert, BigSidebar, SmallSidebar, Navbar, FormRowSelect, FormRowSelectUsers, FormRowSelectOwners, CollapsibleTable, SearchContainer, Loading, SingleRentalContainer, RentalInfo, RentalActions, ActionContainer, DeleteAlert }

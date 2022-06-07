@@ -88,8 +88,7 @@ const updateUser = async (req,res) => {
 
 const getAllUsers = async (req,res) => {
   const users = await User.find()
-    .populate('assignedRentals')
-
+  
   res.status(StatusCodes.OK).json({ users })
 }
 

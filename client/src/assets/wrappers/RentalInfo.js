@@ -32,6 +32,8 @@ const Wrapper = styled.article`
 
         span {
           font-size: 0.75rem;
+          font-weight: 700;
+          color: darkred;
           text-transform: lowercase;
           cursor: pointer;
           padding: 0 0.75em;
