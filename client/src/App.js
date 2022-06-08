@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Login, Error, ProtectedRoute } from './pages'
-import { AddRental, AddOwner, AllRentals, Profile, Stats, SingleRental, SharedLayout } from './pages/Dashboard'
+import { AddRental, AddOwner, AllRentals, AllOwners, Profile, Stats, SingleRental, SharedLayout } from './pages/Dashboard'
 
 function App() {
   return (
@@ -18,6 +18,7 @@ function App() {
           <Route path="all-rentals" element={<AllRentals/>} />
           <Route path="rentals/:id" element={<SingleRental/>} />
           <Route path="add-rental" element={<AddRental/>} />
+          <Route path="all-owners" element={<AllOwners/>} />
           <Route path="add-owner" element={<AddOwner/>} />
           <Route path="profile" element={<Profile/>} />
         </Route>

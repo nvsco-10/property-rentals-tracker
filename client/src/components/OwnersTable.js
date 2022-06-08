@@ -1,5 +1,5 @@
-import Wrapper from '../assets/wrappers/RentalActions'
-import * as React from 'react';
+import React from 'react'
+import Wrapper from '../assets/wrappers/OwnersTable'
 import { useEffect } from 'react';
 import { useAppContext } from '../context/appContext';
 import PropTypes from 'prop-types';
@@ -19,32 +19,25 @@ import { visuallyHidden } from '@mui/utils';
 import AddButton from './AddButton';
 import moment from 'moment'
 
-const RentalActions = () => {
-  const { activeRental, actions, isLoading, setAction, activeAction, createAction, getAllRentals } = useAppContext()
-  const { _id } = activeRental
+const OwnersTable = () => {
+  const { owners, isLoading, setOwner } = useAppContext()
 
   useEffect(() => {
 
-    setAction('')
+    // setAction('')
    
   }, [])
 
-  function createData(id, actionItem, details, priority, status, createdAt, createdBy, notes) {
+  function createData(id, name, createdAt) {
     return {
       id,
-      actionItem,
-      details,
-      priority,
-      status,
-      createdAt,
-      createdBy,
-      notes
+      name,
+      createdAt
     };
   }
 
-  const rows = actions?.map(action => {
-    // console.log(action)
-    return createData(action._id, action.actionItem, action.details, action.priority, action.status, moment(action.createdAt).format('MMM Do, YYYY'), action.createdBy.username, action.notes)
+  const rows = owners?.map(owner => {
+    return createData(owner._id, owner.name, moment(owner.createdAt).format('MMM Do, YYYY'))
   })
 
 
@@ -80,22 +73,10 @@ const RentalActions = () => {
   
   const headCells = [
     {
-      id: 'item',
+      id: 'name',
       numeric: false,
       disablePadding: true,
-      label: 'Action Items',
-    },
-    {
-      id: 'priority',
-      numeric: false,
-      disablePadding: false,
-      label: 'Priority',
-    },
-    {
-      id: 'status',
-      numeric: false,
-      disablePadding: false,
-      label: 'Status',
+      label: 'Name',
     },
     {
       id: 'createdAt',
@@ -199,10 +180,10 @@ const RentalActions = () => {
   return (
     <Wrapper>
       <header>
-        <h5>Actions</h5>
-        <AddButton type='action'/>
+        <h5>Owners</h5>
+        <AddButton type='owner'/>
       </header>
-      { actions?.length ? (
+      { owners?.length ? (
       <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
         {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
@@ -235,7 +216,7 @@ const RentalActions = () => {
                       // onClick={(event) => handleClick(event, row.name)}
                       // role="checkbox"
                       // aria-checked={isItemSelected}
-                      onClick={() => setAction(row)}
+                      onClick={() => setOwner(row)}
                       tabIndex={-1}
                       key={row.id}
                       // selected={isItemSelected}
@@ -253,13 +234,13 @@ const RentalActions = () => {
                         component="th"
                         id={labelId}
                         scope="row"
-                        padding="none"
+                        // padding="none"
                       >
-                        {row.actionItem}
+                        {row.name}
                       </TableCell>
-                      <TableCell align="left">{row.priority}</TableCell>
-                      <TableCell align="left">{row.status}</TableCell>
                       <TableCell align="left">{row.createdAt}</TableCell>
+                      {/* <TableCell align="left">{row.status}</TableCell>
+                      <TableCell align="left">{row.createdAt}</TableCell> */}
                     </TableRow>
                   );
                 })}
@@ -291,10 +272,10 @@ const RentalActions = () => {
       />
     </Box>
     ) : (
-      <div>No actions to display...</div>
+      <div>No owners to display...</div>
     )}
     </Wrapper>
   )
 }
 
-export default RentalActions
+export default OwnersTable

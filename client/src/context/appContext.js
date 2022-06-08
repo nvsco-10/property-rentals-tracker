@@ -23,6 +23,10 @@ import { DISPLAY_ALERT,
          CREATE_OWNER_ERROR,
          GET_OWNERS_BEGIN,
          GET_OWNERS_SUCCESS,
+         SET_ACTIVE_OWNER,
+         GET_RENTALBYOWNER_BEGIN,
+         GET_RENTALBYOWNER_SUCCESS,
+         GET_RENTALBYOWNER_ERROR,
          CREATE_RENTAL_BEGIN,
          CREATE_RENTAL_SUCCESS,
          CREATE_RENTAL_ERROR,
@@ -72,6 +76,8 @@ const initialState = {
   owners: [],
   ownerName: '',
   ownerEmail: '',
+  activeOwner: {},
+  ownerRentals: [],
   isEditing: false,
   editRentalId: '',
   streetAddress: '',
@@ -291,6 +297,40 @@ const AppProvider = ({ children }) => {
       logoutUser()
     }
     clearAlert()
+  }
+
+  const setOwner = (owner) => {
+    dispatch({ 
+      type: SET_ACTIVE_OWNER,
+      payload: {
+        owner: owner,
+      }
+    })
+
+    getRentalsByOwner(owner.id)
+    
+  }
+
+  const getRentalsByOwner = async (id) => {
+    dispatch({ type: GET_RENTALBYOWNER_BEGIN })
+    try {
+      const { data } = await authFetch.get(`/rentals/owners/${id}`)
+      const { rentals } = data
+
+      dispatch({ 
+        type: GET_RENTALBYOWNER_SUCCESS,
+        payload: {
+          rentals: rentals,
+        }
+      })
+
+    } catch (error) {
+      console.log(error.msg)
+      // dispatch({ 
+      //   type: GET_RENTALBYOWNER_ERROR,
+      //   payload: { msg: error.response.data.msg }
+      // })
+    }
   }
 
   const createRental = async () => {
@@ -655,6 +695,8 @@ const AppProvider = ({ children }) => {
         clearValues,
         createOwner,
         getOwners,
+        setOwner,
+        getRentalsByOwner,
         createRental,
         setEditRental,
         editRental,

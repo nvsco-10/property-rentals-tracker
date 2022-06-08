@@ -15,5 +15,8 @@ import RentalInfo from './RentalInfo'
 import RentalActions from './RentalActions'
 import ActionContainer from './ActionContainer'
 import DeleteAlert from './DeleteAlert'
+import OwnersTable from './OwnersTable'
+import OwnersContainer from './OwnersContainer'
+import OwnersProperty from './OwnersProperty'
 
-export { Logo, FormRow, Alert, BigSidebar, SmallSidebar, Navbar, FormRowSelect, FormRowSelectUsers, FormRowSelectOwners, CollapsibleTable, SearchContainer, Loading, SingleRentalContainer, RentalInfo, RentalActions, ActionContainer, DeleteAlert }
+export { Logo, FormRow, Alert, BigSidebar, SmallSidebar, Navbar, FormRowSelect, FormRowSelectUsers, FormRowSelectOwners, CollapsibleTable, SearchContainer, Loading, SingleRentalContainer, RentalInfo, RentalActions, ActionContainer, DeleteAlert, OwnersContainer, OwnersTable, OwnersProperty }

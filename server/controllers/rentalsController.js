@@ -55,6 +55,10 @@ const getAllRentals = async (req,res) => {
 const getAssignedRentals = async ({ user },res) => {
   const rentals = await Rental.find({ assigned: { _id: user.userId }})
 
+  if (!rentals) {
+    throw new NotFoundError(`No rentals with user id: ${user.userId}`)
+  }
+
   res.status(StatusCodes.OK).json({ rentals, totalRentals: rentals.length })
 }
 
@@ -87,6 +91,16 @@ const getRentalById = async ({ params },res) => {
   }
 
   res.status(StatusCodes.OK).json({ rental })
+}
+
+const getRentalsByOwner = async ({ params },res) => {
+  const rentals = await Rental.find({ owner: { _id: params.ownerId }})
+
+  if (!rentals) {
+    throw new NotFoundError(`No rentals with owner id: ${params.ownerId}`)
+  }
+
+  res.status(StatusCodes.OK).json({ rentals, totalRentals: rentals.length })
 }
 
 const updateRental = async ({ body, params },res) => {
@@ -239,4 +253,4 @@ const deleteNote = async ({ params }, res) => {
   res.status(StatusCodes.OK).json({ updatedAction })
 }
 
-export { createRental, getAllRentals, getAssignedRentals, getRentalById, updateRental, deleteRental, showStats, createAction, updateAction, deleteAction, createNote, updateNote,deleteNote }
+export { createRental, getAllRentals, getAssignedRentals, getRentalById, getRentalsByOwner, updateRental, deleteRental, showStats, createAction, updateAction, deleteAction, createNote, updateNote,deleteNote }

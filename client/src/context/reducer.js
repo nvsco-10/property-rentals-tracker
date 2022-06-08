@@ -18,6 +18,10 @@ import { DISPLAY_ALERT,
          CREATE_OWNER_ERROR,
          GET_OWNERS_BEGIN,
          GET_OWNERS_SUCCESS,
+         SET_ACTIVE_OWNER,
+         GET_RENTALBYOWNER_BEGIN,
+         GET_RENTALBYOWNER_SUCCESS,
+         GET_RENTALBYOWNER_ERROR,
          CREATE_RENTAL_BEGIN,
          CREATE_RENTAL_SUCCESS,
          CREATE_RENTAL_ERROR,
@@ -233,6 +237,29 @@ const reducer = (state, action) => {
       ...state,
       isLoading: false,
       owners: action.payload.owners,
+    }
+  }
+
+  if (action.type === SET_ACTIVE_OWNER) {
+    return {
+      ...state,
+      activeOwner: action.payload.owner
+    }
+  }
+
+  if (action.type === GET_RENTALBYOWNER_BEGIN) {
+    return { 
+      ...state, 
+      // isLoading: true,
+      showAlert: false
+    }
+  }
+
+  if (action.type === GET_RENTALBYOWNER_SUCCESS) {
+    return { 
+      ...state, 
+      isLoading: false,
+      ownerRentals: action.payload.rentals,
     }
   }
 
