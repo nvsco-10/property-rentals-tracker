@@ -26,6 +26,9 @@ import { DISPLAY_ALERT,
          GET_RENTALBYOWNER_BEGIN,
          GET_RENTALBYOWNER_SUCCESS,
          GET_RENTALBYOWNER_ERROR,
+         GET_ASSIGNEDRENTALS_BEGIN,
+         GET_ASSIGNEDRENTALS_SUCCESS,
+         GET_ASSIGNEDRENTALS_ERROR,
          CREATE_RENTAL_BEGIN,
          CREATE_RENTAL_SUCCESS,
          CREATE_RENTAL_ERROR,
@@ -56,7 +59,9 @@ import { DISPLAY_ALERT,
          EDIT_NOTE_SUCCESS,
          EDIT_NOTE_ERROR,
          DELETE_NOTE_BEGIN,
-         CLEAR_FILTERS
+         CLEAR_FILTERS,
+         GET_STATS_BEGIN,
+         GET_STATS_SUCCESS
        } from './actions'
        
 import { initialState } from './appContext'
@@ -290,6 +295,42 @@ const reducer = (state, action) => {
       ...state, 
       isLoading: false,
       ownerRentals: action.payload.rentals,
+    }
+  }
+
+  if (action.type === GET_RENTALBYOWNER_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.msg,
+    }
+  }
+
+  if (action.type === GET_ASSIGNEDRENTALS_BEGIN) {
+    return { 
+      ...state, 
+      isLoading: true,
+      showAlert: false
+    }
+  }
+
+  if (action.type === GET_ASSIGNEDRENTALS_SUCCESS) {
+    return { 
+      ...state, 
+      isLoading: false,
+      assignedRentals: action.payload.assignedRentals,
+    }
+  }
+
+  if (action.type === GET_ASSIGNEDRENTALS_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.msg,
     }
   }
 
@@ -544,6 +585,21 @@ const reducer = (state, action) => {
       ...state,
       search: '',
       searchStatus: 'active'
+    }
+  }
+
+  if (action.type === GET_STATS_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+      showAlert: false,
+    }
+  }
+  if (action.type === GET_STATS_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      stats: action.payload.stats,
     }
   }
 

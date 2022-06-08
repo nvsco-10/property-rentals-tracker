@@ -3,50 +3,63 @@ import styled from 'styled-components'
 const Wrapper = styled.div`
   margin-top: 2rem;
   display: flex;
-  flex-direction: row;
-
+  flex-direction: column;
+  
   h6 {
     margin: 0;
   }
 
-   p {
+  p {
     margin: 0;
   } 
+
+  button {
+    height: 20px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
 
   .owner-column, .property-column {
     display: flex;
     justify-content: center;
-    flex-basis: 50%;
-    /* flex-direction: column; */
-    max-width: 900px;
-    margin: 0 auto;
-    /* gap: 1rem; */
+    flex-basis: 100%;
+
   }
 
-  /* .info-container { 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-inline: 1rem; */
-
-    p {
-      font-size: 0.90rem;
+  .owner-column {
+      margin-bottom: 2rem;
     }
-  /* } */
+
+  .property-column {
+    margin-bottom: 1rem;
+  }
+
+  @media (min-width: 992px) {
+    flex-direction: column;
+
+    .owner-column, .property-column {
+      width: 700px;
+      margin: 0 auto;
+    }
+
+    .owner-column {
+      margin-bottom: 2rem;
+    }
+
+    .property-column {
+      margin-bottom: 1rem;
+    }
+
+  }
 
   @media (min-width: 1420px) {
-    .owner-column, .property-column {
     flex-direction: row;
-    max-width: 100%;
-    }
-  }
 
-  /* @media (min-width: 992px) {
-    .rental-details {
-    flex-direction: row;
+    .owner-column, .property-column {
+      flex-basis: 50%;
     }
-  } */
+  
+  }
 
 `
 

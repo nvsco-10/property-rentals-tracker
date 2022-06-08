@@ -69,7 +69,7 @@ const ActionContainer = () => {
                 </div>
                 <div className='row'>
                   <p className='details'>Added by: {note.createdBy.username}</p>
-                  <p className='details'>{moment(note.createdAt).format('MMM Do, YYYY')}</p>
+                  <p className='details'>{moment(note.createdAt).format('YYYY-MM-DD, HH:mm:ss')}</p>
                 </div>
             </div>
             )

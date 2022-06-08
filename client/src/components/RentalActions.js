@@ -44,7 +44,7 @@ const RentalActions = () => {
 
   const rows = actions?.map(action => {
     // console.log(action)
-    return createData(action._id, action.actionItem, action.details, action.priority, action.status, moment(action.createdAt).format('MMM Do, YYYY'), action.createdBy.username, action.notes)
+    return createData(action._id, action.actionItem, action.details, action.priority, action.status, moment(action.createdAt).format('YYYY-MM-DD, HH:mm:ss'), action.createdBy.username, action.notes)
   })
 
 
@@ -191,10 +191,6 @@ const RentalActions = () => {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
-
-  if(isLoading) {
-    return <div>isLoading</div>
-  }
   
   return (
     <Wrapper>

@@ -176,7 +176,7 @@ const OwnersProperty = () => {
   return (
     <Wrapper>
       <header>
-        <h5>{activeOwner && `${activeOwner.name} - Rentals`}</h5>
+        <h5>{activeOwner?.name ? `${activeOwner.name} - Rentals` : 'No owner selected'}</h5>
       </header>
       { ownerRentals?.length ? (
       <Box sx={{ width: '100%' }}>

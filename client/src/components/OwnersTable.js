@@ -184,7 +184,7 @@ const OwnersTable = () => {
         {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
         <TableContainer>
           <Table
-            sx={{ minWidth: 400 }}
+            sx={{ minWidth: 420 }}
             aria-labelledby="tableTitle"
             size={dense ? 'small' : 'medium'}
           >
@@ -229,12 +229,12 @@ const OwnersTable = () => {
                         component="th"
                         id={labelId}
                         scope="row"
-                        // padding="none"
+                        padding="none"
                       >
                         {row.name}
                       </TableCell>
                       <TableCell align="left">{row.createdAt}</TableCell>
-                      <TableCell align="left"><EditDeleteBtns type='owner' id={row.id} /></TableCell>
+                      <TableCell align="right"><EditDeleteBtns type='owner' id={row.id} /></TableCell>
                     </TableRow>
                   );
                 })}

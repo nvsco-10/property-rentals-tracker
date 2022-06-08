@@ -27,33 +27,34 @@ import { visuallyHidden } from '@mui/utils';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-export default function CollapsibleTable() {
+export default function AssignedRentalsTable() {
 
-  const { getAllRentals, rentals, search, searchStatus } = useAppContext()
+  const { assignedRentals } = useAppContext()
 
-  useEffect(() => {
-    getAllRentals()
-  }, [search, searchStatus])
-
-  function createData(id, address, status, priority, owner, assigned, updatedAt, actions) {
+  function createData(id, address, status, priority, owner, updatedAt, actions) {
     return {
       id,
       address,
       status,
       priority,
       owner,
-      assigned,
       updatedAt,
       actions
     };
   }
 
-  const rows = rentals.map(rental => {
+  const rows = assignedRentals.map(rental => {
     const actions = rental.actions.map(actions => {
-      return { id: actions._id, action: actions.actionItem, priority: actions.priority, createdAt: moment(actions.createdAt).format('YYYY-MM-DD, HH:mm:ss') }
+      return { 
+        id: actions._id, 
+        action: actions.actionItem, 
+        priority: actions.priority, 
+        status: actions.status, 
+        createdAt: moment(actions.createdAt).format('YYYY-MM-DD, HH:mm:ss') 
+      }
     })
 
-    return createData(rental._id, `${rental.streetAddress} ${rental.city}`, rental.status, rental.priority, rental.owner.name || '', rental.assigned.username || '', moment(rental.updatedAt).format('YYYY-MM-DD, HH:mm:ss'), actions)
+    return createData(rental._id, `${rental.streetAddress} ${rental.city}`, rental.status, rental.priority, rental.owner.name || '', moment(actions.updatedAt).format('YYYY-MM-DD, HH:mm:ss') || '', actions)
   })
 
   function descendingComparator(a, b, orderBy) {
@@ -110,12 +111,6 @@ export default function CollapsibleTable() {
       numeric: false,
       disablePadding: false,
       label: 'Owner',
-    },
-    {
-      id: 'assigned',
-      numeric: false,
-      disablePadding: false,
-      label: 'assigned',
     },
     {
       id: 'updatedAt',
@@ -260,7 +255,6 @@ export default function CollapsibleTable() {
         <TableCell align="left">{row.status}</TableCell>
         <TableCell align="left">{row.priority}</TableCell>
         <TableCell align="left">{row.owner}</TableCell>
-        <TableCell align="left">{row.assigned}</TableCell>
         <TableCell align="left">{row.updatedAt}</TableCell>
       </TableRow>
       <TableRow>
@@ -275,6 +269,7 @@ export default function CollapsibleTable() {
                   <TableRow>
                     <TableCell>Action Items</TableCell>
                     <TableCell>Priority</TableCell>
+                    <TableCell>Status</TableCell>
                     <TableCell align="right">Date Added</TableCell>
                   </TableRow>
                 </TableHead>
@@ -286,6 +281,7 @@ export default function CollapsibleTable() {
                         {action.action}
                       </TableCell>
                       <TableCell>{action.priority}</TableCell>
+                      <TableCell>{action.status}</TableCell>
                       <TableCell align="right">{action.createdAt}</TableCell>
                     </TableRow>
                   ))

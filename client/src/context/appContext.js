@@ -30,6 +30,9 @@ import { DISPLAY_ALERT,
          GET_RENTALBYOWNER_BEGIN,
          GET_RENTALBYOWNER_SUCCESS,
          GET_RENTALBYOWNER_ERROR,
+         GET_ASSIGNEDRENTALS_BEGIN,
+         GET_ASSIGNEDRENTALS_SUCCESS,
+         GET_ASSIGNEDRENTALS_ERROR,
          CREATE_RENTAL_BEGIN,
          CREATE_RENTAL_SUCCESS,
          CREATE_RENTAL_ERROR,
@@ -60,7 +63,9 @@ import { DISPLAY_ALERT,
          EDIT_NOTE_SUCCESS,
          EDIT_NOTE_ERROR,
          DELETE_NOTE_BEGIN,
-         CLEAR_FILTERS
+         CLEAR_FILTERS,
+         GET_STATS_BEGIN,
+         GET_STATS_SUCCESS
        } from './actions'
 
 const token = localStorage.getItem('token')
@@ -73,8 +78,8 @@ const initialState = {
   alertType: '',
   user: user ? JSON.parse(user) : null,
   token: token,
-  userLocation: '',
   users: [],
+  assignedRentals: [],
   showSidebar: false,
   owners: [],
   ownerName: '',
@@ -106,7 +111,8 @@ const initialState = {
   actionPriority: 'normal',
   activeNote: {},
   note: '',
-  editedNote: ''
+  editedNote: '',
+  stats: {},
   }
 
 const AppContext = React.createContext()
@@ -375,11 +381,32 @@ const AppProvider = ({ children }) => {
       })
 
     } catch (error) {
-      console.log(error.msg)
-      // dispatch({ 
-      //   type: GET_RENTALBYOWNER_ERROR,
-      //   payload: { msg: error.response.data.msg }
-      // })
+      dispatch({ 
+        type: GET_RENTALBYOWNER_ERROR,
+        payload: { msg: error.response.data.msg }
+      })
+    }
+  }
+
+  const getAssignedRentals = async (id) => {
+    dispatch({ type: GET_ASSIGNEDRENTALS_BEGIN })
+    try {
+      const { data } = await authFetch.get(`/rentals/user`)
+      const { rentals } = data
+      console.log(rentals)
+
+      dispatch({ 
+        type: GET_ASSIGNEDRENTALS_SUCCESS,
+        payload: {
+          assignedRentals: rentals,
+        }
+      })
+
+    } catch (error) {
+      dispatch({ 
+        type: GET_ASSIGNEDRENTALS_ERROR,
+        payload: { msg: error.response.data.msg }
+      })
     }
   }
 
@@ -730,6 +757,23 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CLEAR_FILTERS })
   }
 
+  const getStats = async () => {
+    dispatch({ type: GET_STATS_BEGIN })
+    try {
+      const { data } = await authFetch('/rentals/stats')
+      dispatch({
+        type: GET_STATS_SUCCESS,
+        payload: {
+          stats: data.stats,
+        },
+      })
+    } catch (error) {
+      console.log(error.msg)
+      // logoutUser()
+    }
+    clearAlert()
+  }
+
 
   return (
     <AppContext.Provider  
@@ -750,6 +794,7 @@ const AppProvider = ({ children }) => {
         editOwner,
         deleteOwner,
         getRentalsByOwner,
+        getAssignedRentals,
         createRental,
         setEditRental,
         editRental,
@@ -766,7 +811,8 @@ const AppProvider = ({ children }) => {
         setEditNote,
         editNote,
         deleteNote,
-        clearFilters
+        clearFilters,
+        getStats
         }}
     >
       {children}

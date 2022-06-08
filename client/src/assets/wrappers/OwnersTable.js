@@ -5,7 +5,7 @@ const Wrapper = styled.article`
   border-radius: var(--borderRadius);
   box-shadow: var(--shadow-2);
   width: 100%;
-  /* height: max-content; */
+  height: max-content;
   margin: 0 0.25rem;
   padding: 1rem;
 

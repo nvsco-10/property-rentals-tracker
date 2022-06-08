@@ -2,8 +2,9 @@ import Rental from '../models/Rental.js'
 import Action from '../models/Action.js'
 import { StatusCodes } from 'http-status-codes'
 import { BadRequestError, NotFoundError } from '../errors/index.js'
+import mongoose from 'mongoose'
 
-import checkPermissions from '../utils/checkPermissions.js'
+// import checkPermissions from '../utils/checkPermissions.js'
 
 const createRental = async ({ user, body },res) => {
   const { streetAddress, city, zipCode, assigned, owner } = body
@@ -53,7 +54,16 @@ const getAllRentals = async (req,res) => {
 }
 
 const getAssignedRentals = async ({ user },res) => {
-  const rentals = await Rental.find({ assigned: { _id: user.userId }})
+  const queryObject = {
+    assigned: { 
+      _id: user.userId 
+    },
+    status: ['open', 'pending-lease', 'maintenance']
+  }
+
+  const rentals = await Rental.find(queryObject)
+    .populate('actions')
+    .populate('owner')
 
   if (!rentals) {
     throw new NotFoundError(`No rentals with user id: ${user.userId}`)
@@ -91,6 +101,25 @@ const getRentalById = async ({ params },res) => {
   }
 
   res.status(StatusCodes.OK).json({ rental })
+}
+
+const showStats = async ({ user },res) => {
+  let stats = await Rental.aggregate([
+    { 
+      $group: { 
+      _id: '$status', 
+      count: { '$sum': 1 } 
+      }
+    }
+  ])
+
+  stats = stats.reduce((acc,curr) => {
+    const { _id: title, count } = curr
+    acc[title] = count
+    return acc
+  }, {})
+
+  res.status(StatusCodes.OK).json({ stats })
 }
 
 const getRentalsByOwner = async ({ params },res) => {
@@ -131,10 +160,6 @@ const deleteRental = async ({ params },res) => {
   }
 
   res.status(StatusCodes.OK).json({ msg: 'Success! Rental removed' })
-}
-
-const showStats = async (req,res) => {
-  res.send('showStats')
 }
 
 const createAction = async ({ body, params, user },res) => {

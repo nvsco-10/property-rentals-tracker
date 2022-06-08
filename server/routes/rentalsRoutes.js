@@ -7,9 +7,11 @@ router.route('/')
   .get(getAllRentals)
   .post(createRental)
   
-
-router.route('/assignedRentals')
+router.route('/user')
   .get(getAssignedRentals)
+
+router.route('/stats')
+  .get(showStats)
 
 router.route('/actions/:actionId')
   .post(createNote)
