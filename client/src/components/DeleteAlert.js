@@ -5,7 +5,7 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 
 const DeleteAlert = ({ open, setOpen, type }) => {
-  const { activeRental, activeAction, activeNote, deleteRental, deleteAction, deleteNote } = useAppContext();
+  const { activeRental, activeAction, activeNote, deleteRental, deleteAction, deleteNote, deleteOwner } = useAppContext();
 
   const handleClose = () => {
     setOpen(false);
@@ -24,6 +24,10 @@ const DeleteAlert = ({ open, setOpen, type }) => {
 
     if(type === 'note') {
       deleteNote()
+    }
+
+    if(type === 'owner') {
+      deleteOwner()
     }
 
   }

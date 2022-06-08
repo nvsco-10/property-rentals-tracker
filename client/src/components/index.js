@@ -18,5 +18,10 @@ import DeleteAlert from './DeleteAlert'
 import OwnersTable from './OwnersTable'
 import OwnersContainer from './OwnersContainer'
 import OwnersProperty from './OwnersProperty'
+import AddButton from './AddButton'
+import CreateOwner from './CreateOwner'
+import CreateAction from './CreateAction'
+import EditDeleteBtns from './EditDeleteBtns'
+import EditNote from './EditNote'
 
-export { Logo, FormRow, Alert, BigSidebar, SmallSidebar, Navbar, FormRowSelect, FormRowSelectUsers, FormRowSelectOwners, CollapsibleTable, SearchContainer, Loading, SingleRentalContainer, RentalInfo, RentalActions, ActionContainer, DeleteAlert, OwnersContainer, OwnersTable, OwnersProperty }
+export { Logo, FormRow, Alert, BigSidebar, SmallSidebar, Navbar, FormRowSelect, FormRowSelectUsers, FormRowSelectOwners, CollapsibleTable, SearchContainer, Loading, SingleRentalContainer, RentalInfo, RentalActions, ActionContainer, DeleteAlert, OwnersContainer, OwnersTable, OwnersProperty, AddButton, CreateOwner, CreateAction, EditDeleteBtns, EditNote }

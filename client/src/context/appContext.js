@@ -24,6 +24,9 @@ import { DISPLAY_ALERT,
          GET_OWNERS_BEGIN,
          GET_OWNERS_SUCCESS,
          SET_ACTIVE_OWNER,
+         SET_EDIT_OWNER,
+         EDIT_OWNER_SUCCESS,
+         EDIT_OWNER_ERROR,
          GET_RENTALBYOWNER_BEGIN,
          GET_RENTALBYOWNER_SUCCESS,
          GET_RENTALBYOWNER_ERROR,
@@ -75,7 +78,6 @@ const initialState = {
   showSidebar: false,
   owners: [],
   ownerName: '',
-  ownerEmail: '',
   activeOwner: {},
   ownerRentals: [],
   isEditing: false,
@@ -258,16 +260,16 @@ const AppProvider = ({ children }) => {
   const createOwner = async () => {
     dispatch({ type: CREATE_OWNER_BEGIN })
     try {
-      const { ownerName, ownerEmail } = state
+      const { ownerName } = state
 
       await authFetch.post('/owners', {
-        name: ownerName,
-        email: ownerEmail
+        name: ownerName
       })
 
       dispatch({ type: CREATE_OWNER_SUCCESS })
 
       clearValues()
+      getOwners()
 
     } catch (error) {
       if(error.response.status === 401) return
@@ -309,6 +311,54 @@ const AppProvider = ({ children }) => {
 
     getRentalsByOwner(owner.id)
     
+  }
+
+  const setEditOwner = (id) => {
+   
+    dispatch({ 
+      type: SET_EDIT_OWNER, 
+      payload: 
+        { 
+          id: id
+        } 
+    })
+  }
+
+  const editOwner = async () => {
+    try {
+      const { ownerName, activeOwner } = state
+      console.log(activeOwner)
+      await authFetch.patch(`/owners/${activeOwner.id}`, {
+        name: ownerName
+      })
+
+      dispatch({ type: EDIT_OWNER_SUCCESS })
+      
+      clearValues()
+      getOwners()
+
+    } catch (error) {
+
+      if(error.response.status === 401) return
+      dispatch({
+        type: EDIT_OWNER_ERROR,
+        payload: { msg: error.response.data.msg }
+      })
+    }
+    clearAlert()
+  }
+
+  const deleteOwner = async () => {
+    const { activeOwner } = state
+
+    try {
+      await authFetch.delete(`/owners/${activeOwner.id}`)
+
+      getOwners()
+
+    } catch (error) {
+      logoutUser()
+    }
   }
 
   const getRentalsByOwner = async (id) => {
@@ -696,6 +746,9 @@ const AppProvider = ({ children }) => {
         createOwner,
         getOwners,
         setOwner,
+        setEditOwner,
+        editOwner,
+        deleteOwner,
         getRentalsByOwner,
         createRental,
         setEditRental,

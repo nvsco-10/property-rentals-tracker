@@ -172,10 +172,6 @@ const OwnersProperty = () => {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
-
-  if(isLoading) {
-    return <div>isLoading</div>
-  }
   
   return (
     <Wrapper>

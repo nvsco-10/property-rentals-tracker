@@ -1,30 +1,28 @@
 import { useState } from 'react'
 import { GrFormAdd } from 'react-icons/gr'
 import Wrapper from '../assets/wrappers/AddButton'
-import ActionContainer from './CreateAction'
+import { CreateAction, CreateOwner } from '.'
 
 const AddButton = ({ type }) => {
-  const [open, setOpen] = useState(false);
+  const [openAction, setOpenAction] = useState(false)
+  const [openOwner, setOpenOwner] = useState(false)
 
   const handleClick = () => {
     if(type === 'action') {
-      setOpen(true)
+      setOpenAction(true)
+    }
 
+    if(type === 'owner') {
+      setOpenOwner(true)
     }
   }
 
-  const renderModal = () => {
-    switch(type) {
-      case 'action':
-        return <ActionContainer open={open} setOpen={setOpen}/>
-        break;
-    }
-  }
   
   return (
     <Wrapper>
       <GrFormAdd onClick={handleClick}/>
-      {renderModal()}
+      <CreateAction open={openAction} setOpen={setOpenAction}/>
+      <CreateOwner open={openOwner} setOpen={setOpenOwner}/>
     </Wrapper>
   )
 }

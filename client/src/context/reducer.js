@@ -19,6 +19,10 @@ import { DISPLAY_ALERT,
          GET_OWNERS_BEGIN,
          GET_OWNERS_SUCCESS,
          SET_ACTIVE_OWNER,
+         SET_EDIT_OWNER,
+         EDIT_OWNER_SUCCESS,
+         EDIT_OWNER_ERROR,
+         DELETE_OWNER_BEGIN,
          GET_RENTALBYOWNER_BEGIN,
          GET_RENTALBYOWNER_SUCCESS,
          GET_RENTALBYOWNER_ERROR,
@@ -63,7 +67,7 @@ const reducer = (state, action) => {
       ...state,
       showAlert: true,
       alertType: 'danger',
-      alertText: 'Please provide all values!'
+      alertText: 'Please provide required values!'
     }
   }
 
@@ -175,7 +179,6 @@ const reducer = (state, action) => {
     const initialState = {
       isEditing: false,
       ownerName: '',
-      ownerEmail: '',
       editRentalId: '',
       streetAddress: '',
       city: '',
@@ -244,6 +247,33 @@ const reducer = (state, action) => {
     return {
       ...state,
       activeOwner: action.payload.owner
+    }
+  }
+
+  if(action.type === SET_EDIT_OWNER) {
+    const owner = state.owners.find((owner) => owner._id === action.payload.id)
+    return {
+    ...state,
+    isEditing: true,
+    ownerName: owner.name,
+    }
+  }
+
+  if (action.type === EDIT_OWNER_SUCCESS) {
+    return {
+      ...state,
+      showAlert: true,
+      alertType: 'success',
+      alertText: 'Owner Updated!',
+    }
+  }
+  if (action.type === EDIT_OWNER_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.msg,
     }
   }
 

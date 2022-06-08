@@ -39,7 +39,7 @@ const deleteOwner = async ({ params },res) => {
   const deletedOwner = await Owner.findOneAndDelete({ _id: params.id })
 
   if (!deletedOwner) {
-    throw new NotFoundError(`No action with id: ${params.id}`)
+    throw new NotFoundError(`No owner with id: ${params.id}`)
   }
 
   res.status(StatusCodes.OK).json({ msg: 'Success! Owner removed' })

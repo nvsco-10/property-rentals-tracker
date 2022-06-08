@@ -16,17 +16,11 @@ import Paper from '@mui/material/Paper';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
-import AddButton from './AddButton';
+import { AddButton, EditDeleteBtns } from '.';
 import moment from 'moment'
 
 const OwnersTable = () => {
   const { owners, isLoading, setOwner } = useAppContext()
-
-  useEffect(() => {
-
-    // setAction('')
-   
-  }, [])
 
   function createData(id, name, createdAt) {
     return {
@@ -83,6 +77,11 @@ const OwnersTable = () => {
       numeric: false,
       disablePadding: false,
       label: 'Date Added',
+    },
+    {
+      id: 'buttons',
+      numeric: false,
+      disablePadding: false,
     },
     
   ];
@@ -172,10 +171,6 @@ const OwnersTable = () => {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
-
-  if(isLoading) {
-    return <div>isLoading</div>
-  }
   
   return (
     <Wrapper>
@@ -239,8 +234,7 @@ const OwnersTable = () => {
                         {row.name}
                       </TableCell>
                       <TableCell align="left">{row.createdAt}</TableCell>
-                      {/* <TableCell align="left">{row.status}</TableCell>
-                      <TableCell align="left">{row.createdAt}</TableCell> */}
+                      <TableCell align="left"><EditDeleteBtns type='owner' id={row.id} /></TableCell>
                     </TableRow>
                   );
                 })}
