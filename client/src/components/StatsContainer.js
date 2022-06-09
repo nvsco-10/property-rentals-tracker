@@ -2,39 +2,46 @@ import React from 'react'
 import { useAppContext } from '../context/appContext'
 import Wrapper from '../assets/wrappers/StatsContainer'
 import { StatsItem } from '.'
-import { FaSuitcaseRolling, FaCalendarCheck, FaBug } from 'react-icons/fa'
+import { RiDoorOpenFill } from 'react-icons/ri'
+import { MdPendingActions } from 'react-icons/md'
+import { AiOutlineFileDone } from 'react-icons/ai'
+import { BsHouseDoor } from 'react-icons/bs'
 
 const StatsContainer = () => {
   const { stats } = useAppContext()
+
+  const getTotal = (vacant=0,pending=0,closed=0,maintenance=0) => {
+    return vacant + pending + closed + maintenance
+  }
 
   const defaultStats = [
     {
       title: 'Vacant',
       count: stats.open || 0,
-      icon: <FaSuitcaseRolling />,
+      icon: <RiDoorOpenFill />,
       color: '#e9b949',
       bcg: '#fcefc7',
     },
     {
       title: 'Pending-Lease',
       count: stats["pending-lease"] || 0,
-      icon: <FaCalendarCheck />,
+      icon: <MdPendingActions />,
       color: '#647acb',
       bcg: '#e0e8f9',
     },
     {
       title: 'Closed',
       count: stats.closed || 0,
-      icon: <FaBug />,
+      icon: <AiOutlineFileDone />,
       color: '#d66a6a',
       bcg: '#ffeeee',
     },
     {
       title: 'Total Rentals',
-      count: (stats.closed  + stats.open + stats.maintenance + stats["pending-lease"]) || 0,
-      icon: <FaBug />,
-      color: '#d66a6a',
-      bcg: '#ffeeee',
+      count: getTotal(stats.open, stats["pending-lease"], stats.closed, stats.maintenance) || 0,
+      icon: <BsHouseDoor />,
+      color: '#5aab0e',
+      bcg: '#edfae1',
     },
   ]
 

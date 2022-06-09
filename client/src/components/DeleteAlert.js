@@ -31,10 +31,14 @@ const DeleteAlert = ({ open, setOpen, type }) => {
       deleteOwner()
     }
 
+    if(type !== 'user') {
+      setOpen(false)
+    }
+    
     if(type === 'user') {
       deleteUser()
     }
-
+    
   }
 
 

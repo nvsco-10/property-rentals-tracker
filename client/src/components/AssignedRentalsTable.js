@@ -343,7 +343,7 @@ export default function AssignedRentalsTable() {
         {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
         <TableContainer>
           <Table
-            sx={{ minWidth: 750 }}
+            sx={{ minWidth: 800 }}
             aria-labelledby="tableTitle"
             size={dense ? 'small' : 'medium'}
           >

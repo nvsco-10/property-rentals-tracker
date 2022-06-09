@@ -2,8 +2,11 @@ import { useState, useEffect } from 'react'
 import { FormRow, FormRowSelect, FormRowSelectUsers, FormRowSelectOwners, Alert, DeleteAlert } from '../../components'
 import { useAppContext } from '../../context/appContext'
 import Wrapper from '../../assets/wrappers/DashboardFormPage-Medium'
+import { useNavigate } from 'react-router-dom'
 
 const AddRental = () => {
+  const navigate = useNavigate();
+
   const {
     isLoading,
     isEditing,
@@ -25,7 +28,8 @@ const AddRental = () => {
     users,
     getOwners,
     owners,
-    editRental
+    editRental,
+    activeRental
   } = useAppContext()
 
   // delete alert
@@ -36,17 +40,24 @@ const AddRental = () => {
     getOwners()
   }, [])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if (!streetAddress || !city|| !zipCode) {
+    if (!streetAddress || !city|| !zipCode || !owner || !assigned) {
       displayAlert()
       return
     }
     
     if (isEditing) {
-      editRental()
+      const response = editRental()
+   
+      if (response) {
+        setTimeout(() => {
+          navigate(`/rentals/${activeRental._id}`)
+        }, 2000)
+      }
       return
+
     }
  
     createRental()
@@ -62,7 +73,7 @@ const AddRental = () => {
     <Wrapper>
       <form className='form'>
         <div className='addrental-header'>
-          <h4>{isEditing ? 'edit rental' : 'add rental'}</h4>
+          <h5>{isEditing ? 'edit rental' : 'add rental'}</h5>
           {isEditing && <span onClick={() => setOpen(true)} className='btn delete-btn'>delete</span> }
         </div>
         <DeleteAlert open={open} setOpen={setOpen} type='rental' />
@@ -101,7 +112,7 @@ const AddRental = () => {
           {/* rental type */}
           <FormRowSelect
             name='priority'
-            labelText='rental type'
+            labelText='priority'
             value={priority}
             handleChange={handleRentalInput}
             list={priorityOptions}

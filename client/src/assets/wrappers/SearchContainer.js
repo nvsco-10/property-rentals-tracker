@@ -6,6 +6,7 @@ const Wrapper = styled.section`
     max-width: 100%;
     margin-top: 2rem;
     margin-bottom: 1rem;
+    padding-bottom: 1.35em;
     font-size: 0.75rem;
   }
   .form-input,

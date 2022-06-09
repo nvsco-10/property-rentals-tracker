@@ -204,7 +204,7 @@ const RentalActions = () => {
         {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
         <TableContainer>
           <Table
-            sx={{ minWidth: 400 }}
+            sx={{ minWidth: 500 }}
             aria-labelledby="tableTitle"
             size={dense ? 'small' : 'medium'}
           >

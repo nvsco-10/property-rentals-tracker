@@ -53,7 +53,7 @@ import { DISPLAY_ALERT,
          CREATE_ACTION_BEGIN,
          CREATE_ACTION_SUCCESS,
          CREATE_ACTION_ERROR,
-         DELETE_ACTION_BEGIN,
+         DELETE_ACTION_SUCCESS,
          SET_EDIT_ACTION,
          EDIT_ACTION_BEGIN,
          EDIT_ACTION_SUCCESS,
@@ -510,7 +510,9 @@ const reducer = (state, action) => {
     return { 
       ...state, 
       isLoading: true,
-      showAlert: false
+      isEditing: false,
+      showAlert: false,
+      activeAction: '',
     }
   }
 
@@ -540,12 +542,12 @@ const reducer = (state, action) => {
     }
   }
 
-  if (action.type === CREATE_ACTION_BEGIN) {
-    return { 
-      ...state, 
-      // isLoading: true 
-    }
-  }
+  // if (action.type === CREATE_ACTION_BEGIN) {
+  //   return { 
+  //     ...state, 
+  //     // isLoading: true 
+  //   }
+  // }
 
   if (action.type === CREATE_ACTION_SUCCESS) {
     return {
@@ -567,10 +569,10 @@ const reducer = (state, action) => {
     }
   }
 
-  if(action.type === DELETE_ACTION_BEGIN) {
+  if(action.type === DELETE_ACTION_SUCCESS) {
     return {
       ...state,
-      // isLoading: true
+      activeAction: ''
     }
   }
 
@@ -585,16 +587,17 @@ const reducer = (state, action) => {
     }
   }
 
-  if (action.type === EDIT_ACTION_BEGIN) {
-    return {
-      ...state,
-      // isLoading: true,
-    }
-  }
+  // if (action.type === EDIT_ACTION_BEGIN) {
+  //   return {
+  //     ...state,
+  //     // isLoading: true,
+  //   }
+  // }
+
   if (action.type === EDIT_ACTION_SUCCESS) {
     return {
       ...state,
-      // isLoading: false,
+      // activeAction: action.payload.activeAction,
       showAlert: true,
       alertType: 'success',
       alertText: 'Action Updated!',
@@ -617,13 +620,13 @@ const reducer = (state, action) => {
     }
   }
 
-  if (action.type === CREATE_NOTE_SUCCESS) {
-    return {
-      ...state,
-      activeAction: action.payload.activeAction
-    }
+  // if (action.type === CREATE_NOTE_SUCCESS) {
+  //   return {
+  //     ...state,
+  //     activeAction: action.payload.activeAction
+  //   }
 
-  }
+  // }
 
   if(action.type === SET_EDIT_NOTE) {
     const note = state.activeAction.notes.find((note) => note._id === action.payload.id)
@@ -654,12 +657,12 @@ const reducer = (state, action) => {
     }
   }
 
-  if(action.type === DELETE_NOTE_BEGIN) {
-    return {
-      ...state,
-      // isLoading: true
-    }
-  }
+  // if(action.type === DELETE_NOTE_BEGIN) {
+  //   return {
+  //     ...state,
+  //     // isLoading: true
+  //   }
+  // }
 
   if(action.type === CLEAR_FILTERS) {
     return {

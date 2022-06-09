@@ -57,7 +57,7 @@ import { DISPLAY_ALERT,
          CREATE_ACTION_BEGIN,
          CREATE_ACTION_SUCCESS,
          CREATE_ACTION_ERROR,
-         DELETE_ACTION_BEGIN,
+         DELETE_ACTION_SUCCESS,
          SET_EDIT_ACTION,
          EDIT_ACTION_BEGIN,
          EDIT_ACTION_SUCCESS,
@@ -320,7 +320,7 @@ const AppProvider = ({ children }) => {
       getUsers()
 
     } catch (error) {
-      console.log(error.msg)
+      logoutUser()
     }
     clearAlert()
   }
@@ -340,8 +340,7 @@ const AppProvider = ({ children }) => {
       })
 
     } catch (error) {
-      console.log(error.msg)
-      // logoutUser()
+      logoutUser()
     }
     clearAlert()
   }
@@ -427,7 +426,7 @@ const AppProvider = ({ children }) => {
   const editOwner = async () => {
     try {
       const { ownerName, activeOwner } = state
-      console.log(activeOwner)
+
       await authFetch.patch(`/owners/${activeOwner.id}`, {
         name: ownerName
       })
@@ -570,11 +569,7 @@ const AppProvider = ({ children }) => {
       dispatch({ type: EDIT_RENTAL_SUCCESS })
       
       clearValues()
-      setTimeout(() => {
-        getAllRentals()
-      }, 2000)
       
-
     } catch (error) {
 
       if(error.response.status === 401) return
@@ -653,6 +648,27 @@ const AppProvider = ({ children }) => {
     }
   }
 
+  const refreshRental = async(id) => {
+    try {
+      const { data } = await authFetch.get(`/rentals/${id}`)
+      const { rental } = data
+
+      dispatch({ 
+        type: GET_RENTALBYID_SUCCESS,
+        payload: {
+          rental: rental[0],
+          actions: rental[0].actions
+        }
+      })
+
+    } catch (error) {
+      dispatch({ 
+        type: GET_RENTALBYID_ERROR,
+        payload: { msg: error.response.data.msg }
+      })
+    }
+  }
+
   const setAction = (action) => {
     // console.log(action)
     dispatch({ 
@@ -665,7 +681,6 @@ const AppProvider = ({ children }) => {
   }
 
   const createAction = async (rentalId) => {
-    dispatch({ type: CREATE_ACTION_BEGIN })
     try {
       const { actionItem, details, actionStatus, actionPriority } = state
 
@@ -680,7 +695,7 @@ const AppProvider = ({ children }) => {
 
       clearValues()
       setTimeout(() => {
-        getRentalById(rentalId)
+        refreshRental(rentalId)
       }, 1000)
       
 
@@ -697,11 +712,12 @@ const AppProvider = ({ children }) => {
   const deleteAction = async (actionId) => {
     const { activeRental } = state
 
-    dispatch({ type: DELETE_ACTION_BEGIN })
     try {
       await authFetch.delete(`/rentals/actions/${actionId}`)
 
-      getRentalById(activeRental._id)
+      refreshRental(activeRental._id)
+
+      dispatch({ type: DELETE_ACTION_SUCCESS})
 
     } catch (error) {
 
@@ -726,23 +742,36 @@ const AppProvider = ({ children }) => {
   }
 
   const editAction = async (actionId) => {
-    const { activeRental } = state
+    const { activeRental, activeAction } = state
     
-    dispatch({ type: EDIT_ACTION_BEGIN })
+    // dispatch({ type: EDIT_ACTION_BEGIN })
     try {
       const { actionItem, details, actionStatus, actionPriority } = state;
-      await authFetch.patch(`/rentals/actions/${actionId}`, {
+      const { data } = await authFetch.patch(`/rentals/actions/${actionId}`, {
         actionItem,
         details,
         status: actionStatus,
         priority: actionPriority
       })
 
+      const { updatedAction } = data
+
       dispatch({ type: EDIT_ACTION_SUCCESS })
       
       clearValues()
       setTimeout(() => {
-        getRentalById(activeRental._id)
+        refreshRental(activeRental._id)
+        setAction({
+          id: updatedAction._id,
+          actionItem: updatedAction.actionItem,
+          details: updatedAction.details,
+          status: updatedAction.status,
+          priority: updatedAction.priority,
+          notes: updatedAction.notes,
+          createdAt: activeAction.createdAt,
+          createdBy: activeAction.createdBy,
+          updatedAt: updatedAction.updatedAt
+        })
       }, 1000)
 
     } catch (error) {
@@ -763,12 +792,26 @@ const AppProvider = ({ children }) => {
     try {
       const { note } = state
 
-      await authFetch.post(`/rentals/actions/${id}`, {
+      const { data } = await authFetch.post(`/rentals/actions/${id}`, {
         note
       })
 
+      const { updatedAction } = data
+
       clearValues()
-      getRentalById(activeRental._id)
+      refreshRental(activeRental._id)
+
+      setAction({
+        id: updatedAction._id,
+        actionItem: updatedAction.actionItem,
+        details: updatedAction.details,
+        status: updatedAction.status,
+        priority: updatedAction.priority,
+        notes: updatedAction.notes,
+        createdAt: activeAction.createdAt,
+        createdBy: activeAction.createdBy,
+        updatedAt: updatedAction.updatedAt
+      })
 
       // dispatch({ 
       //   type: CREATE_NOTE_SUCCESS,
@@ -806,16 +849,29 @@ const AppProvider = ({ children }) => {
     const { editedNote, activeNote, activeAction, activeRental } = state
     
     try {
-      await authFetch.patch(`/rentals/actions/${activeAction.id}/${activeNote._id}`, {
+      const { data } = await authFetch.patch(`/rentals/actions/${activeAction.id}/${activeNote._id}`, {
         note: editedNote
       })
+
+      const { updatedAction } = data
 
       dispatch({ type: EDIT_NOTE_SUCCESS })
       
       clearValues()
 
       setTimeout(() => {
-        getRentalById(activeRental._id)
+        refreshRental(activeRental._id)
+        setAction({
+          id: updatedAction._id,
+          actionItem: updatedAction.actionItem,
+          details: updatedAction.details,
+          status: updatedAction.status,
+          priority: updatedAction.priority,
+          notes: updatedAction.notes,
+          createdAt: activeAction.createdAt,
+          createdBy: activeAction.createdBy,
+          updatedAt: updatedAction.updatedAt
+        })  
       }, 1000)
 
     } catch (error) {
@@ -832,14 +888,23 @@ const AppProvider = ({ children }) => {
   const deleteNote = async () => {
     const { activeNote, activeAction, activeRental } = state
 
-    dispatch({ type: DELETE_NOTE_BEGIN })
-
     try {
-      await authFetch.delete(`/rentals/actions/${activeAction.id}/${activeNote._id}`)
+      const { data } = await authFetch.delete(`/rentals/actions/${activeAction.id}/${activeNote._id}`)
+      
+      const { updatedAction } = data
+      refreshRental(activeRental._id)
 
-      // setNote('')
-
-      getRentalById(activeRental._id)
+      setAction({
+        id: updatedAction._id,
+        actionItem: updatedAction.actionItem,
+        details: updatedAction.details,
+        status: updatedAction.status,
+        priority: updatedAction.priority,
+        notes: updatedAction.notes,
+        createdAt: activeAction.createdAt,
+        createdBy: activeAction.createdBy,
+        updatedAt: updatedAction.updatedAt
+      })  
 
     } catch (error) {
       logoutUser()
@@ -862,7 +927,7 @@ const AppProvider = ({ children }) => {
       })
     } catch (error) {
       console.log(error.msg)
-      // logoutUser()
+      logoutUser()
     }
     clearAlert()
   }

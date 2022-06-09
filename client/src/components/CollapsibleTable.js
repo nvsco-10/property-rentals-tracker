@@ -48,12 +48,12 @@ export default function CollapsibleTable() {
     };
   }
 
-  const rows = rentals.map(rental => {
-    const actions = rental.actions.map(actions => {
+  const rows = rentals?.map(rental => {
+    const actions = rental.actions?.map(actions => {
       return { id: actions._id, action: actions.actionItem, priority: actions.priority, createdAt: moment(actions.createdAt).format('YYYY-MM-DD, HH:mm:ss') }
     })
 
-    return createData(rental._id, `${rental.streetAddress} ${rental.city}`, rental.status, rental.priority, rental.owner?.name || '', rental.assigned.username || '', moment(rental.updatedAt).format('YYYY-MM-DD, HH:mm:ss'), actions)
+    return createData(rental._id, `${rental.streetAddress} ${rental.city}`, rental.status, rental.priority, rental.owner?.name || '', rental.assigned?.username || '', moment(rental.updatedAt).format('YYYY-MM-DD, HH:mm:ss'), actions)
   })
 
   function descendingComparator(a, b, orderBy) {
@@ -347,7 +347,7 @@ export default function CollapsibleTable() {
         {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
         <TableContainer>
           <Table
-            sx={{ minWidth: 750 }}
+            sx={{ minWidth: 1000 }}
             aria-labelledby="tableTitle"
             size={dense ? 'small' : 'medium'}
           >

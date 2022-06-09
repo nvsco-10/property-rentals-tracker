@@ -96,6 +96,10 @@ const createUser = async (req,res) => {
     throw new BadRequestError('Please provide all values')
   }
 
+  if(password.length < 6) {
+    throw new BadRequestError('Password must be a minimum of 6 characters')
+  }
+
   const emailExists = await User.findOne({email})
 
   if (emailExists) {

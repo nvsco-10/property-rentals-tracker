@@ -30,10 +30,8 @@ const RentalSchema = new mongoose.Schema(
     streetAddress: {
       type: String,
       required: [true, 'Please provide a street address'],
-      minlength: 3,
       maxlength: 50,
       trim: true,
-      unique: true,
     },
     city: {
       type: String,
@@ -95,9 +93,15 @@ RentalSchema
     })
 
 RentalSchema
-.virtual('noteCount')
-.get(function() {
-    return this.notes.length;
+  .virtual('noteCount')
+  .get(function() {
+      return this.notes.length;
+})
+
+RentalSchema
+  .virtual('fullAddress')
+  .get(function() {
+      return `${this.streetAddress}, ${this.city}, ${this.zipCode}`;
 })
 
 export default mongoose.model('Rental', RentalSchema);

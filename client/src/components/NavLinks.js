@@ -1,5 +1,5 @@
 import links from '../utils/links'
-import { IoBarChartSharp } from 'react-icons/io5'
+import { HiUserGroup } from 'react-icons/hi'
 import { NavLink } from 'react-router-dom'
 import { useAppContext } from '../context/appContext'
 
@@ -11,7 +11,7 @@ const NavLinks = ({toggleSidebar}) => {
     id: 1, 
     text: 'manage users', 
     path: '/manage-users', 
-    icon: <IoBarChartSharp /> 
+    icon: <HiUserGroup /> 
   }
 
   return (

@@ -1,13 +1,13 @@
-import { IoBarChartSharp } from 'react-icons/io5'
-import { MdQueryStats } from 'react-icons/md'
-import { FaHome, FaWpforms } from 'react-icons/fa'
-import { ImProfile } from 'react-icons/im'
+import { RiDashboardFill } from 'react-icons/ri'
+import { IoMdAdd } from 'react-icons/io'
+import { FaHome } from 'react-icons/fa'
+import { ImUsers } from 'react-icons/im'
 
 const links = [
-  { id: 1, text: 'home', path: '/', icon: <IoBarChartSharp /> },
+  { id: 1, text: 'home', path: '/', icon: <RiDashboardFill /> },
   { id: 2, text: 'all rentals', path: 'all-rentals', icon: <FaHome /> },
-  { id: 3, text: 'add rental', path: 'add-rental', icon: <FaWpforms /> },
-  { id: 4, text: 'all owners', path: 'all-owners', icon: <FaHome /> },
+  { id: 3, text: 'add rental', path: 'add-rental', icon: <IoMdAdd /> },
+  { id: 4, text: 'all owners', path: 'all-owners', icon: <ImUsers /> },
 ]
 
 export default links
