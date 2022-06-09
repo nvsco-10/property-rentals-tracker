@@ -11,10 +11,12 @@ const Wrapper = styled.section`
   }
   .form {
     max-width: 400px;
-    border-top: 5px solid var(--primary-500);
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    /* border-top: 5px solid var(--primary-500); */
   }
 
-  h3 {
+  h5 {
     text-align: center;
   }
   p {
