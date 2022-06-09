@@ -1,10 +1,17 @@
 import express from 'express'
-import path from 'path'
 const app = express()
 import dotenv from 'dotenv'
 dotenv.config()
 import 'express-async-errors'
 import morgan from 'morgan'
+
+import { dirname } from 'path'
+import { fileURLToPath } from 'url'
+import path from 'path'
+
+import helmet from 'helmet'
+import xss from 'xss-clean'
+import mongoSanitize from 'express-mongo-sanitize'
 
 // db and authenticate user
 import connectDB from './db/connect.js'
@@ -22,8 +29,12 @@ if(process.env.NODE_ENV !== 'production'){
     app.use(morgan('dev'))
 }
 
-app.use(express.urlencoded({ extended: true }));
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
 app.use(express.json())
+// app.use(helmet())
+// app.use(xss())
+// app.use(mongoSanitize())
 
 app.get('/', (req,res) => {
   res.send('Welcome')
@@ -34,14 +45,10 @@ app.use('/api/v1/rentals', authenticateUser, rentalsRouter)
 app.use('/api/v1/owners', authenticateUser, ownersRouter)
 
 // only when ready to deploy
-// app.get('*', (req, res) => {
-//   res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'))
-// })
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'))
+})
 
-// if we're in production, serve client/build as static assets
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/build')));
-}
 
 app.use(notFoundMiddleware)
 app.use(errorHandleMiddleware)
