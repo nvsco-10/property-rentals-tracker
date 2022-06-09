@@ -1,4 +1,5 @@
 import express from 'express'
+import path from 'path'
 const app = express()
 import dotenv from 'dotenv'
 dotenv.config()
@@ -17,10 +18,11 @@ import notFoundMiddleware from './middleware/not-found.js'
 import errorHandleMiddleware from './middleware/error-handler.js'
 import authenticateUser from './middleware/auth.js'
 
-if(process.env.NODE_ENV !== 'productiion'){
+if(process.env.NODE_ENV !== 'production'){
     app.use(morgan('dev'))
 }
 
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
 
 app.get('/', (req,res) => {
@@ -32,9 +34,14 @@ app.use('/api/v1/rentals', authenticateUser, rentalsRouter)
 app.use('/api/v1/owners', authenticateUser, ownersRouter)
 
 // only when ready to deploy
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'))
-})
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'))
+// })
+
+// if we're in production, serve client/build as static assets
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/build')));
+}
 
 app.use(notFoundMiddleware)
 app.use(errorHandleMiddleware)
