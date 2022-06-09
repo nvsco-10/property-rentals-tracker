@@ -11,6 +11,10 @@ const Wrapper = styled.div`
     margin-top: 1rem;
   }
 
+  .form-label, select, option {
+    font-size: 0.875rem;
+  }
+
   .btn-container {
     display: flex;
     justify-content: flex-end;

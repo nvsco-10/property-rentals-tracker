@@ -1,7 +1,7 @@
 import Wrapper from '../assets/wrappers/SmallSidebar'
 import { FaTimes } from 'react-icons/fa'
 import { useAppContext } from '../context/appContext'
-import Logo from './Logo'
+import DarkLogo from './DarkLogo'
 import NavLinks from './NavLinks.js'
 
 const SmallSidebar = () => {
@@ -19,7 +19,7 @@ const SmallSidebar = () => {
             <FaTimes/>
           </button>
           <header>
-            <Logo/>
+            <DarkLogo/>
           </header>
           <NavLinks toggleSidebar={toggleSidebar} />
         </div>

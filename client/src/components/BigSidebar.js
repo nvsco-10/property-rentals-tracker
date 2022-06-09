@@ -1,6 +1,6 @@
 import Wrapper from '../assets/wrappers/BigSidebar'
 import { useAppContext } from '../context/appContext'
-import Logo from './Logo'
+import DarkLogo from './DarkLogo'
 import NavLinks from './NavLinks.js'
 
 const BigSidebar = () => {
@@ -11,7 +11,7 @@ const BigSidebar = () => {
     <div className={ showSidebar ? 'sidebar-container' : 'sidebar-container show-sidebar'}>
       <div className='content'>
         <header>
-          <Logo/>
+          <DarkLogo/>
         </header>
         <NavLinks />
       </div>

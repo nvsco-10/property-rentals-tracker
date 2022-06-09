@@ -23,11 +23,12 @@ const Wrapper = styled.aside`
     header {
       height: 6rem;
       display: flex;
+      justify-content: center;
       align-items: center;
-      padding-left: 2.5rem;
+      padding-top: 1rem;
     }
     img {
-      width: 50%;
+      width: 70%;
     }
     .nav-links {
       padding-top: 2rem;
@@ -50,7 +51,7 @@ const Wrapper = styled.aside`
       color: var(--primary-500);
     }
     .icon {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       margin-right: 1rem;
       display: grid;
       place-items: center;

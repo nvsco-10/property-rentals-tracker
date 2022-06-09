@@ -37,6 +37,9 @@ const Wrapper = styled.section`
   .form-row {
     margin-bottom: 0.75rem;
   }
+  .form-label, select, option {
+    font-size: 0.875rem;
+  }
   .form-center {
     display: grid;
     row-gap: 0.5rem;
@@ -50,7 +53,7 @@ const Wrapper = styled.section`
     grid-template-columns: 1fr 1fr;
     column-gap: 1rem;
     /* align-self: flex-end; */
-    margin-top: 1rem;
+    margin-top: 0.75rem;
     button {
       height: 35px;
     }

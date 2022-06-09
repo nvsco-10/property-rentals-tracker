@@ -1,4 +1,5 @@
 import Logo from './Logo'
+import DarkLogo from './DarkLogo'
 import FormRow from './FormRow'
 import Alert from './Alert'
 import BigSidebar from './BigSidebar'
@@ -33,4 +34,4 @@ import UsersTable from './UsersTable'
 import AddUser from './AddUser'
 
 
-export { Logo, FormRow, Alert, BigSidebar, SmallSidebar, Navbar, FormRowSelect, FormRowSelectUsers, FormRowSelectOwners, FormRowSelectRole, CollapsibleTable, SearchContainer, Loading, SingleRentalContainer, RentalInfo, RentalActions, ActionContainer, DeleteAlert, OwnersContainer, OwnersTable, OwnersProperty, AddButton, CreateOwner, CreateAction, EditDeleteBtns, EditNote, AssignedRentalsContainer, AssignedRentalsTable, StatsContainer, StatsItem, UsersContainer, UsersTable, AddUser }
+export { Logo, DarkLogo, FormRow, Alert, BigSidebar, SmallSidebar, Navbar, FormRowSelect, FormRowSelectUsers, FormRowSelectOwners, FormRowSelectRole, CollapsibleTable, SearchContainer, Loading, SingleRentalContainer, RentalInfo, RentalActions, ActionContainer, DeleteAlert, OwnersContainer, OwnersTable, OwnersProperty, AddButton, CreateOwner, CreateAction, EditDeleteBtns, EditNote, AssignedRentalsContainer, AssignedRentalsTable, StatsContainer, StatsItem, UsersContainer, UsersTable, AddUser }

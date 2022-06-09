@@ -12,7 +12,7 @@ const Home = () => {
 
   return (
     <>
-    <h5>XYZ Property Management</h5>
+    <h5>XYZ Properties</h5>
     <StatsContainer />
     <AssignedRentalsContainer />
     </>
