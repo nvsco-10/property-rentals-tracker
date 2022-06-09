@@ -27,6 +27,9 @@ import AssignedRentalsContainer from './AssignedRentalsContainer'
 import AssignedRentalsTable from './AssignedRentalsTable'
 import StatsContainer from './StatsContainer'
 import StatsItem from './StatsItem'
+import UsersContainer from './UsersContainer'
+import UsersTable from './UsersTable'
+import AddUser from './AddUser'
 
 
-export { Logo, FormRow, Alert, BigSidebar, SmallSidebar, Navbar, FormRowSelect, FormRowSelectUsers, FormRowSelectOwners, CollapsibleTable, SearchContainer, Loading, SingleRentalContainer, RentalInfo, RentalActions, ActionContainer, DeleteAlert, OwnersContainer, OwnersTable, OwnersProperty, AddButton, CreateOwner, CreateAction, EditDeleteBtns, EditNote, AssignedRentalsContainer, AssignedRentalsTable, StatsContainer, StatsItem }
+export { Logo, FormRow, Alert, BigSidebar, SmallSidebar, Navbar, FormRowSelect, FormRowSelectUsers, FormRowSelectOwners, CollapsibleTable, SearchContainer, Loading, SingleRentalContainer, RentalInfo, RentalActions, ActionContainer, DeleteAlert, OwnersContainer, OwnersTable, OwnersProperty, AddButton, CreateOwner, CreateAction, EditDeleteBtns, EditNote, AssignedRentalsContainer, AssignedRentalsTable, StatsContainer, StatsItem, UsersContainer, UsersTable, AddUser }

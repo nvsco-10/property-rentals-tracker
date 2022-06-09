@@ -6,10 +6,11 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 
 const EditNote = ({ open, setOpen }) => {
-  const { handleChange, showAlert, displayAlert, activeNote, editedNote, editNote } = useAppContext()
+  const { handleChange, showAlert, displayAlert, activeNote, editedNote, editNote, clearValues } = useAppContext()
 
   const handleClose = () => {
     setOpen(false);
+    clearValues()
   };
 
   const handleInput = (e) => {

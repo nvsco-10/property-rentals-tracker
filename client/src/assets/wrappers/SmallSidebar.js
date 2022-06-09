@@ -20,7 +20,7 @@ const Wrapper = styled.aside`
     opacity: 1;
   }
   .content {
-    background: var(--white);
+    background: var(--primary-500);
     width: var(--fluid-width);
     height: 95vh;
     border-radius: var(--borderRadius);
@@ -37,7 +37,7 @@ const Wrapper = styled.aside`
     background: transparent;
     border-color: transparent;
     font-size: 2rem;
-    color: var(--red-dark);
+    color: var(--white);
     cursor: pointer;
   }
   header {
@@ -51,14 +51,17 @@ const Wrapper = styled.aside`
     padding-top: 2rem;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
   }
   .nav-link {
     display: flex;
     align-items: center;
-    color: var(--grey-500);
-    padding: 1rem 0;
+    width: 100%;
+    color: var(--white);
+    padding: 1rem 0 1rem 1rem;
     text-transform: capitalize;
-    transition: var(--transition);
   }
   .nav-link:hover {
     color: var(--grey-900);
@@ -73,11 +76,16 @@ const Wrapper = styled.aside`
     place-items: center;
     transition: var(--transition);
   }
+
+  .nav-link.active {
+      background-color: var(--grey-700)
+  }
+
   .active {
-    color: var(--grey-900);
+    color: var(--white);
   }
   .active .icon {
-    color: var(--primary-500);
+    color: var(--white);
   }
 `
 export default Wrapper

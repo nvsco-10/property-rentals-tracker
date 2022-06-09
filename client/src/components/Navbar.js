@@ -22,7 +22,7 @@ const Navbar = () => {
         <div className='btn-container'>
           <button 
             type='button' 
-            className='btn' 
+            className='btn settings-btn' 
             onClick={() => setShowDropdown(!showDropdown)} 
           >
             <FaUserCircle />
@@ -32,9 +32,9 @@ const Navbar = () => {
           <div className={showDropdown ? 'dropdown show-dropdown' : 'dropdown'}>
             <button 
               type='button' 
-              className='dropdown-btn' 
+              className='dropdown-btn first' 
             >
-              <Link to='profile'>
+              <Link to='profile' className='dropdown-btn'>
               profile
               </Link>
             </button>

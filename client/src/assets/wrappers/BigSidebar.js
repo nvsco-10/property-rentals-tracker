@@ -6,7 +6,7 @@ const Wrapper = styled.aside`
     display: block;
     box-shadow: 1px 0px 0px 0px rgba(0, 0, 0, 0.1);
     .sidebar-container {
-      background: var(--white);
+      background: var(--primary-500);
       min-height: 100vh;
       height: 100%;
       width: 250px;
@@ -37,14 +37,13 @@ const Wrapper = styled.aside`
     .nav-link {
       display: flex;
       align-items: center;
-      color: var(--grey-500);
+      color: var(--white);
       padding: 1rem 0;
       padding-left: 2.5rem;
       text-transform: capitalize;
-      transition: var(--transition);
     }
     .nav-link:hover {
-      background: var(--grey-50);
+      background: var(--grey-100);
       color: var(--grey-900);
     }
     .nav-link:hover .icon {
@@ -55,10 +54,14 @@ const Wrapper = styled.aside`
       margin-right: 1rem;
       display: grid;
       place-items: center;
-      transition: var(--transition);
     }
+
+    .nav-link.active {
+      background-color: var(--grey-100)
+    }
+
     .active {
-      color: var(--grey-900);
+      color: var(--primary-500);
     }
     .active .icon {
       color: var(--primary-500);

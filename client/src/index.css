@@ -18,7 +18,7 @@ html {
   --primary-200: #87eaf2;
   --primary-300: #54d1db;
   --primary-400: #38bec9;
-  --primary-500: #2cb1bc;
+  --primary-500: #273862;
   --primary-600: #14919b;
   --primary-700: #0e7c86;
   --primary-800: #0a6c74;
@@ -154,14 +154,13 @@ ul {
   letter-spacing: var(--letterSpacing);
   padding: 0.375rem 0.75rem;
   box-shadow: var(--shadow-2);
-  transition: var(--transition);
   text-transform: capitalize;
   display: inline-block;
 }
-.btn:hover {
+/* .btn:hover {
   background: var(--primary-700);
   box-shadow: var(--shadow-3);
-}
+} */
 .btn-hipster {
   color: var(--primary-500);
   background: var(--primary-200);
@@ -298,25 +297,3 @@ ul {
   min-height: 100vh;
 }
 
-.coffee-info {
-  text-align: center;
-  text-transform: capitalize;
-  margin-bottom: 1rem;
-  letter-spacing: var(--letterSpacing);
-}
-.coffee-info span {
-  display: block;
-}
-.coffee-info a {
-  color: var(--primary-500);
-}
-
-@media screen and (min-width: 992px) {
-  .coffee-info {
-    text-align: left;
-  }
-  .coffee-info span {
-    display: inline-block;
-    margin-right: 0.5rem;
-  }
-}

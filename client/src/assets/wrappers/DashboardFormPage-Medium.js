@@ -63,9 +63,7 @@ const Wrapper = styled.section`
   .clear-btn {
     background: var(--grey-500);
   }
-  .clear-btn:hover {
-    background: var(--black);
-  }
+  
   @media (min-width: 992px) {
     padding: 3rem 2rem 4rem;
 

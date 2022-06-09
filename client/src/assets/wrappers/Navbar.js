@@ -39,12 +39,16 @@ const Wrapper = styled.nav`
     box-shadow: var(--shadow-2);
   }
 
+  .settings-btn {
+    padding: 0.75em;
+  }
+
   .dropdown {
     position: absolute;
     top: 40px;
     left: 0;
     width: 100%;
-    background: var(--primary-100);
+    background: var(--primary-500);
     box-shadow: var(--shadow-2);
     padding: 0.5rem;
     text-align: center;
@@ -57,10 +61,16 @@ const Wrapper = styled.nav`
   .dropdown-btn {
     background: transparent;
     border-color: transparent;
-    color: var(--primary-500);
+    color: var(--white);
     letter-spacing: var(--letterSpacing);
     text-transform: capitalize;
     cursor: pointer;
+    width: 90%;
+    padding: 0.75em 0;
+  }
+  .dropdown-btn.first {
+    border-bottom: solid 1px var(--grey-400);
+    padding: 0.25em 0 0.5em;
   }
   .logo-text {
     display: none;

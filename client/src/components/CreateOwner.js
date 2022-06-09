@@ -6,10 +6,11 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 
 const CreateOwner = ({ open, setOpen }) => {
-  const { handleChange, showAlert, displayAlert, isEditing, ownerName, createOwner, editOwner } = useAppContext()
+  const { handleChange, showAlert, displayAlert, isEditing, ownerName, createOwner, editOwner, clearValues } = useAppContext()
 
   const handleClose = () => {
     setOpen(false);
+    clearValues()
   };
 
   const handleInput = (e) => {

@@ -393,7 +393,6 @@ const AppProvider = ({ children }) => {
     try {
       const { data } = await authFetch.get(`/rentals/user`)
       const { rentals } = data
-      console.log(rentals)
 
       dispatch({ 
         type: GET_ASSIGNEDRENTALS_SUCCESS,

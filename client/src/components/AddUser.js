@@ -2,20 +2,18 @@ import * as React from 'react';
 import Wrapper from '../assets/wrappers/Modal'
 import Box from '@mui/material/Box';
 import { useAppContext } from '../context/appContext';
-import { FormRow, FormRowSelect, FormRowSelectUsers, Alert } from './index.js'
+import { FormRow, FormRowSelect, Alert } from './index.js'
 import Modal from '@mui/material/Modal';
 
-export default function ActionContainer({ open, setOpen }) {
-  const{ isEditing, actionItem, details, actionStatus, actionStatusOptions, actionPriority, actionPriorityOptions, handleChange, createAction, editAction, activeRental, showAlert, activeAction, displayAlert, clearValues } = useAppContext()
-
-  const { _id } = activeRental
+export default function AddUser({ open, setOpen }) {
+  const{ isEditing, displayAlert, handleChange, showAlert, clearValues } = useAppContext()
 
   const handleClose = () => {
     setOpen(false);
     clearValues()
   };
 
-  const handleActionInput = (e) => {
+  const handleUserInput = (e) => {
     const name = e.target.name
     const value = e.target.value
 
@@ -25,17 +23,16 @@ export default function ActionContainer({ open, setOpen }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if(!actionItem) {
-      displayAlert()
-      return
-    }
+    // if(!username  || !email || !firstName || !lastName) {
+    //   displayAlert()
+    //   return
+    // }
 
     if(isEditing) {
-      editAction(activeAction.id)
+      console.log('edit')
       return
     }
 
-    createAction(_id)
   }
 
   // modal box style from MUI
@@ -62,39 +59,53 @@ export default function ActionContainer({ open, setOpen }) {
           <Wrapper>
 
             {isEditing ? 
-              <h5>Edit Action</h5> :
-              <h5>Add New Action</h5>
+              <h5>Edit User</h5> :
+              <h5>Add New User</h5>
             }
             
             {showAlert && <Alert />}
             <div className='form-container'>
               <FormRow
                 type='text'
-                labelText='action item'
-                name='actionItem'
-                value={actionItem}
-                handleChange={handleActionInput}
+                labelText='username'
+                name='username'
+                // value={actionItem}
+                handleChange={handleUserInput}
+              />
+              <FormRow
+                type='password'
+                labelText='password'
+                name='password'
+                // value={actionItem}
+                handleChange={handleUserInput}
               />
               <FormRow
                 type='text'
-                labelText='details (optional)'
-                name='details'
-                value={details}
-                handleChange={handleActionInput}
+                labelText='first name'
+                name='firstName'
+                // value={details}
+                handleChange={handleUserInput}
+              />
+              <FormRow
+                type='text'
+                labelText='last name'
+                name='lastName'
+                // value={details}
+                handleChange={handleUserInput}
+              />
+               <FormRow
+                type='text'
+                labelText='email'
+                name='email'
+                // value={details}
+                handleChange={handleUserInput}
               />
               <FormRowSelect
-                labelText='status'
-                name='actionStatus'
-                value={actionStatus} 
-                handleChange={handleActionInput}
-                list={actionStatusOptions}
-              />
-              <FormRowSelect
-                labelText='priority'
-                name='actionPriority'
-                value={actionPriority} 
-                handleChange={handleActionInput}
-                list={actionPriorityOptions}
+                labelText='Admin'
+                name='isAdmin'
+                // value={actionStatus} 
+                handleChange={handleUserInput}
+                list={["true", "false"]}
               />
             </div>
           

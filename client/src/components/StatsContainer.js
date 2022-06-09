@@ -17,7 +17,7 @@ const StatsContainer = () => {
     },
     {
       title: 'Pending-Lease',
-      count: stats.open || 0,
+      count: stats["pending-lease"] || 0,
       icon: <FaCalendarCheck />,
       color: '#647acb',
       bcg: '#e0e8f9',
@@ -31,7 +31,7 @@ const StatsContainer = () => {
     },
     {
       title: 'Total Rentals',
-      count: (stats.closed  + stats.open) || 0,
+      count: (stats.closed  + stats.open + stats.maintenance + stats["pending-lease"]) || 0,
       icon: <FaBug />,
       color: '#d66a6a',
       bcg: '#ffeeee',
