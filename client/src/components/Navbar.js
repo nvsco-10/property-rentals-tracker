@@ -32,14 +32,6 @@ const Navbar = () => {
           <div className={showDropdown ? 'dropdown show-dropdown' : 'dropdown'}>
             <button 
               type='button' 
-              className='dropdown-btn first' 
-            >
-              <Link to='profile' className='dropdown-btn'>
-              profile
-              </Link>
-            </button>
-            <button 
-              type='button' 
               className='dropdown-btn' 
               onClick={logoutUser} 
             >

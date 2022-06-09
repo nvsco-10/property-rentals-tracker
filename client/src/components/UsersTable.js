@@ -20,7 +20,7 @@ import { AddButton, EditDeleteBtns } from '.';
 import moment from 'moment'
 
 const UsersTable = () => {
-  const { getUsers, users, isLoading, setOwner } = useAppContext()
+  const { getUsers, users, isLoading, setUser } = useAppContext()
 
   useEffect(() => {
     getUsers()
@@ -171,7 +171,7 @@ const UsersTable = () => {
   const [orderBy, setOrderBy] = React.useState('calories');
   // const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
+  const [dense, setDense] = React.useState(true);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleRequestSort = (event, property) => {
@@ -229,7 +229,7 @@ const UsersTable = () => {
                   return (
                     <TableRow
                       hover
-                      // onClick={() => console.log(row)}
+                      onClick={() => setUser(row)}
                       tabIndex={-1}
                       key={row.id}
                     >

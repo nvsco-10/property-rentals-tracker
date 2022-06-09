@@ -2,11 +2,11 @@ import * as React from 'react';
 import Wrapper from '../assets/wrappers/Modal'
 import Box from '@mui/material/Box';
 import { useAppContext } from '../context/appContext';
-import { FormRow, FormRowSelect, Alert } from './index.js'
+import { FormRow, FormRowSelectRole, Alert } from './index.js'
 import Modal from '@mui/material/Modal';
 
 export default function AddUser({ open, setOpen }) {
-  const{ isEditing, displayAlert, handleChange, showAlert, clearValues } = useAppContext()
+  const{ isEditing, displayAlert, handleChange, showAlert, clearValues, username, password, firstName, lastName, email, isAdmin, createUser, updateUser } = useAppContext()
 
   const handleClose = () => {
     setOpen(false);
@@ -23,16 +23,39 @@ export default function AddUser({ open, setOpen }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // if(!username  || !email || !firstName || !lastName) {
-    //   displayAlert()
-    //   return
-    // }
-
-    if(isEditing) {
-      console.log('edit')
+    if( !username || !firstName || !lastName || !email ) {
+      displayAlert()
       return
     }
 
+    if(!isEditing && !password) {
+      displayAlert()
+      return
+    }
+   
+    if(isEditing) {
+      const currentUser = {
+        username,
+        firstName,
+        lastName,
+        email,
+        isAdmin
+      }
+
+      updateUser(currentUser)
+      return
+    }
+
+    const currentUser = {
+      username,
+      password,
+      firstName,
+      lastName,
+      email,
+      isAdmin
+    }
+
+    createUser(currentUser)
   }
 
   // modal box style from MUI
@@ -69,43 +92,45 @@ export default function AddUser({ open, setOpen }) {
                 type='text'
                 labelText='username'
                 name='username'
-                // value={actionItem}
+                value={username}
                 handleChange={handleUserInput}
               />
+              {!isEditing && 
               <FormRow
                 type='password'
                 labelText='password'
                 name='password'
-                // value={actionItem}
+                value={password}
                 handleChange={handleUserInput}
               />
+              }
               <FormRow
                 type='text'
                 labelText='first name'
                 name='firstName'
-                // value={details}
+                value={firstName}
                 handleChange={handleUserInput}
               />
               <FormRow
                 type='text'
                 labelText='last name'
                 name='lastName'
-                // value={details}
+                value={lastName}
                 handleChange={handleUserInput}
               />
                <FormRow
                 type='text'
                 labelText='email'
                 name='email'
-                // value={details}
+                value={email}
                 handleChange={handleUserInput}
               />
-              <FormRowSelect
-                labelText='Admin'
+              <FormRowSelectRole
+                labelText='role'
                 name='isAdmin'
-                // value={actionStatus} 
+                value={isAdmin} 
                 handleChange={handleUserInput}
-                list={["true", "false"]}
+                list={["admin", "user"]}
               />
             </div>
           

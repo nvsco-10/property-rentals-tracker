@@ -3,9 +3,10 @@ import { useAppContext } from '../context/appContext'
 import Wrapper from '../assets/wrappers/Modal'
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
+import { Alert } from '.'
 
 const DeleteAlert = ({ open, setOpen, type }) => {
-  const { activeRental, activeAction, activeNote, deleteRental, deleteAction, deleteNote, deleteOwner } = useAppContext();
+  const { activeRental, activeAction, activeNote, deleteRental, deleteAction, deleteNote, deleteOwner, deleteUser, showAlert, activeUser } = useAppContext();
 
   const handleClose = () => {
     setOpen(false);
@@ -28,6 +29,10 @@ const DeleteAlert = ({ open, setOpen, type }) => {
 
     if(type === 'owner') {
       deleteOwner()
+    }
+
+    if(type === 'user') {
+      deleteUser()
     }
 
   }
@@ -53,10 +58,14 @@ const DeleteAlert = ({ open, setOpen, type }) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style} className='box'>
-          <Wrapper>
-            <p>{`Are you sure you want to delete this ${type}?`}</p>
-            <p>Click 'Delete' to proceed.</p>
 
+          <Wrapper>
+            { showAlert && <Alert/>}
+            {type === 'user' ? 
+              <p>{`Are you sure you want to delete user: ${activeUser.username}?`}</p> :
+              <p>{`Are you sure you want to delete this ${type}?`}</p>
+            }
+            <p>Click 'Delete' to proceed.</p>
             <div className='btn-container'>
               <button className='btn delete-btn' onClick={handleSubmit}>Delete</button>
               <button className='btn cancel-btn' onClick={handleClose}>Cancel</button>

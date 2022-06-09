@@ -53,7 +53,7 @@ export default function CollapsibleTable() {
       return { id: actions._id, action: actions.actionItem, priority: actions.priority, createdAt: moment(actions.createdAt).format('YYYY-MM-DD, HH:mm:ss') }
     })
 
-    return createData(rental._id, `${rental.streetAddress} ${rental.city}`, rental.status, rental.priority, rental.owner.name || '', rental.assigned.username || '', moment(rental.updatedAt).format('YYYY-MM-DD, HH:mm:ss'), actions)
+    return createData(rental._id, `${rental.streetAddress} ${rental.city}`, rental.status, rental.priority, rental.owner?.name || '', rental.assigned.username || '', moment(rental.updatedAt).format('YYYY-MM-DD, HH:mm:ss'), actions)
   })
 
   function descendingComparator(a, b, orderBy) {
@@ -309,7 +309,7 @@ export default function CollapsibleTable() {
   const [orderBy, setOrderBy] = React.useState('status');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
+  const [dense, setDense] = React.useState(true);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   // collapse
   const [open, setOpen] = React.useState(false);

@@ -10,9 +10,16 @@ import { DISPLAY_ALERT,
          SETUP_USER_ERROR, 
          TOGGLE_SIDEBAR,
          LOGOUT_USER,
+         CREATE_USER_BEGIN,
+         CREATE_USER_SUCCESS,
+         CREATE_USER_ERROR,
+         SET_ACTIVE_USER,
+         SET_EDIT_USER,
          UPDATE_USER_BEGIN,
          UPDATE_USER_SUCCESS,
+         UPDATE_CURRENTUSER_SUCCESS,
          UPDATE_USER_ERROR,
+         DELETE_ADMIN_ERROR,
          GET_USERS_BEGIN,
          GET_USERS_SUCCESS,
          GET_USERS_ERROR,
@@ -85,6 +92,13 @@ const initialState = {
   ownerName: '',
   activeOwner: {},
   ownerRentals: [],
+  activeUser: {},
+  username: '',
+  password: '',
+  firstName: '',
+  lastName: '',
+  email: '',
+  isAdmin: false,
   isEditing: false,
   editRentalId: '',
   streetAddress: '',
@@ -173,6 +187,7 @@ const AppProvider = ({ children }) => {
     localStorage.removeItem('user')
   }
 
+  // mainly for login - setupUser can also be used for register user functionality if one will be implemented in the future
   const setupUser = async ({ currentUser, endPoint, alertText }) => {
     dispatch({ type: SETUP_USER_BEGIN })
     try {
@@ -185,6 +200,8 @@ const AppProvider = ({ children }) => {
       })
 
       addUserToLocalStorage({ user, token })
+
+      clearValues()
 
     } catch(error) {
       if(error.response.status !== 401) {
@@ -208,25 +225,102 @@ const AppProvider = ({ children }) => {
     removeUserFromLocalStorage()
   }
 
+  // for manage users page
+  const createUser = async (currentUser) => {
+    dispatch({ type: CREATE_USER_BEGIN })
+    try {
+      const { data } = await axios.post(`/api/v1/auth/createUser`, currentUser)
+      const { user } = data
+
+      dispatch({
+        type: CREATE_USER_SUCCESS,
+      })
+
+      clearValues()
+      getUsers()
+
+    } catch(error) {
+      if(error.response.status !== 401) {
+        dispatch({
+          type: CREATE_USER_ERROR,
+          payload: { msg: error.response.data.msg }
+        })
+      }
+      
+    }
+    
+    clearAlert()
+  }
+
+  const setUser = (user) => {
+    dispatch({ 
+      type: SET_ACTIVE_USER,
+      payload: {
+        activeUser: user,
+      }
+    })
+  }
+
+  const setEditUser = (id) => {
+   
+    dispatch({ 
+      type: SET_EDIT_USER, 
+      payload: 
+        { 
+          id: id
+        } 
+    })
+  }
+
   const updateUser = async (currentUser) => {
     dispatch({ type: UPDATE_USER_BEGIN })
     try {
-      const { data } = await authFetch.patch('/auth/updateUser', currentUser)
+      const { activeUser, user } = state
+      const { data } = await authFetch.patch(`/auth/users/${activeUser.id}`, currentUser)
       
-      const { user, token } = data
 
-      dispatch({ 
-        type: UPDATE_USER_SUCCESS,
-        payload: { user, token } 
-      })
+      if(activeUser.id === user._id) {
+        dispatch({ 
+          type: UPDATE_CURRENTUSER_SUCCESS,
+          payload: { 
+            user: data.user
+          } 
+        })
+      }
 
-      addUserToLocalStorage({ user, token })
+      if(activeUser.id !== user._id) {
+        dispatch({ type: UPDATE_USER_SUCCESS })
+      }
+
+      clearValues()
+      getUsers()
 
     } catch (error) {
       dispatch({ 
         type: UPDATE_USER_ERROR,
         payload: { msg: error.response.data.msg }
       })
+    }
+    clearAlert()
+  }
+
+  const deleteUser = async () => {
+    const { activeUser } = state
+
+    try {
+      if(activeUser.id === process.env.REACT_APP_ADMIN) {
+        dispatch({ 
+          type: DELETE_ADMIN_ERROR
+        })
+        clearAlert()
+        return
+      }
+      await authFetch.delete(`/auth/users/${activeUser.id}`)
+
+      getUsers()
+
+    } catch (error) {
+      console.log(error.msg)
     }
     clearAlert()
   }
@@ -782,7 +876,11 @@ const AppProvider = ({ children }) => {
         setupUser,
         toggleSidebar,
         logoutUser,
+        createUser,
+        setUser,
+        setEditUser,
         updateUser,
+        deleteUser,
         getUsers,
         handleChange,
         clearValues,

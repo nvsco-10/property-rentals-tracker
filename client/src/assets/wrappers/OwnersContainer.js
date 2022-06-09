@@ -57,6 +57,7 @@ const Wrapper = styled.div`
 
     .owner-column, .property-column {
       flex-basis: 50%;
+      margin: 0 0.50rem;
     }
   
   }

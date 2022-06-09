@@ -5,9 +5,16 @@ import { DISPLAY_ALERT,
          SETUP_USER_ERROR, 
          TOGGLE_SIDEBAR,
          LOGOUT_USER,
+         SET_ACTIVE_USER,
+         SET_EDIT_USER,
+         CREATE_USER_BEGIN,
+         CREATE_USER_SUCCESS,
+         CREATE_USER_ERROR,
          UPDATE_USER_BEGIN,
+         UPDATE_CURRENTUSER_SUCCESS,
          UPDATE_USER_SUCCESS,
          UPDATE_USER_ERROR,
+         DELETE_ADMIN_ERROR,
          GET_USERS_BEGIN,
          GET_USERS_SUCCESS,
          GET_USERS_ERROR,
@@ -22,7 +29,7 @@ import { DISPLAY_ALERT,
          SET_EDIT_OWNER,
          EDIT_OWNER_SUCCESS,
          EDIT_OWNER_ERROR,
-         DELETE_OWNER_BEGIN,
+         DELETE_OWNER_ERROR,
          GET_RENTALBYOWNER_BEGIN,
          GET_RENTALBYOWNER_SUCCESS,
          GET_RENTALBYOWNER_ERROR,
@@ -129,6 +136,55 @@ const reducer = (state, action) => {
     }
   }
 
+  if (action.type === CREATE_USER_BEGIN) {
+    return { 
+      ...state, 
+      isLoading: true 
+    }
+  }
+
+  if (action.type === CREATE_USER_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'success',
+      alertText: 'New User Added!',
+    }
+  }
+
+  if (action.type === CREATE_USER_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.msg,
+    }
+  }
+
+  if(action.type === SET_ACTIVE_USER) {
+    return {
+      ...state,
+      activeUser: action.payload.activeUser,
+      }
+  }
+
+  if(action.type === SET_EDIT_USER) {
+    const user = state.users.find((user) => user._id === action.payload.id)
+    const { username, firstName, lastName, email, isAdmin } = user
+   
+    return {
+    ...state,
+    isEditing: true,
+    username: username,
+    firstName: firstName,
+    lastName: lastName,
+    email: email,
+    isAdmin: isAdmin
+    }
+  }
+
   if (action.type === UPDATE_USER_BEGIN) {
     return { 
       ...state, 
@@ -140,7 +196,16 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoading: false,
-      token: action.payload.token,
+      showAlert: true,
+      alertType: 'success',
+      alertText: 'User Updated!',
+    }
+  }
+
+  if (action.type === UPDATE_CURRENTUSER_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
       user: action.payload.user,
       showAlert: true,
       alertType: 'success',
@@ -155,6 +220,16 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: 'danger',
       alertText: action.payload.msg,
+    }
+  }
+
+  if (action.type === DELETE_ADMIN_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: 'Admin Can\'t Be Deleted!',
     }
   }
 
@@ -183,6 +258,12 @@ const reducer = (state, action) => {
   if(action.type === CLEAR_VALUES) {
     const initialState = {
       isEditing: false,
+      username: '',
+      password: '',
+      email: '',
+      firstName: '',
+      lastName: '',
+      isAdmin: false,
       ownerName: '',
       editRentalId: '',
       streetAddress: '',

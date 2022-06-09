@@ -50,10 +50,11 @@ const Wrapper = styled.nav`
     width: 100%;
     background: var(--primary-500);
     box-shadow: var(--shadow-2);
-    padding: 0.5rem;
+    padding: 0.25rem;
     text-align: center;
     visibility: hidden;
     border-radius: var(--borderRadius);
+    margin-top: 0.25rem;
   }
   .show-dropdown {
     visibility: visible;
@@ -67,10 +68,6 @@ const Wrapper = styled.nav`
     cursor: pointer;
     width: 90%;
     padding: 0.75em 0;
-  }
-  .dropdown-btn.first {
-    border-bottom: solid 1px var(--grey-400);
-    padding: 0.25em 0 0.5em;
   }
   .logo-text {
     display: none;

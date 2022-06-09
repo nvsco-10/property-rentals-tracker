@@ -7,6 +7,7 @@ import Navbar from './Navbar'
 import FormRowSelect from './FormRowSelect'
 import FormRowSelectUsers from './FormRowSelectUsers'
 import FormRowSelectOwners from './FormRowSelectOwners'
+import FormRowSelectRole from './FormRowSelectRole'
 import SearchContainer from './SearchContainer'
 import CollapsibleTable from './CollapsibleTable'
 import Loading from './Loading'
@@ -32,4 +33,4 @@ import UsersTable from './UsersTable'
 import AddUser from './AddUser'
 
 
-export { Logo, FormRow, Alert, BigSidebar, SmallSidebar, Navbar, FormRowSelect, FormRowSelectUsers, FormRowSelectOwners, CollapsibleTable, SearchContainer, Loading, SingleRentalContainer, RentalInfo, RentalActions, ActionContainer, DeleteAlert, OwnersContainer, OwnersTable, OwnersProperty, AddButton, CreateOwner, CreateAction, EditDeleteBtns, EditNote, AssignedRentalsContainer, AssignedRentalsTable, StatsContainer, StatsItem, UsersContainer, UsersTable, AddUser }
+export { Logo, FormRow, Alert, BigSidebar, SmallSidebar, Navbar, FormRowSelect, FormRowSelectUsers, FormRowSelectOwners, FormRowSelectRole, CollapsibleTable, SearchContainer, Loading, SingleRentalContainer, RentalInfo, RentalActions, ActionContainer, DeleteAlert, OwnersContainer, OwnersTable, OwnersProperty, AddButton, CreateOwner, CreateAction, EditDeleteBtns, EditNote, AssignedRentalsContainer, AssignedRentalsTable, StatsContainer, StatsItem, UsersContainer, UsersTable, AddUser }

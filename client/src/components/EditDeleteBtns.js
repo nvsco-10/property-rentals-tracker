@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
 import Wrapper from '../assets/wrappers/EditDeleteBtns'
 import { useAppContext } from '../context/appContext'
-import { DeleteAlert, CreateAction, CreateOwner, EditNote } from '.'
+import { DeleteAlert, CreateAction, CreateOwner, EditNote, AddUser } from '.'
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai'
 
 const EditDeleteBtns = ({ type, id }) => {
-  const { setEditAction, setEditNote, setEditOwner } = useAppContext()
+  const { setEditAction, setEditNote, setEditOwner, setEditUser } = useAppContext()
   const [openDelete, setOpenDelete] = useState(false);
   const [openEditAction, setOpenEditAction] = useState(false);
   const [openEditNote, setOpenEditNote] = useState(false)
   const [openEditOwner, setOpenEditOwner] = useState(false)
+  const [openEditUser, setOpenEditUser] = useState(false)
 
   const handleEdit = () => {
     if(type === 'action') {
@@ -26,6 +27,11 @@ const EditDeleteBtns = ({ type, id }) => {
       setEditOwner(id)
       setOpenEditOwner(true)
     }
+
+    if(type === 'user') {
+      setEditUser(id)
+      setOpenEditUser(true)
+    }
   }
 
   const handleDelete = () => {
@@ -40,6 +46,7 @@ const EditDeleteBtns = ({ type, id }) => {
       <CreateAction open={openEditAction} setOpen={setOpenEditAction} />
       <EditNote open={openEditNote} setOpen={setOpenEditNote} />
       <CreateOwner open={openEditOwner} setOpen={setOpenEditOwner} />
+      <AddUser open={openEditUser} setOpen={setOpenEditUser} />
     </Wrapper>
   )
 }
