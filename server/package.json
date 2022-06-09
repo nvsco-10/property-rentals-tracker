@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "nodemon server.js --ignore client",
     "watch": "nodemon server.js",
     "build-client": "cd client && npm run build",
     "install-client": "cd client && npm install",
