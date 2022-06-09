@@ -23,8 +23,9 @@ function App() {
           <Route path="manage-users" element={<ManageUsers/>} />
         </Route>
         <Route path="/login" element={<Login/>} />
+        <Route path="/unauthorized" element={<Unauthorized/>} />
         <Route path="*" element={<Error/>} />
-        <Route path="unauthorized" element={<Unauthorized/>} />
+        
       </Routes>
     </BrowserRouter>
   );

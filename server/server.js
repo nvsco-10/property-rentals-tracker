@@ -32,9 +32,9 @@ app.use('/api/v1/rentals', authenticateUser, rentalsRouter)
 app.use('/api/v1/owners', authenticateUser, ownersRouter)
 
 // only when ready to deploy
-// app.get('*', (req, res) => {
-//   res.sendFile(path.resolve(__dirname, './client/build', 'index.html'))
-// })
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, './client/build', 'index.html'))
+})
 
 app.use(notFoundMiddleware)
 app.use(errorHandleMiddleware)
