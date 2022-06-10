@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import { Alert } from '.'
 
 const DeleteAlert = ({ open, setOpen, type }) => {
-  const { activeRental, activeAction, activeNote, deleteRental, deleteAction, deleteNote, deleteOwner, deleteUser, showAlert, activeUser } = useAppContext();
+  const { user, activeRental, activeAction, activeNote, deleteRental, deleteAction, deleteNote, deleteOwner, deleteUser, showAlert, activeUser } = useAppContext();
 
   const handleClose = () => {
     setOpen(false);
@@ -36,6 +36,7 @@ const DeleteAlert = ({ open, setOpen, type }) => {
     }
     
     if(type === 'user') {
+
       deleteUser()
     }
     
@@ -71,7 +72,7 @@ const DeleteAlert = ({ open, setOpen, type }) => {
             }
             <p>Click 'Delete' to proceed.</p>
             <div className='btn-container'>
-              <button className='btn delete-btn' onClick={handleSubmit}>Delete</button>
+              <button className='btn delete-btn' onClick={handleSubmit} disabled={user.username === "demoAdmin" ? true : false}>Delete</button>
               <button className='btn cancel-btn' onClick={handleClose}>Cancel</button>
             </div>
           </Wrapper>

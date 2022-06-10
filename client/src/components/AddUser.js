@@ -6,7 +6,7 @@ import { FormRow, FormRowSelectRole, Alert } from './index.js'
 import Modal from '@mui/material/Modal';
 
 export default function AddUser({ open, setOpen }) {
-  const{ isEditing, displayAlert, handleChange, showAlert, clearValues, username, password, firstName, lastName, email, isAdmin, createUser, updateUser } = useAppContext()
+  const{ user, isEditing, displayAlert, handleChange, showAlert, clearValues, username, password, firstName, lastName, email, isAdmin, createUser, updateUser } = useAppContext()
 
   const handleClose = () => {
     setOpen(false);
@@ -141,7 +141,7 @@ export default function AddUser({ open, setOpen }) {
             </div>
           
             <div className='btn-container'>
-              <button className='btn submit-btn' onClick={handleSubmit}>Submit</button>
+              <button className='btn submit-btn' onClick={handleSubmit} disabled={user.username === "demoAdmin" ? true : false}>Submit</button>
               <button className='btn cancel-btn' onClick={handleClose}>Cancel</button>
             </div>
           </Wrapper>
