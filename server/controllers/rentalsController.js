@@ -153,6 +153,8 @@ const updateRental = async ({ body, params },res) => {
 }
 
 const deleteRental = async ({ params },res) => {
+  const deletedActions = await Action.deleteMany({ rentalId: params.id })
+
   const deletedRental = await Rental.findOneAndDelete({ _id: params.id })
 
   if (!deletedRental) {
@@ -160,6 +162,7 @@ const deleteRental = async ({ params },res) => {
   }
 
   res.status(StatusCodes.OK).json({ msg: 'Success! Rental removed' })
+ 
 }
 
 const createAction = async ({ body, params, user },res) => {
@@ -169,8 +172,8 @@ const createAction = async ({ body, params, user },res) => {
     throw new BadRequestError('Please provide an action item')
   }
 
-  // user.userId '629657dff0dd6759ce1fec52'
   body.createdBy = user.userId
+  body.rentalId = params.id
 
   const action = await Action.create(body) 
 

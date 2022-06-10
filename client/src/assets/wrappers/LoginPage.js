@@ -27,12 +27,44 @@ const Wrapper = styled.section`
   .btn {
     margin-top: 1rem;
   }
-  .member-btn {
-    background: transparent;
-    border: transparent;
-    color: var(--primary-500);
+  .toggle {
+    color: blue;
     cursor: pointer;
-    letter-spacing: var(--letterSpacing);
   }
+
+  .demo-login {
+    display: grid;
+    row-gap: 2rem;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1rem;
+
+    .account {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      padding: 1rem 0;
+
+      font-size: 0.75rem;
+      background: none;
+      border: none;
+
+
+      .icon {
+        font-size: 2rem;
+        padding-bottom: 0.20rem;
+      }
+
+    }
+
+    .account:hover {
+      background-color: var(--grey-100)
+    }
+
+  }
+
+ 
+
 `
 export default Wrapper

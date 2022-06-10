@@ -51,6 +51,10 @@ const ActionSchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: 'User',
     },
+    rentalId: {
+      type: mongoose.Types.ObjectId,
+      ref: 'Rental',
+    },
     notes: [noteSchema],
   },
   {

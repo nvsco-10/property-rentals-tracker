@@ -79,7 +79,7 @@ const reducer = (state, action) => {
       ...state,
       showAlert: true,
       alertType: 'danger',
-      alertText: 'Please provide required values!'
+      alertText: action.payload.alertText || 'Please provide required values!'
     }
   }
 

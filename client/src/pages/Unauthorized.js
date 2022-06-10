@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import img from '../assets/images/not-found.svg'
+import img from '../assets/images/warning.svg'
 import Wrapper from '../assets/wrappers/ErrorPage'
 
 const Unauthorized = () => {
@@ -7,8 +7,8 @@ const Unauthorized = () => {
     <Wrapper className='full-page'>
       <div>
         <img src={img} alt='not found' />
-        <h3>YOU ARE NOT AUTHORIZED TO ACCESS THIS PAGE</h3>
-        <p>text</p>
+        <h3>Unauthorized Access!</h3>
+        <p>Sorry you can't view this page.</p>
         <Link to='/'>back home</Link>
       </div>
     </Wrapper>

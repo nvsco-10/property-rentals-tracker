@@ -47,7 +47,12 @@ const AddRental = () => {
       displayAlert()
       return
     }
-    
+
+    if (zipCode.length < 5 || zipCode.length > 10) {
+      displayAlert('Zip Code must be between 5 and 10 digits')
+      return
+    }
+
     if (isEditing) {
       const response = editRental()
    

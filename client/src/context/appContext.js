@@ -166,8 +166,13 @@ const AppProvider = ({ children }) => {
     }
   )
 
-  const displayAlert = () => {
-    dispatch({type: DISPLAY_ALERT})
+  const displayAlert = (alertText) => {
+    dispatch({
+      type: DISPLAY_ALERT,
+      payload: {
+        alertText: alertText
+      }
+      })
     clearAlert()
   }
 
