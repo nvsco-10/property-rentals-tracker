@@ -57,15 +57,23 @@ const ActionContainer = () => {
               value={note}
               onChange={handleNoteInput}
             />
-            <button className='btn addnote-btn' onClick={handleNoteSubmit}>Add note</button>
+            <button className='btn addnote-btn' onClick={handleNoteSubmit} disabled={note.length < 401 ? false : true}>Add note</button>
+            <p className={note.length < 401 ? '' : 'danger'}>
+              {note.length} / 400
+              <span className={note.length < 401 ? '' : 'active'}>
+                note length has been exceeded!
+              </span>
+            </p>
           </div>
           <div className='body'>
             {activeAction?.notes?.length > 0 ? (activeAction.notes.map(note => {
               return (
               <div onClick={() => setNote(note)} key={note._id} className='note-container'>
-                <div className='row'>
-                  <p className='note'>{note.note}</p>
+                <div className='row end'>
                   <EditDeleteBtns type='note' id={note._id} />
+                </div>
+                <div className='row start'>
+                  <p className='note'>{note.note}</p>
                 </div>
                 <div className='row'>
                   <p className='details'>Added by: {note.createdBy.username}</p>

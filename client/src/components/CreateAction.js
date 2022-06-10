@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react'
 import Wrapper from '../assets/wrappers/Modal'
 import Box from '@mui/material/Box';
 import { useAppContext } from '../context/appContext';
@@ -44,7 +45,13 @@ export default function ActionContainer({ open, setOpen }) {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 450,
+    width: {
+      xs: 380, 
+      sm: 450,
+      md: 450, 
+      lg: 450, 
+      xl: 450, 
+    },
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
@@ -74,6 +81,7 @@ export default function ActionContainer({ open, setOpen }) {
                 name='actionItem'
                 value={actionItem}
                 handleChange={handleActionInput}
+                maxLength={100}
               />
               <FormRow
                 type='text'
@@ -81,6 +89,7 @@ export default function ActionContainer({ open, setOpen }) {
                 name='details'
                 value={details}
                 handleChange={handleActionInput}
+                maxLength={400}
               />
               <FormRowSelect
                 labelText='status'
@@ -99,7 +108,13 @@ export default function ActionContainer({ open, setOpen }) {
             </div>
           
             <div className='btn-container'>
-              <button className='btn submit-btn' onClick={handleSubmit}>Submit</button>
+              <button 
+                className='btn submit-btn' 
+                onClick={handleSubmit} 
+                disabled={actionItem?.length > 100 || details?.length > 400 ? true : false}
+              >
+                Submit
+              </button>
               <button className='btn cancel-btn' onClick={handleClose}>Cancel</button>
             </div>
           </Wrapper>

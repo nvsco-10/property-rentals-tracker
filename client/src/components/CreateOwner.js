@@ -42,7 +42,13 @@ const CreateOwner = ({ open, setOpen }) => {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 450,
+    width: {
+      xs: 380, 
+      sm: 450,
+      md: 450, 
+      lg: 450, 
+      xl: 450, 
+    },
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
@@ -69,11 +75,18 @@ const CreateOwner = ({ open, setOpen }) => {
                 name='ownerName'
                 value={ownerName}
                 handleChange={handleInput}
+                maxLength={50}
               />
             </div>
           
             <div className='btn-container'>
-              <button className='btn submit-btn' onClick={handleSubmit}>Submit</button>
+              <button 
+                className='btn submit-btn' 
+                onClick={handleSubmit}
+                disabled={ownerName?.length > 50 ? true : false}
+              >
+                Submit
+              </button>
               <button className='btn cancel-btn' onClick={handleClose}>Cancel</button>
             </div>
           </Wrapper>

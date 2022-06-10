@@ -1,30 +1,5 @@
 import mongoose from 'mongoose'
 
-// Schema to create note - not a mongoose model
-const noteSchema = new mongoose.Schema(
-  {
-    note: {
-      type: String,
-      required: [true, 'Please provide a note'],
-      minlength: 3,
-      maxLength: 400,
-      trim: true,
-    },
-    createdBy: {
-      type: mongoose.Types.ObjectId,
-      ref: 'User',
-      required: true,
-    },
-  },
-  {
-    toJSON: {
-      virtuals: true,
-    },
-    id: false,
-    timestamps: true
-  }
-);
-
 const RentalSchema = new mongoose.Schema(
   {
     streetAddress: {
@@ -74,7 +49,6 @@ const RentalSchema = new mongoose.Schema(
         ref: 'Action'
       }
     ],
-    notes: [noteSchema],
   },
   {
     toJSON: {
@@ -91,12 +65,6 @@ RentalSchema
     .get(function() {
         return this.actions.length;
     })
-
-RentalSchema
-  .virtual('noteCount')
-  .get(function() {
-      return this.notes.length;
-})
 
 RentalSchema
   .virtual('fullAddress')

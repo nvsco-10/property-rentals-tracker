@@ -40,7 +40,7 @@ const Wrapper = styled.nav`
   }
 
   .settings-btn {
-    padding: 0.75em;
+    padding: 0.5em;
   }
 
   .dropdown {
@@ -67,7 +67,6 @@ const Wrapper = styled.nav`
     text-transform: capitalize;
     cursor: pointer;
     width: 90%;
-    padding: 0.75em 0;
   }
   .logo-text {
     display: none;

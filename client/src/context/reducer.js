@@ -628,6 +628,16 @@ const reducer = (state, action) => {
 
   // }
 
+  if (action.type === CREATE_NOTE_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.msg,
+    }
+  }
+
   if(action.type === SET_EDIT_NOTE) {
     const note = state.activeAction.notes.find((note) => note._id === action.payload.id)
    

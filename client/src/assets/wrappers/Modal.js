@@ -15,6 +15,25 @@ const Wrapper = styled.div`
     font-size: 0.875rem;
   }
 
+  .warning {
+    padding-left: 0.75rem;
+    margin: 0.25rem 0 0; 
+    font-size: 0.75rem;
+  }
+
+  .warning.danger {
+    color: red;
+  }
+
+  span {
+    visibility: hidden;
+    margin: 0 0.5rem;
+  }
+
+  span.active {
+    visibility: visible;
+  }
+
   .btn-container {
     display: flex;
     justify-content: flex-end;

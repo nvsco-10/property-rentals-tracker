@@ -224,7 +224,10 @@ const createNote = async ({ body, params, user },res) => {
     throw new BadRequestError('Please provide a note')
   }
 
-  // user.userId '629657dff0dd6759ce1fec52'
+  if( note.length > 400 ) {
+    throw new BadRequestError('Note character length has been exceeded. Only 400 characters allowed ')
+  }
+
   body.createdBy = user.userId
 
   const updatedAction = await Action.findOneAndUpdate(

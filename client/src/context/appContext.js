@@ -809,16 +809,13 @@ const AppProvider = ({ children }) => {
         updatedAt: updatedAction.updatedAt
       })
 
-      // dispatch({ 
-      //   type: CREATE_NOTE_SUCCESS,
-      //   payload: {
-      //     activeAction: action
-      //   } 
-      // })
-
     } catch (error) {
-      // console.log(error.msg)
-      logoutUser()
+      dispatch({ 
+        type: CREATE_NOTE_ERROR,
+        payload: {
+          payload: { msg: error.response.data.msg }
+        } 
+      })
     }
   }
 

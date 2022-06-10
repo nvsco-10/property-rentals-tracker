@@ -115,7 +115,7 @@ export default function CollapsibleTable() {
       id: 'assigned',
       numeric: false,
       disablePadding: false,
-      label: 'assigned',
+      label: 'Assigned',
     },
     {
       id: 'updatedAt',

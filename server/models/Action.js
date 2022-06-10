@@ -6,7 +6,6 @@ const noteSchema = new mongoose.Schema(
     note: {
       type: String,
       required: [true, 'Please provide a note'],
-      minlength: 3,
       maxLength: 400,
       trim: true,
     },
@@ -30,7 +29,6 @@ const ActionSchema = new mongoose.Schema(
     actionItem: {
       type: String,
       required: [true, 'Please provide an action item'],
-      minlength: 3,
       maxlength: 100,
       trim: true,
     },
