@@ -11,9 +11,9 @@ const SingleRental = () => {
   useEffect(() => {
     getRentalById(id)
 
-    if (isLoading) {
-      return <Loading center />
-    }
+    // if (isLoading) {
+    //   return <Loading center />
+    // }
   }, [])
 
   return (

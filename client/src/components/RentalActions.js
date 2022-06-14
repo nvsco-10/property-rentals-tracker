@@ -20,7 +20,7 @@ import AddButton from './AddButton';
 import moment from 'moment'
 
 const RentalActions = () => {
-  const { activeRental, actions, isLoading, setAction, activeAction, createAction, getAllRentals } = useAppContext()
+  const { activeRental, actions, setAction } = useAppContext()
   const { _id } = activeRental
 
   useEffect(() => {
@@ -43,7 +43,6 @@ const RentalActions = () => {
   }
 
   const rows = actions?.map(action => {
-    // console.log(action)
     return createData(action._id, action.actionItem, action.details, action.priority, action.status, moment(action.createdAt).format('YYYY-MM-DD, HH:mm:ss'), action.createdBy.username, action.notes)
   })
 

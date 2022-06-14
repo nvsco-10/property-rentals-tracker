@@ -39,7 +39,7 @@ const SearchContainer = () => {
             name='searchStatus'
             value={searchStatus}
             handleChange={handleSearch}
-            list={['active', 'inactive', 'all']}
+            list={['active', 'inactive', 'all', 'open', 'pending-lease', 'maintenance']}
           />
           <button
             className='btn btn-block btn-danger'

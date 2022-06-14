@@ -8,7 +8,7 @@ import Loading from './Loading'
 import moment from 'moment'
 
 const ActionContainer = () => {
-  const { rentalById, activeAction, activeNote, isLoading, handleChange, note, createNote, setNote } = useAppContext()
+  const { activeAction, handleChange, note, createNote, setNote } = useAppContext()
 
   const handleNoteInput = (e) => {
     const name = e.target.name
@@ -83,7 +83,9 @@ const ActionContainer = () => {
             )
             })
           ) : (
-            <div>No notes to display...</div>
+            <div>
+              <p className='text-small'>No notes to display...</p>
+            </div>
           )}
         </div>
       </div>

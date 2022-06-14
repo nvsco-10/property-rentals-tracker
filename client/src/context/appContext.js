@@ -653,6 +653,7 @@ const AppProvider = ({ children }) => {
     try {
       const { data } = await authFetch.get(`/rentals/${id}`)
       const { rental } = data
+      // console.log(rental)
 
       dispatch({ 
         type: GET_RENTALBYID_SUCCESS,

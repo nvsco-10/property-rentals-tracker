@@ -28,7 +28,7 @@ const Wrapper = styled.section`
     margin-top: 1rem;
   }
   .toggle {
-    color: blue;
+    color: rgb(37, 120, 193);
     cursor: pointer;
   }
 
@@ -54,6 +54,7 @@ const Wrapper = styled.section`
       .icon {
         font-size: 2rem;
         padding-bottom: 0.20rem;
+        color: var(--primary-500)
       }
 
     }

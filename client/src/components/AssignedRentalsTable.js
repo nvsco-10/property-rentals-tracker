@@ -366,7 +366,7 @@ export default function AssignedRentalsTable() {
                   
 
                   return (
-                    <CollapsibleRow row={row} />
+                    <CollapsibleRow key={row.id} row={row} />
                   );
                 })}
               {emptyRows > 0 && (

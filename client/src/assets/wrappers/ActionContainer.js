@@ -63,14 +63,14 @@ const Wrapper = styled.article`
         width: 100%;
         resize: vertical;
         line-height: inherit;
-        font-size: inherit;
+        font-size: var(--small-text);
         padding: 0.5em;
       }
 
       .addnote-btn {
         background: #112658;
         color: white;
-        font-size: inherit;
+        font-size: var(--small-text);
         padding: 0.25em;
       }
 
@@ -110,6 +110,7 @@ const Wrapper = styled.article`
 
         .note {
           text-align: justify;
+          font-size: var(--small-text);
           padding: 0.5em;
         }
 

@@ -9,7 +9,7 @@ import Loading from './Loading'
 import React from 'react'
 
 const SingleRentalContainer = () => {
-  const { getRentalById, isLoading, activeAction, activeRental } = useAppContext()
+  const { isLoading} = useAppContext()
 
   if(isLoading) {
     return <Loading center/>

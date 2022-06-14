@@ -117,7 +117,7 @@ h5 {
   font-size: 1.25rem;
 }
 
-small,
+.small,
 .text-small {
   font-size: var(--small-text);
 }

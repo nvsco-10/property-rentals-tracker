@@ -38,6 +38,18 @@ const getAllRentals = async (req,res) => {
     queryObject.status = ['closed']
   }
 
+  if(status === 'open') {
+    queryObject.status = ['open']
+  }
+
+  if(status === 'pending-lease') {
+    queryObject.status = ['pending-lease']
+  }
+
+  if(status === 'maintenance') {
+    queryObject.status = ['maintenance']
+  }
+
   if(search) {
     queryObject.streetAddress = { $regex: search, $options: 'i'}
   }
@@ -237,6 +249,16 @@ const createNote = async ({ body, params, user },res) => {
     { _id: params.actionId },
     { $addToSet: { notes: body } },
     { runValidators: true, new: true }
+  ).populate(
+    { 
+      path:  'notes',
+      populate: [
+        {
+          path: 'createdBy',
+          model: 'User', 
+        }
+      ]
+    }
   )
 
   if( !updatedAction ) {
@@ -261,6 +283,16 @@ const updateNote = async ({ body, params },res) => {
     { _id: params.actionId, "notes._id": params.noteId  },
     { $set: { "notes.$.note": note  } },
     { new: true }
+  ).populate(
+    { 
+      path:  'notes',
+      populate: [
+        {
+          path: 'createdBy',
+          model: 'User', 
+        }
+      ]
+    }
   )
 
   if( !updatedAction ) {
@@ -275,6 +307,16 @@ const deleteNote = async ({ params }, res) => {
     { _id: params.actionId },
     { $pull: { notes: { _id: params.noteId } } },
     { new: true }
+  ).populate(
+    { 
+      path:  'notes',
+      populate: [
+        {
+          path: 'createdBy',
+          model: 'User', 
+        }
+      ]
+    }
   )
 
   if (!updateAction) {
