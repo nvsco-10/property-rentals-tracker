@@ -667,13 +667,6 @@ const reducer = (state, action) => {
     }
   }
 
-  // if(action.type === DELETE_NOTE_BEGIN) {
-  //   return {
-  //     ...state,
-  //     // isLoading: true
-  //   }
-  // }
-
   if(action.type === CLEAR_FILTERS) {
     return {
       ...state,
