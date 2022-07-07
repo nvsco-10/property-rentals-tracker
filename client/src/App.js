@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Login, Error, ProtectedRoute, Unauthorized } from './pages'
-import { AddRental, AllRentals, AllOwners, Profile, Home, SingleRental, ManageUsers, SharedLayout } from './pages/Dashboard'
+import { AddRental, AllRentals, AllOwners, Home, SingleRental, ManageUsers, SharedLayout } from './pages/Dashboard'
 
 function App() {
   return (
@@ -19,7 +19,6 @@ function App() {
           <Route path="rentals/:id" element={<SingleRental/>} />
           <Route path="add-rental" element={<AddRental/>} />
           <Route path="all-owners" element={<AllOwners/>} />
-          <Route path="profile" element={<Profile/>} />
           <Route path="manage-users" element={<ManageUsers/>} />
         </Route>
         <Route path="/login" element={<Login/>} />

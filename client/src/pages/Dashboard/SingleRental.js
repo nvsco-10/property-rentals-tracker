@@ -1,28 +1,21 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useAppContext } from '../../context/appContext'
-import { Loading, SingleRentalContainer } from '../../components'
+import { SingleRentalContainer } from '../../components'
 
 const SingleRental = () => {
   const { id } = useParams()
-  const { getRentalById, activeRental, isLoading } = useAppContext()
-  const { _id } = activeRental
+  const { getRentalById, activeRental, } = useAppContext()
 
   useEffect(() => {
     getRentalById(id)
-
-    // if (isLoading) {
-    //   return <Loading center />
-    // }
   }, [])
 
   return (
     <>
-    {activeRental && (
-      <>
-      <SingleRentalContainer />
-      </>
-    )}
+      {activeRental && (
+        <SingleRentalContainer />
+      )}
     </>
   )
 }
