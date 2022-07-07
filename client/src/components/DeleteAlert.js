@@ -72,7 +72,7 @@ const DeleteAlert = ({ open, setOpen, type }) => {
             }
             <p>Click 'Delete' to proceed.</p>
             <div className='btn-container'>
-              <button className='btn delete-btn' onClick={handleSubmit} disabled={user.username === "demoAdmin" ? true : false}>Delete</button>
+              <button className='btn delete-btn' onClick={handleSubmit} disabled={user.username === "demoAdmin" && type === 'user' ? true : false}>Delete</button>
               <button className='btn cancel-btn' onClick={handleClose}>Cancel</button>
             </div>
           </Wrapper>
