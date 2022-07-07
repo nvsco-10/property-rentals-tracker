@@ -1,4 +1,4 @@
-# Property Rentals Managers
+# Property Rentals Tracker
 
 ![MIT License](https://img.shields.io/badge/license-MIT-blue)
 
