@@ -2,7 +2,6 @@ import Rental from '../models/Rental.js'
 import Action from '../models/Action.js'
 import { StatusCodes } from 'http-status-codes'
 import { BadRequestError, NotFoundError } from '../errors/index.js'
-import mongoose from 'mongoose'
 
 // import checkPermissions from '../utils/checkPermissions.js'
 
@@ -326,4 +325,19 @@ const deleteNote = async ({ params }, res) => {
   res.status(StatusCodes.OK).json({ updatedAction })
 }
 
-export { createRental, getAllRentals, getAssignedRentals, getRentalById, getRentalsByOwner, updateRental, deleteRental, showStats, createAction, updateAction, deleteAction, createNote, updateNote,deleteNote }
+export { 
+  createRental, 
+  getAllRentals, 
+  getAssignedRentals, 
+  getRentalById, 
+  getRentalsByOwner, 
+  updateRental, 
+  deleteRental, 
+  showStats, 
+  createAction, 
+  updateAction, 
+  deleteAction, 
+  createNote, 
+  updateNote,
+  deleteNote 
+}

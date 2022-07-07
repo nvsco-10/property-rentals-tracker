@@ -1,7 +1,22 @@
 import express from 'express'
 const router = express.Router()
 
-import { createRental, getAllRentals, getAssignedRentals, getRentalById, getRentalsByOwner, updateRental, deleteRental, showStats, createAction, updateAction, deleteAction, createNote, updateNote, deleteNote  } from '../controllers/rentalsController.js'
+import { 
+  createRental, 
+  getAllRentals, 
+  getAssignedRentals, 
+  getRentalById, 
+  getRentalsByOwner, 
+  updateRental, 
+  deleteRental, 
+  showStats, 
+  createAction, 
+  updateAction, 
+  deleteAction, 
+  createNote, 
+  updateNote, 
+  deleteNote  
+} from '../controllers/rentalsController.js'
 
 router.route('/')
   .get(getAllRentals)
@@ -21,7 +36,6 @@ router.route('/actions/:actionId')
 router.route('/owners/:ownerId')
   .get(getRentalsByOwner)
 
-
 router.route('/actions/:actionId/:noteId')
   .patch(updateNote)
   .delete(deleteNote)
@@ -31,7 +45,5 @@ router.route('/:id')
   .post(createAction)
   .patch(updateRental)
   .delete(deleteRental)
-
-
 
 export default router

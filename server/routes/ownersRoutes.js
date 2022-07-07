@@ -1,7 +1,12 @@
 import express from 'express'
 const router = express.Router()
 
-import { createOwner, updateOwner, deleteOwner, getOwners } from '../controllers/ownersController.js'
+import { 
+  createOwner, 
+  updateOwner, 
+  deleteOwner, 
+  getOwners 
+} from '../controllers/ownersController.js'
 
 router.route('/')
   .get(getOwners)

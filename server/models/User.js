@@ -3,7 +3,6 @@ import bcrypt from 'bcryptjs'
 import validator from 'validator'
 import jwt from 'jsonwebtoken'
 
-
 const UserSchema = new mongoose.Schema(
   {
     username: {

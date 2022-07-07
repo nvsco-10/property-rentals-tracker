@@ -61,7 +61,6 @@ const login = async (req,res) => {
 }
 
 const updateUser = async ({ body, params },res) => {
-  // add assignedRentals
  const { username, email, firstName, lastName, isAdmin } = body
 
  if ( !username || !email || !firstName || !lastName ) {
