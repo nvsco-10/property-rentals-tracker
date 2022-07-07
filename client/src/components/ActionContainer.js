@@ -1,8 +1,5 @@
 import { useAppContext } from '../context/appContext'
-import { Info, StatusContainer, EditDeleteBtns } from '.'
-
-// Date formatting
-import moment from 'moment'
+import { Info, StatusContainer, EditDeleteBtns, Note } from '.'
 
 // Styles
 import Wrapper from '../assets/wrappers/ActionContainer'
@@ -72,18 +69,11 @@ const ActionContainer = () => {
               <div className='body'>
                 {activeAction?.notes?.length > 0 ? (activeAction.notes.map(note => {
                   return (
-                  <div onClick={() => setActiveNote(note)} key={note._id} className='note-container'>
-                    <div className='row end'>
-                      <EditDeleteBtns type='note' id={note._id} />
-                    </div>
-                    <div className='row start'>
-                      <p className='note'>{note.note}</p>
-                    </div>
-                    <div className='row'>
-                      <p className='details'>Added by: {note.createdBy.username}</p>
-                      <p className='details'>{moment(note.createdAt).format('YYYY-MM-DD, HH:mm:ss')}</p>
-                    </div>
-                  </div>
+                    <Note 
+                      key={note._id}
+                      note={note}
+                      setActiveNote={setActiveNote}
+                    />
                   )
                 })
               ) : (
