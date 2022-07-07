@@ -1,4 +1,3 @@
-import React from 'react'
 import { UsersContainer } from '../../components'
 import { useAppContext } from '../../context/appContext'
 import { Navigate } from 'react-router-dom'

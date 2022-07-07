@@ -1,8 +1,19 @@
 import { useState, useEffect } from 'react'
-import { FormRow, FormRowSelect, FormRowSelectUsers, FormRowSelectOwners, Alert, DeleteAlert } from '../../components'
 import { useAppContext } from '../../context/appContext'
-import Wrapper from '../../assets/wrappers/DashboardFormPage-Medium'
 import { useNavigate } from 'react-router-dom'
+
+// Components
+import { 
+  FormRow, 
+  FormRowSelect, 
+  FormRowSelectUsers, 
+  FormRowSelectOwners, 
+  Alert, 
+  DeleteAlert 
+} from '../../components'
+
+// Styles
+import Wrapper from '../../assets/wrappers/DashboardFormPage-Medium'
 
 const AddRental = () => {
   const navigate = useNavigate();
@@ -32,7 +43,6 @@ const AddRental = () => {
     activeRental
   } = useAppContext()
 
-  // delete alert
   const [open, setOpen] = useState(false);
 
   useEffect(() => {

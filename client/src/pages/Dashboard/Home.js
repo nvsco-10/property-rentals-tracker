@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useAppContext } from '../../context/appContext'
 import { AssignedRentalsContainer, StatsContainer } from '../../components'
 
@@ -12,9 +12,9 @@ const Home = () => {
 
   return (
     <>
-    <h5>XYZ Properties</h5>
-    <StatsContainer />
-    <AssignedRentalsContainer />
+      <h5>XYZ Properties</h5>
+      <StatsContainer />
+      <AssignedRentalsContainer />
     </>
   )
 }

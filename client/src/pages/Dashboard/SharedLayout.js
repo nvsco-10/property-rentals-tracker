@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import { Navbar, SmallSidebar, BigSidebar } from '../../components'
 
+// Styles
 import Wrapper from '../../assets/wrappers/SharedLayout'
 
 const SharedLayout = () => {
