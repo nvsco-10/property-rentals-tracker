@@ -1,26 +1,26 @@
+import * as React from 'react'
 import { useState, useEffect } from 'react'
-import { Logo, FormRow, Alert } from '../components'
-import Wrapper from '../assets/wrappers/LoginPage'
 import { useAppContext } from '../context/appContext'
 import { useNavigate } from 'react-router-dom'
-import { FaUserTie, FaUser } from 'react-icons/fa'
+
+// Components
+import { Logo, FormRow, Alert, DemoButton } from '../components'
+// Styles
+import Wrapper from '../assets/wrappers/LoginPage'
+// Utils
 import demoUsers from '../utils/demoUsers'
 
-import * as React from 'react';
-import Tooltip from '@mui/material/Tooltip';
-import DeleteIcon from '@mui/icons-material/Delete';
-import IconButton from '@mui/material/IconButton';
 
 const Login = () => {
   const navigate = useNavigate()
-  const { admin, bob, jane, alex } = demoUsers
+  const [ admin, bob, jane, alex ] = demoUsers
+  const { user, isLoading, showAlert, displayAlert, setupUser } = useAppContext();
 
   const initialState = {
     username: '',
     password: '',
   }
-  const { user, isLoading, showAlert, displayAlert, setupUser } = useAppContext();
-
+  
   const [formData, setformData] = useState(initialState)
   const [demo, setDemo] = useState(false)
 
@@ -78,41 +78,21 @@ const Login = () => {
         {showAlert && <Alert />}
 
         { demo ? 
-          (
             <div className='demo-login'>
-
-              <Tooltip title="Never at the office" placement="top">
-                <button id='admin' className='account' onClick={loginDemoUser} >
-                  <FaUserTie  className='icon'  />
-                  Demo Admin
-                </button>
-              </Tooltip>
-              
-              <Tooltip title="Bob hates his job" placement="top">
-                <button id='bob' className='account'  onClick={loginDemoUser}>
-                  <FaUser className='icon' />
-                  Demo User Bob
-                </button>
-              </Tooltip>
-
-              <Tooltip title="Jane hates Bob" placement="top">
-                <button id='jane' className='account'  onClick={loginDemoUser} >
-                  <FaUser className='icon' />
-                  Demo User Jane
-                </button>
-              </Tooltip>
-
-              <Tooltip title="Alex is suffering from Imposter Syndrome" placement="top">
-                <button id='alex' className='account' onClick={loginDemoUser} >
-                  <FaUser className='icon' />
-                  Demo User Alex
-                </button>
-              </Tooltip>
-
+              {demoUsers.map(user => {
+                return (
+                <DemoButton 
+                  key={user.id}
+                  id={user.id}
+                  name={user.name}
+                  title={user.title}
+                  handleClick={loginDemoUser}
+                  icon={user.icon}
+                />
+                )
+              })}
             </div>
-          ) 
           : 
-          (
             <>
               {/* username input */}
               <FormRow 
@@ -134,7 +114,7 @@ const Login = () => {
                 submit
               </button>
             </>
-          )
+
         }
 
         <p className='toggle' onClick={() => setDemo(!demo)}>

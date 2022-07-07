@@ -194,9 +194,10 @@ const AppProvider = ({ children }) => {
 
   // mainly for login - setupUser can also be used for register user functionality if one will be implemented in the future
   const setupUser = async ({ currentUser, endPoint, alertText }) => {
+    const { username, password } = currentUser
     dispatch({ type: SETUP_USER_BEGIN })
     try {
-      const { data } = await axios.post(`/api/v1/auth/${endPoint}`, currentUser)
+      const { data } = await axios.post(`/api/v1/auth/${endPoint}`, {username, password})
       const { user, token } = data
 
       dispatch({

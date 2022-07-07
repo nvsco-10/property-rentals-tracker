@@ -25,7 +25,6 @@ function App() {
         <Route path="/login" element={<Login/>} />
         <Route path="/unauthorized" element={<Unauthorized/>} />
         <Route path="*" element={<Error/>} />
-        
       </Routes>
     </BrowserRouter>
   );
