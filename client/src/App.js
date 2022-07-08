@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Login, Error, ProtectedRoute, Unauthorized } from './pages'
+import { Login, NotFound, ProtectedRoute, Unauthorized } from './pages'
 import { AddRental, AllRentals, AllOwners, Home, SingleRental, ManageUsers, SharedLayout } from './pages/Dashboard'
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
         </Route>
         <Route path="/login" element={<Login/>} />
         <Route path="/unauthorized" element={<Unauthorized/>} />
-        <Route path="*" element={<Error/>} />
+        <Route path="*" element={<NotFound/>} />
       </Routes>
     </BrowserRouter>
   );

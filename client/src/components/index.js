@@ -36,6 +36,7 @@ import DemoButton from './DemoButton'
 import Info from './Info'
 import StatusContainer from './StatusContainer'
 import Note from './Note'
+import Error from './Error'
 
 
-export { Logo, DarkLogo, FormRow, Alert, BigSidebar, SmallSidebar, Navbar, FormRowSelect, FormRowSelectUsers, FormRowSelectOwners, FormRowSelectRole, CollapsibleTable, SearchContainer, Loading, SingleRentalContainer, RentalInfo, RentalActions, ActionContainer, DeleteAlert, OwnersContainer, OwnersTable, OwnersProperty, AddButton, CreateOwner, CreateAction, EditDeleteBtns, EditNote, AssignedRentalsContainer, AssignedRentalsTable, StatsContainer, StatsItem, UsersContainer, UsersTable, AddUser, DemoButton, Info, StatusContainer, Note }
+export { Logo, DarkLogo, FormRow, Alert, BigSidebar, SmallSidebar, Navbar, FormRowSelect, FormRowSelectUsers, FormRowSelectOwners, FormRowSelectRole, CollapsibleTable, SearchContainer, Loading, SingleRentalContainer, RentalInfo, RentalActions, ActionContainer, DeleteAlert, OwnersContainer, OwnersTable, OwnersProperty, AddButton, CreateOwner, CreateAction, EditDeleteBtns, EditNote, AssignedRentalsContainer, AssignedRentalsTable, StatsContainer, StatsItem, UsersContainer, UsersTable, AddUser, DemoButton, Info, StatusContainer, Note, Error }
