@@ -1,4 +1,4 @@
-import React from 'react'
+// Material UI components
 import Tooltip from '@mui/material/Tooltip';
 
 const DemoButton = ({ id, title, name, handleClick, icon }) => {

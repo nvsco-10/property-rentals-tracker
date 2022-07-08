@@ -1,12 +1,27 @@
-import React from 'react'
 import { useAppContext } from '../context/appContext'
-import Wrapper from '../assets/wrappers/Modal'
-import Modal from '@mui/material/Modal';
-import Box from '@mui/material/Box';
+
+// Components
 import { Alert } from '.'
 
+// Material UI components
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+
+// Styles
+import Wrapper from '../assets/wrappers/Modal'
+
 const DeleteAlert = ({ open, setOpen, type }) => {
-  const { user, activeRental, activeAction, activeNote, deleteRental, deleteAction, deleteNote, deleteOwner, deleteUser, showAlert, activeUser } = useAppContext();
+  const { 
+    user, 
+    activeAction, 
+    deleteRental, 
+    deleteAction, 
+    deleteNote, 
+    deleteOwner, 
+    deleteUser, 
+    showAlert, 
+    activeUser 
+  } = useAppContext();
 
   const handleClose = () => {
     setOpen(false);
@@ -36,12 +51,10 @@ const DeleteAlert = ({ open, setOpen, type }) => {
     }
     
     if(type === 'user') {
-
       deleteUser()
     }
     
   }
-
 
   const style = {
     position: 'absolute',

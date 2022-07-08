@@ -1,7 +1,13 @@
-import React, { useState } from 'react'
-import Wrapper from '../assets/wrappers/EditDeleteBtns'
+import { useState } from 'react'
 import { useAppContext } from '../context/appContext'
+
+// Components
 import { DeleteAlert, CreateAction, CreateOwner, EditNote, AddUser } from '.'
+
+// Styles
+import Wrapper from '../assets/wrappers/EditDeleteBtns'
+
+// Icons 
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai'
 
 const EditDeleteBtns = ({ type, id }) => {

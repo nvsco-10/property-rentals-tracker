@@ -1,13 +1,35 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react'
-import Wrapper from '../assets/wrappers/Modal'
-import Box from '@mui/material/Box';
 import { useAppContext } from '../context/appContext';
-import { FormRow, FormRowSelect, FormRowSelectUsers, Alert } from './index.js'
+
+// Components
+import { FormRow, FormRowSelect, Alert } from './index.js'
+
+// Material UI components
+import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 
+// Styles
+import Wrapper from '../assets/wrappers/Modal'
+import style from '../utils/modalStyle'
+
 export default function ActionContainer({ open, setOpen }) {
-  const{ isEditing, actionItem, details, actionStatus, actionStatusOptions, actionPriority, actionPriorityOptions, handleChange, createAction, editAction, activeRental, showAlert, activeAction, displayAlert, clearValues } = useAppContext()
+  const { 
+    isEditing, 
+    actionItem, 
+    details, 
+    actionStatus, 
+    actionStatusOptions, 
+    actionPriority, 
+    actionPriorityOptions, 
+    handleChange, 
+    createAction, 
+    editAction, 
+    activeRental, 
+    showAlert, 
+    activeAction, 
+    displayAlert, 
+    clearValues 
+  } = useAppContext()
 
   const { _id } = activeRental
 
@@ -38,24 +60,6 @@ export default function ActionContainer({ open, setOpen }) {
 
     createAction(_id)
   }
-
-  // modal box style from MUI
-  const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: {
-      xs: 380, 
-      sm: 450,
-      md: 450, 
-      lg: 450, 
-      xl: 450, 
-    },
-    bgcolor: 'background.paper',
-    boxShadow: 24,
-    p: 4,
-  };
 
   return (
     <div>

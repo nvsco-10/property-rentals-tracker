@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { GrFormAdd } from 'react-icons/gr'
-import Wrapper from '../assets/wrappers/AddButton'
 import { CreateAction, CreateOwner, AddUser } from '.'
+
+// Styles
+import Wrapper from '../assets/wrappers/AddButton'
 
 const AddButton = ({ type }) => {
   const [openAction, setOpenAction] = useState(false)

@@ -1,12 +1,18 @@
-import React from 'react'
 import { useAppContext } from '../context/appContext'
-import { FormRow, FormRowSelect, Alert } from './index.js'
-import Wrapper from '../assets/wrappers/Modal'
+
+// Components
+import { FormRow,  Alert } from './index.js'
+
+// Material UI components
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 
+// Styles
+import style from '../utils/modalStyle'
+import Wrapper from '../assets/wrappers/Modal'
+
 const EditNote = ({ open, setOpen }) => {
-  const { handleChange, showAlert, displayAlert, activeNote, editedNote, editNote, clearValues } = useAppContext()
+  const { handleChange, showAlert, editedNote, editNote, clearValues } = useAppContext()
 
   const handleClose = () => {
     setOpen(false);
@@ -25,24 +31,6 @@ const EditNote = ({ open, setOpen }) => {
 
     editNote()
   }
-
-  // modal box style from MUI
-  const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: {
-      xs: 380, 
-      sm: 450,
-      md: 450, 
-      lg: 450, 
-      xl: 450, 
-    },
-    bgcolor: 'background.paper',
-    boxShadow: 24,
-    p: 4,
-  };
 
   return (
     <div>

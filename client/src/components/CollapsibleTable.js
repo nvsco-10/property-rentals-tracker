@@ -1,10 +1,9 @@
-import * as React from 'react';
-import { useEffect } from 'react'
-import { useAppContext } from '../context/appContext'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import moment from 'moment'
+import { useAppContext } from '../context/appContext'
+
+// Material UI components
 import PropTypes from 'prop-types';
-import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import Table from '@mui/material/Table';
@@ -15,17 +14,16 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+
+// Date formatting
+import moment from 'moment'
 
 export default function CollapsibleTable() {
 
@@ -126,7 +124,7 @@ export default function CollapsibleTable() {
   ];
   
   function EnhancedTableHead(props) {
-    const { order, orderBy, rowCount, onRequestSort } =
+    const { order, orderBy, onRequestSort } =
       props;
     const createSortHandler = (property) => (event) => {
       onRequestSort(event, property);
@@ -170,157 +168,97 @@ export default function CollapsibleTable() {
     orderBy: PropTypes.string.isRequired,
     rowCount: PropTypes.number.isRequired,
   };
-  
-  // const EnhancedTableToolbar = (props) => {
-  //   const { numSelected } = props;
-  
-  //   return (
-  //     <Toolbar
-  //       sx={{
-  //         pl: { sm: 2 },
-  //         pr: { xs: 1, sm: 1 },
-  //         ...(numSelected > 0 && {
-  //           bgcolor: (theme) =>
-  //             alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
-  //         }),
-  //       }}
-  //     >
-  //       {/* {numSelected > 0 ? (
-  //         <Typography
-  //           sx={{ flex: '1 1 100%' }}
-  //           color="inherit"
-  //           variant="subtitle1"
-  //           component="div"
-  //         >
-  //           {numSelected} selected
-  //         </Typography>
-  //       ) : ( */}
-  //         {/* <Typography
-  //           sx={{ flex: '1 1 100%' }}
-  //           variant="h6"
-  //           id="tableTitle"
-  //           component="div"
-  //         >
-  //           All Rental Properties
-  //         </Typography> */}
-  //       {/* )} */}
-  
-  //       {/* {numSelected > 0 ? (
-  //         <Tooltip title="Delete">
-  //           <IconButton>
-  //             <DeleteIcon />
-  //           </IconButton>
-  //         </Tooltip>
-  //       ) : ( */}
-  //         {/* <Tooltip title="Filter list">
-  //           <IconButton>
-  //             <FilterListIcon />
-  //           </IconButton>
-  //         </Tooltip> */}
-  //       {/* )} */}
-  //     </Toolbar>
-  //   );
-  // };
-  
-  // EnhancedTableToolbar.propTypes = {
-  //   numSelected: PropTypes.number.isRequired,
-  // };
 
   const CollapsibleRow = (props) => {
     const { row } = props;
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
 
     return (
       <>
-      <TableRow
-        hover
-        tabIndex={-1}
-        key={row.id}
-      >
-        <TableCell padding="checkbox">
-
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
-        <TableCell
-          component="th"
-          // id={labelId}
-          scope="row"
-          padding="none"
+        <TableRow
+          hover
+          tabIndex={-1}
+          key={row.id}
         >
-          <Link to={`/rentals/${row.id}`}>
-          {row.address}
-          </Link>
-        </TableCell>
-        <TableCell align="left">{row.status}</TableCell>
-        <TableCell align="left">{row.priority}</TableCell>
-        <TableCell align="left">{row.owner}</TableCell>
-        <TableCell align="left">{row.assigned}</TableCell>
-        <TableCell align="left">{row.updatedAt}</TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              {/* <Typography variant="h6" gutterBottom component="div">
-                Actions
-              </Typography> */}
-              <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Action Items</TableCell>
-                    <TableCell>Priority</TableCell>
-                    <TableCell align="right">Date Added</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {row.actions.length ? (
-                  row.actions.map((action) => (
-                    <TableRow key={action.id}>
-                      <TableCell component="th" scope="row">
-                        {action.action}
-                      </TableCell>
-                      <TableCell>{action.priority}</TableCell>
-                      <TableCell align="right">{action.createdAt}</TableCell>
-                    </TableRow>
-                  ))
-                  ) : (
+          <TableCell padding="checkbox">
+
+            <IconButton
+              aria-label="expand row"
+              size="small"
+              onClick={() => setOpen(!open)}
+            >
+              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </IconButton>
+          </TableCell>
+          <TableCell
+            component="th"
+            scope="row"
+            padding="none"
+          >
+            <Link to={`/rentals/${row.id}`}>
+            {row.address}
+            </Link>
+          </TableCell>
+          <TableCell align="left">{row.status}</TableCell>
+          <TableCell align="left">{row.priority}</TableCell>
+          <TableCell align="left">{row.owner}</TableCell>
+          <TableCell align="left">{row.assigned}</TableCell>
+          <TableCell align="left">{row.updatedAt}</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box sx={{ margin: 1 }}>
+                <Table size="small" aria-label="purchases">
+                  <TableHead>
                     <TableRow>
-                      <TableCell>No action items to display...</TableCell>
+                      <TableCell>Action Items</TableCell>
+                      <TableCell>Priority</TableCell>
+                      <TableCell align="right">Date Added</TableCell>
                     </TableRow>
-                  )
-                  }
-                </TableBody>
-              </Table>
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {row.actions.length ? (
+                    row.actions.map((action) => (
+                      <TableRow key={action.id}>
+                        <TableCell component="th" scope="row">
+                          {action.action}
+                        </TableCell>
+                        <TableCell>{action.priority}</TableCell>
+                        <TableCell align="right">{action.createdAt}</TableCell>
+                      </TableRow>
+                    ))
+                    ) : (
+                      <TableRow>
+                        <TableCell>No action items to display...</TableCell>
+                      </TableRow>
+                    )
+                    }
+                  </TableBody>
+                </Table>
+              </Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
       </>
     )
   }
 
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('status');
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(true);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('status');
+  const [page, setPage] = useState(0);
+  const [dense, setDense] = useState(true);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   // collapse
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
-  const handleRequestSort = (event, property) => {
+  const handleRequestSort = (property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (newPage) => {
     setPage(newPage);
   };
 
@@ -333,18 +271,13 @@ export default function CollapsibleTable() {
     setDense(event.target.checked);
   };
 
-  const isSelected = (address) => selected.indexOf(address) !== -1;
-
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
-  
-
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
         <TableContainer>
           <Table
             sx={{ minWidth: 1000 }}
@@ -352,10 +285,8 @@ export default function CollapsibleTable() {
             size={dense ? 'small' : 'medium'}
           >
             <EnhancedTableHead
-              // numSelected={selected.length}
               order={order}
               orderBy={orderBy}
-              // onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
             />
@@ -364,11 +295,7 @@ export default function CollapsibleTable() {
                  rows.slice().sort(getComparator(order, orderBy)) */}
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  // const isItemSelected = isSelected(row.address);
-                  // const labelId = `enhanced-table-checkbox-${index}`;
-                  
-
+                .map((row) => {
                   return (
                     <CollapsibleRow key={row.id} row={row} />
                   );

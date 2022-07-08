@@ -1,5 +1,3 @@
-import React from 'react'
-
 const FormRow = ({ type, name, value, handleChange, labelText, readOnly, maxLength }) => {
   const currentLength = value?.length
   const max = maxLength + 1;

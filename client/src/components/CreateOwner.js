@@ -1,12 +1,27 @@
-import React from 'react'
 import { useAppContext } from '../context/appContext'
+
+// Components
 import { FormRow, Alert } from './index.js'
-import Wrapper from '../assets/wrappers/Modal'
+
+// Material UI components
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 
+// Styles
+import Wrapper from '../assets/wrappers/Modal'
+import style from '../utils/modalStyle'
+
 const CreateOwner = ({ open, setOpen }) => {
-  const { handleChange, showAlert, displayAlert, isEditing, ownerName, createOwner, editOwner, clearValues } = useAppContext()
+  const { 
+    handleChange, 
+    showAlert, 
+    displayAlert, 
+    isEditing, 
+    ownerName, 
+    createOwner,
+    editOwner, 
+    clearValues 
+  } = useAppContext()
 
   const handleClose = () => {
     setOpen(false);
@@ -35,24 +50,6 @@ const CreateOwner = ({ open, setOpen }) => {
 
     createOwner()
   }
-
-  // modal box style from MUI
-  const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: {
-      xs: 380, 
-      sm: 450,
-      md: 450, 
-      lg: 450, 
-      xl: 450, 
-    },
-    bgcolor: 'background.paper',
-    boxShadow: 24,
-    p: 4,
-  };
 
   return (
     <div>
