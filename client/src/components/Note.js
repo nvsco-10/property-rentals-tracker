@@ -1,3 +1,4 @@
+// Components
 import EditDeleteBtns from "./EditDeleteBtns"
 
 // Date formatting

@@ -1,12 +1,15 @@
-import links from '../utils/links'
-import { HiUserGroup } from 'react-icons/hi'
 import { NavLink } from 'react-router-dom'
 import { useAppContext } from '../context/appContext'
+
+// Icons/Utils
+import links from '../utils/links'
+import { HiUserGroup } from 'react-icons/hi'
 
 const NavLinks = ({toggleSidebar}) => {
   const { user } = useAppContext()
   const { isAdmin } = user
 
+  // manage users link for admins
   const usersLink = { 
     id: 1, 
     text: 'manage users', 
@@ -18,7 +21,6 @@ const NavLinks = ({toggleSidebar}) => {
     <div className='nav-links'>
       {links.map((link) => {
         const { id, text, path, icon } = link
-
         return (
           <NavLink
             to={path}

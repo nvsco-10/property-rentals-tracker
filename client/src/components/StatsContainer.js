@@ -1,7 +1,10 @@
-import React from 'react'
 import { useAppContext } from '../context/appContext'
-import Wrapper from '../assets/wrappers/StatsContainer'
+
+// Components
 import { StatsItem } from '.'
+
+// Styles/Icons
+import Wrapper from '../assets/wrappers/StatsContainer'
 import { RiDoorOpenFill } from 'react-icons/ri'
 import { MdPendingActions } from 'react-icons/md'
 import { AiOutlineFileDone } from 'react-icons/ai'

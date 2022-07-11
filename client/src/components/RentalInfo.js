@@ -1,9 +1,13 @@
-import Wrapper from '../assets/wrappers/RentalInfo'
-import StatusContainer from './StatusContainer'
 import { Link } from 'react-router-dom'
 import { useAppContext } from '../context/appContext'
+
+// Components
+import { Info, StatusContainer } from '.'
+
+// Styles/Icons
 import icon from '../assets/images/houseplaceholder.png'
-import Info from './Info'
+import Wrapper from '../assets/wrappers/RentalInfo'
+
 
 const RentalInfo = () => {
   const { activeRental, setEditRental } = useAppContext()

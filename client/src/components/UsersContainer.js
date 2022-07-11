@@ -1,6 +1,8 @@
-import React from 'react'
-import Wrapper from '../assets/wrappers/UsersContainer'
+// Components
 import { UsersTable, AddButton } from '.'
+
+// Styles
+import Wrapper from '../assets/wrappers/UsersContainer'
 
 const UsersContainer = () => {
   return (

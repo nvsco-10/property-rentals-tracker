@@ -1,3 +1,4 @@
+// Styles
 import Wrapper from '../assets/wrappers/StatItem'
 
 const StatsItem = ({ count, title, icon, color, bcg }) => {

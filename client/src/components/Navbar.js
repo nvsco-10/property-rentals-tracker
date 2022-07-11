@@ -1,9 +1,12 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { useAppContext } from '../context/appContext'
+
+// Styles
 import Wrapper from '../assets/wrappers/Navbar'
-import { FaAlignLeft, FaUserCircle, FaCaretDown } from 'react-icons/fa'
+
+// Icons/Images
 import Logo from './Logo.js'
+import { FaAlignLeft, FaUserCircle, FaCaretDown } from 'react-icons/fa'
 
 const Navbar = () => {
   const { user, toggleSidebar, logoutUser } = useAppContext()

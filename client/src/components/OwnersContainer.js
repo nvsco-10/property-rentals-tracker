@@ -1,8 +1,11 @@
-import React from 'react'
-import Wrapper from '../assets/wrappers/OwnersContainer'
-import { OwnersTable, OwnersProperty } from '.'
 import { useEffect } from 'react';
 import { useAppContext } from '../context/appContext';
+
+// Components
+import { OwnersTable, OwnersProperty } from '.'
+
+// Styles
+import Wrapper from '../assets/wrappers/OwnersContainer'
 
 const OwnersContainer = () => {
   const { getOwners } = useAppContext()

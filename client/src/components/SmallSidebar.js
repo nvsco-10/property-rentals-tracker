@@ -1,7 +1,11 @@
+import { useAppContext } from '../context/appContext'
+
+// Styles/Icons
 import Wrapper from '../assets/wrappers/SmallSidebar'
 import { FaTimes } from 'react-icons/fa'
-import { useAppContext } from '../context/appContext'
 import DarkLogo from './DarkLogo'
+
+// Utils
 import NavLinks from './NavLinks.js'
 
 const SmallSidebar = () => {

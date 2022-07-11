@@ -1,7 +1,10 @@
-import Wrapper from '../assets/wrappers/RentalActions'
-import * as React from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAppContext } from '../context/appContext';
+
+// Components
+import AddButton from './AddButton';
+
+// Material UI components
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -16,20 +19,21 @@ import Paper from '@mui/material/Paper';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
-import AddButton from './AddButton';
+
+// Styles
+import Wrapper from '../assets/wrappers/RentalActions'
+
+// Date formatting
 import moment from 'moment'
 
 const RentalActions = () => {
-  const { activeRental, actions, setAction } = useAppContext()
-  const { _id } = activeRental
+  const { actions, setAction } = useAppContext()
 
   useEffect(() => {
-
     setAction('')
-   
   }, [])
 
-  function createData(id, actionItem, details, priority, status, createdAt, createdBy, notes) {
+  const createData = (id, actionItem, details, priority, status, createdAt, createdBy, notes) => {
     return {
       id,
       actionItem,
@@ -47,7 +51,7 @@ const RentalActions = () => {
   })
 
 
-  function descendingComparator(a, b, orderBy) {
+  const descendingComparator = (a, b, orderBy) => {
     if (b[orderBy] < a[orderBy]) {
       return -1;
     }
@@ -57,7 +61,7 @@ const RentalActions = () => {
     return 0;
   }
   
-  function getComparator(order, orderBy) {
+  const getComparator = (order, orderBy) => {
     return order === 'desc'
       ? (a, b) => descendingComparator(a, b, orderBy)
       : (a, b) => -descendingComparator(a, b, orderBy);
@@ -65,7 +69,7 @@ const RentalActions = () => {
   
   // This method is created for cross-browser compatibility, if you don't
   // need to support IE11, you can use Array.prototype.sort() directly
-  function stableSort(array, comparator) {
+  const stableSort = (array, comparator) => {
     const stabilizedThis = array.map((el, index) => [el, index]);
     stabilizedThis.sort((a, b) => {
       const order = comparator(a[0], b[0]);
@@ -105,7 +109,7 @@ const RentalActions = () => {
     
   ];
   
-  function EnhancedTableHead(props) {
+  const EnhancedTableHead = (props) =>{
     const { order, orderBy,  onRequestSort } =
       props;
     const createSortHandler = (property) => (event) => {
@@ -116,15 +120,6 @@ const RentalActions = () => {
       <TableHead>
         <TableRow>
           <TableCell padding="checkbox">
-            {/* <Checkbox
-              color="primary"
-              indeterminate={numSelected > 0 && numSelected < rowCount}
-              checked={rowCount > 0 && numSelected === rowCount}
-              onChange={onSelectAllClick}
-              inputProps={{
-                'aria-label': 'select all desserts',
-              }}
-            /> */}
           </TableCell>
           {headCells.map((headCell) => (
             <TableCell
@@ -153,20 +148,17 @@ const RentalActions = () => {
   }
   
   EnhancedTableHead.propTypes = {
-    // numSelected: PropTypes.number.isRequired,
     onRequestSort: PropTypes.func.isRequired,
-    // onSelectAllClick: PropTypes.func.isRequired,
     order: PropTypes.oneOf(['asc', 'desc']).isRequired,
     orderBy: PropTypes.string.isRequired,
     rowCount: PropTypes.number.isRequired,
   };
   
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
-  // const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(true);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('calories');
+  const [page, setPage] = useState(0);
+  const [dense, setDense] = useState(true);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -200,7 +192,6 @@ const RentalActions = () => {
       { actions?.length ? (
       <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
         <TableContainer>
           <Table
             sx={{ minWidth: 500 }}
@@ -208,10 +199,8 @@ const RentalActions = () => {
             size={dense ? 'small' : 'medium'}
           >
             <EnhancedTableHead
-              // numSelected={selected.length}
               order={order}
               orderBy={orderBy}
-              // onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
             />
@@ -221,28 +210,16 @@ const RentalActions = () => {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  // const isItemSelected = isSelected(row.name);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      // onClick={(event) => handleClick(event, row.name)}
-                      // role="checkbox"
-                      // aria-checked={isItemSelected}
                       onClick={() => setAction(row)}
                       tabIndex={-1}
                       key={row.id}
-                      // selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
-                        {/* <Checkbox
-                          color="primary"
-                          checked={isItemSelected}
-                          inputProps={{
-                            'aria-labelledby': labelId,
-                          }}
-                        /> */}
                       </TableCell>
                       <TableCell
                         component="th"

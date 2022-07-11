@@ -1,5 +1,3 @@
-import React from 'react'
-
 const Info = ({ heading, item }) => {
   return (
     <div className='info-container'>

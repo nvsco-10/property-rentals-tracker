@@ -1,6 +1,9 @@
-import React from 'react'
-import { FormRow, FormRowSelect } from '.'
 import { useAppContext } from '../context/appContext'
+
+// Components
+import { FormRow, FormRowSelect } from '.'
+
+// Styles
 import Wrapper from '../assets/wrappers/SearchContainer'
 
 const SearchContainer = () => {
@@ -14,19 +17,19 @@ const SearchContainer = () => {
 
   const handleSearch = (e) => {
     if (isLoading) return
-
     handleChange({ name: e.target.name, value: e.target.value })
   }
+
   const handleSubmit = (e) => {
     e.preventDefault()
     clearFilters()
   }
+
   return (
     <Wrapper>
       <form className='form'>
         <div className='form-center'>
           {/* search position */}
-
           <FormRow
             type='text'
             name='search'

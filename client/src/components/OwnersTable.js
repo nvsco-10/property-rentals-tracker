@@ -1,7 +1,10 @@
-import React from 'react'
-import Wrapper from '../assets/wrappers/OwnersTable'
-import { useEffect } from 'react';
+import React, { useState } from 'react';
 import { useAppContext } from '../context/appContext';
+
+// Components
+import { AddButton, EditDeleteBtns } from '.';
+
+// Material UI components
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -16,11 +19,15 @@ import Paper from '@mui/material/Paper';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { visuallyHidden } from '@mui/utils';
-import { AddButton, EditDeleteBtns } from '.';
+
+// Styles
+import Wrapper from '../assets/wrappers/OwnersTable'
+
+// Date formatting
 import moment from 'moment'
 
 const OwnersTable = () => {
-  const { owners, isLoading, setOwner } = useAppContext()
+  const { owners, setOwner } = useAppContext()
 
   function createData(id, name, createdAt) {
     return {
@@ -97,15 +104,6 @@ const OwnersTable = () => {
       <TableHead>
         <TableRow>
           <TableCell padding="checkbox">
-            {/* <Checkbox
-              color="primary"
-              indeterminate={numSelected > 0 && numSelected < rowCount}
-              checked={rowCount > 0 && numSelected === rowCount}
-              onChange={onSelectAllClick}
-              inputProps={{
-                'aria-label': 'select all desserts',
-              }}
-            /> */}
           </TableCell>
           {headCells.map((headCell) => (
             <TableCell
@@ -134,20 +132,17 @@ const OwnersTable = () => {
   }
   
   EnhancedTableHead.propTypes = {
-    // numSelected: PropTypes.number.isRequired,
     onRequestSort: PropTypes.func.isRequired,
-    // onSelectAllClick: PropTypes.func.isRequired,
     order: PropTypes.oneOf(['asc', 'desc']).isRequired,
     orderBy: PropTypes.string.isRequired,
     rowCount: PropTypes.number.isRequired,
   };
   
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
-  // const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(true);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('name');
+  const [page, setPage] = useState(0);
+  const [dense, setDense] = useState(true);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -181,7 +176,6 @@ const OwnersTable = () => {
       { owners?.length ? (
       <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
         <TableContainer>
           <Table
             sx={{ minWidth: 420 }}
@@ -189,10 +183,8 @@ const OwnersTable = () => {
             size={dense ? 'small' : 'medium'}
           >
             <EnhancedTableHead
-              // numSelected={selected.length}
               order={order}
               orderBy={orderBy}
-              // onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
             />
@@ -202,28 +194,16 @@ const OwnersTable = () => {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  // const isItemSelected = isSelected(row.name);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      // onClick={(event) => handleClick(event, row.name)}
-                      // role="checkbox"
-                      // aria-checked={isItemSelected}
                       onClick={() => setOwner(row)}
                       tabIndex={-1}
                       key={row.id}
-                      // selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
-                        {/* <Checkbox
-                          color="primary"
-                          checked={isItemSelected}
-                          inputProps={{
-                            'aria-labelledby': labelId,
-                          }}
-                        /> */}
                       </TableCell>
                       <TableCell
                         component="th"

@@ -1,12 +1,10 @@
-import { useEffect } from 'react'
-import Wrapper from '../assets/wrappers/SingleRentalContainer'
-import RentalInfo from './RentalInfo'
-import RentalActions from './RentalActions'
-import ActionContainer from './ActionContainer'
 import { useAppContext } from '../context/appContext'
-import Loading from './Loading'
 
-import React from 'react'
+// Components
+import { RentalInfo, RentalActions, ActionContainer, Loading } from '.'
+
+// Styles
+import Wrapper from '../assets/wrappers/SingleRentalContainer'
 
 const SingleRentalContainer = () => {
   const { isLoading} = useAppContext()

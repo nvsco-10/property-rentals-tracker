@@ -13,7 +13,7 @@ const FormRowSelectOwners = ({ labelText, name, value, handleChange, list }) => 
         <option value=''>
             
         </option>
-        {list.map((item, index) => {
+        {list.map((item) => {
           return (
             <option key={item._id} value={item._id}>
               {item.name}

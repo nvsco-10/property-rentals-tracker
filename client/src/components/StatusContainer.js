@@ -1,4 +1,4 @@
-import React from 'react'
+// Styles
 import Wrapper from '../assets/wrappers/StatusContainer'
 
 const StatusContainer = ({ status, priority }) => {
