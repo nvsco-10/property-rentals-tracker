@@ -8,8 +8,8 @@
 
 MERN Stack application that allows users to track rental properties and associated tasks
 
-### Latest activity/update (07/07/2022)
-  - refactoring code and minor bug fixes
+### Latest activity/update (07/11/2022)
+  - code refactor and minor bug fixes
 
 <hr>
 
